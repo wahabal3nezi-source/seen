@@ -16,8 +16,6 @@
             text-align: center;
             overflow-x: hidden;
             height: 100vh;
-            /* **تحسين دعم اللمس: منع التكبير المزدوج** */
-            touch-action: manipulation; 
         }
 
         .start-screen {
@@ -71,18 +69,11 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.15s;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            /* **دعم اللمس: استجابة فورية للنقر** */
-            -webkit-tap-highlight-color: transparent; 
         }
 
         .start-button:hover {
             background-color: #ffcc00;
             transform: translateY(-2px);
-        }
-        /* **دعم اللمس: تأثير النقر على اللمس** */
-        .start-button:active {
-            transform: scale(0.98); 
-            background-color: #ffcc00;
         }
 
         .game-content {
@@ -130,7 +121,6 @@
             border-bottom: 1px dashed #b3a369;
             padding-bottom: 2px;
             pointer-events: none;
-            text-align: inherit; /* لضمان أن النص يتبع قيمة `text-align` في العنصر الأب */
         }
 
         .score-display {
@@ -304,18 +294,11 @@
             font-size: 18px;
             font-weight: 800;
             transition: background-color 0.2s, transform 0.1s;
-             /* **دعم اللمس: استجابة فورية للنقر** */
-            -webkit-tap-highlight-color: transparent; 
         }
 
         .question-card:hover:not(.answered) {
             background-color: #5a5a5a;
             transform: translateY(-1px);
-        }
-        /* **دعم اللمس: تأثير النقر على اللمس** */
-        .question-card:active:not(.answered) {
-            transform: scale(0.98); 
-            background-color: #5a5a5a; 
         }
 
         .answered {
@@ -338,8 +321,6 @@
             align-items: center;
             z-index: 1000;
             padding: 20px;
-            /* **تحسين دعم اللمس: منع التكبير المزدوج** */
-            touch-action: manipulation; 
         }
 
         .timer-container { 
@@ -405,18 +386,11 @@
             background-color: #b3a369;
             color: #1c1c1c;
             transition: background-color 0.3s, transform 0.15s;
-             /* **دعم اللمس: استجابة فورية للنقر** */
-            -webkit-tap-highlight-color: transparent; 
         }
         
         .action-buttons button:hover {
             background-color: #ffcc00;
             transform: translateY(-2px);
-        }
-        /* **دعم اللمس: تأثير النقر على اللمس** */
-        .action-buttons button:active {
-            transform: scale(0.98); 
-            background-color: #ffcc00;
         }
 
         .answer-display {
@@ -474,8 +448,6 @@
             gap: 8px;
             transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
             font-family: 'Changa', sans-serif;
-             /* **دعم اللمس: استجابة فورية للنقر** */
-            -webkit-tap-highlight-color: transparent; 
         }
 
         .scoring-button span.icon {
@@ -487,12 +459,6 @@
             filter: brightness(1.05);
             box-shadow: 0 8px 18px rgba(0,0,0,0.5);
         }
-        /* **دعم اللمس: تأثير النقر على اللمس** */
-        .scoring-button:active {
-            transform: scale(0.96);
-            filter: brightness(1.1);
-        }
-
 
         #btn-teamA-score {
             background: linear-gradient(135deg, #0b76ff, #2ea7ff);
@@ -593,13 +559,6 @@
                 flex-direction: column;
                 gap: 15px;
                 width: 95%;
-            }
-            .timer-container {
-                width: 100px; 
-                height: 80px; 
-            }
-            .timer-display {
-                font-size: 32px;
             }
         }
     </style>
@@ -786,28 +745,29 @@
         
         <div class="answer-display" id="a-content"></div>
 
+        <!-- الأيسر يسار – لا أحد في النص – الأيمن يمين -->
         <div class="scoring-section" id="scoring-section" style="display: none;"> 
 
             <div class="scoring-card">
-                <div class="scoring-title"> (يسار الشاشة)</div>
+                <div class="scoring-title">  (يمين الشاشة)</div>
                 <button onclick="recordAnswer('A')" id="btn-teamA-score" class="scoring-button">
-                    <span class="icon">⬅️</span>
-                    <span class="label" id="score-btn-teamA-name">الفريق الأيسر</span>
+                    <span class="icon">➡️</span>
+                    <span class="label">الفريق الأيسر</span>
                 </button>
             </div>
 
             <div class="scoring-card">
                 <div class="scoring-title">لم يجب أحد إجابة صحيحة</div>
                 <button onclick="recordAnswer('None')" id="close-btn" class="scoring-button">
-                    لا أحد / إنهاء السؤال
+                    لا أحد
                 </button>
             </div>
 
             <div class="scoring-card">
-                <div class="scoring-title">(يمين الشاشة)</div>
-                 <button onclick="recordAnswer('B')" id="btn-teamB-score" class="scoring-button">
-                    <span class="icon">➡️</span>
-                    <span class="label" id="score-btn-teamB-name">الفريق الأيمن</span>
+                <div class="scoring-title">  (يسار الشاشة)</div>
+                <button onclick="recordAnswer('B')" id="btn-teamB-score" class="scoring-button">
+                    <span class="icon">⬅️</span>
+                    <span class="label">الفريق الأيمن</span>
                 </button>
             </div>
 
@@ -830,16 +790,12 @@
         let currentQuestionCard = null;
         let totalAnsweredQuestions = 0;
         let currentTurn = 'A'; 
-        const totalQuestions = document.querySelectorAll('.question-card').length;
 
         const teamANameInputDisplay = document.getElementById('teamA-name');
         const teamBNameInputDisplay = document.getElementById('teamB-name');
         const teamANameInputStart = document.getElementById('input-teamA-name');
         const teamBNameInputStart = document.getElementById('input-teamB-name');
         
-        const scoreBtnTeamA = document.getElementById('score-btn-teamA-name');
-        const scoreBtnTeamB = document.getElementById('score-btn-teamB-name');
-
         const startScreen = document.getElementById('start-screen');
         const gameContent = document.getElementById('game-content');
 
@@ -854,8 +810,8 @@
         const teamAPanel = document.getElementById('teamA-panel');
         const teamBPanel = document.getElementById('teamB-panel');
         const gameOverScreen = document.getElementById('game-over-screen'); 
-        const winnerMessage = document.getElementById('winner-message');      
-        const finalScores = document.getElementById('final-scores');          
+        const winnerMessage = document.getElementById('winner-message');     
+        const finalScores = document.getElementById('final-scores');         
         const scoringSection = document.getElementById('scoring-section');
         const timerImage = document.getElementById('timer-image');
 
@@ -863,186 +819,148 @@
             const nameA = teamANameInputStart.value.trim() || 'فريق أيسر';
             const nameB = teamBNameInputStart.value.trim() || 'فريق أيمن';
 
-            // تحديث الأسماء في واجهة اللعبة
             teamANameInputDisplay.value = nameA;
             teamBNameInputDisplay.value = nameB;
 
-            // تحديث الأسماء في أزرار التسجيل
-            scoreBtnTeamA.textContent = nameA;
-            scoreBtnTeamB.textContent = nameB;
+            updateDisplay();
             
-            // إظهار المحتوى وإخفاء شاشة البداية
             startScreen.style.display = 'none';
-            gameContent.style.display = 'block';
-            
-            // تهيئة الدور الحالي
-            updateTurnDisplay();
-            
-            // إعداد مستمعي الأحداث لبطاقات الأسئلة
-            document.querySelectorAll('.question-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    if (!this.classList.contains('answered')) {
-                        openQuestion(this);
-                    }
-                });
-            });
-
-            showAnswerBtn.addEventListener('click', showAnswer);
+            gameContent.style.display = 'block'; 
         }
 
-        function updateTurnDisplay() {
-            const nameA = teamANameInputDisplay.value;
-            const nameB = teamBNameInputDisplay.value;
+        function updateDisplay() {
+            teamAScoreDisplay.textContent = teamAScore;
+            teamBScoreDisplay.textContent = teamBScore;
+            
+            const teamAName = teamANameInputDisplay.value || 'فريق أيسر';
+            const teamBName = teamBNameInputDisplay.value || 'فريق أيمن';
 
-            if (currentTurn === 'A') {
-                currentTurnName.textContent = nameA;
-                teamAPanel.classList.add('current-turn');
-                teamBPanel.classList.remove('current-turn');
-            } else {
-                currentTurnName.textContent = nameB;
-                teamBPanel.classList.add('current-turn');
-                teamAPanel.classList.remove('current-turn');
-            }
+            currentTurnName.textContent = (currentTurn === 'A' ? teamAName : teamBName);
+            
+            teamAPanel.classList.toggle('current-turn', currentTurn === 'A');
+            teamBPanel.classList.toggle('current-turn', currentTurn === 'B');
+            
+            document.getElementById('btn-teamA-score').querySelector('.label').textContent = teamAName;
+            document.getElementById('btn-teamB-score').querySelector('.label').textContent = teamBName;
         }
 
         function switchTurn() {
-            currentTurn = (currentTurn === 'A') ? 'B' : 'A';
-            updateTurnDisplay();
+            currentTurn = (currentTurn === 'A' ? 'B' : 'A');
+            updateDisplay();
         }
 
         function startTimer() {
+            clearInterval(timerInterval); 
             currentTimer = 90;
             timerDisplay.textContent = currentTimer;
-            timerImage.style.backgroundColor = '#6a0dad';
-            
+            timerDisplay.style.color = '#ffcc00'; 
+            timerImage.style.backgroundColor = '#6a0dad'; 
+
             timerInterval = setInterval(() => {
                 currentTimer--;
                 timerDisplay.textContent = currentTimer;
 
-                // تحديث لون الشريط الزمني
-                const percentage = (currentTimer / 90) * 100;
-                if (percentage < 25) {
-                     timerImage.style.backgroundColor = '#d7373f'; // أحمر
-                } else if (percentage < 50) {
-                     timerImage.style.backgroundColor = '#ffcc00'; // أصفر
+                if (currentTimer <= 10) {
+                    timerDisplay.style.color = '#fff'; 
+                    timerImage.style.backgroundColor = '#dc3545';
+                } else {
+                    timerDisplay.style.color = '#ffcc00';
+                    timerImage.style.backgroundColor = '#6a0dad';
                 }
-
+                
                 if (currentTimer <= 0) {
                     clearInterval(timerInterval);
-                    timerDisplay.textContent = "انتهى الوقت!";
-                    // يمكن إضافة منطق لمعاقبة الفريق أو إنهاء السؤال تلقائيًا
+                    timerDisplay.textContent = 'انتهى الوقت!';
+                    timerImage.style.backgroundColor = '#555';
                 }
             }, 1000);
         }
+        
+        function openQuestionScreen(questionElement) {
+            if (questionElement.classList.contains('answered')) return;
 
-        function openQuestion(card) {
-            if (card.classList.contains('answered')) return;
+            currentQuestionCard = questionElement;
+
+            const question = questionElement.getAttribute('data-question');
+            const answer = questionElement.getAttribute('data-answer');
+            const points = parseInt(questionElement.getAttribute('data-points'));
             
-            currentQuestionCard = card;
-            currentQuestionPoints = parseInt(card.dataset.points);
+            currentQuestionPoints = points;
             
-            qContent.textContent = card.dataset.question;
-            aContent.textContent = card.dataset.answer;
+            qContent.textContent = question;
+            aContent.textContent = "الإجابة: " + answer;
             aContent.style.display = 'none';
             showAnswerBtn.style.display = 'block';
-            scoringSection.style.display = 'none';
-            
-            questionScreen.style.display = 'flex';
+            scoringSection.style.display = 'none'; 
+
+            questionScreen.style.display = 'flex'; 
             
             startTimer();
         }
 
-        function showAnswer() {
-            clearInterval(timerInterval);
-            timerDisplay.textContent = "انتهى الوقت/تمت الإجابة";
-            aContent.style.display = 'block';
-            showAnswerBtn.style.display = 'none';
-            scoringSection.style.display = 'flex'; // إظهار أزرار التسجيل
-        }
-
-        function recordAnswer(winningTeam) {
-            let scoreUpdated = false;
-
-            if (winningTeam === 'A') {
+        function recordAnswer(team) {
+            if (team === 'A') {
                 teamAScore += currentQuestionPoints;
-                teamAScoreDisplay.textContent = teamAScore;
-                currentQuestionCard.classList.add('answered');
-                currentQuestionCard.style.backgroundColor = '#383838'; // لون جديد لتمثيل الإجابة الصحيحة
-                currentQuestionCard.style.color = '#fff';
-                currentQuestionCard.style.textDecoration = 'none';
-                scoreUpdated = true;
-                currentTurn = 'A'; // يبقى الدور للفريق الذي أجاب صحيحاً
-            } else if (winningTeam === 'B') {
+            } else if (team === 'B') {
                 teamBScore += currentQuestionPoints;
-                teamBScoreDisplay.textContent = teamBScore;
+            }
+
+            if (currentQuestionCard) {
                 currentQuestionCard.classList.add('answered');
-                currentQuestionCard.style.backgroundColor = '#383838'; // لون جديد لتمثيل الإجابة الصحيحة
-                currentQuestionCard.style.color = '#fff';
-                currentQuestionCard.style.textDecoration = 'none';
-                scoreUpdated = true;
-                currentTurn = 'B'; // يبقى الدور للفريق الذي أجاب صحيحاً
-            } else {
-                 // لا أحد أجاب بشكل صحيح، فقط نغلق السؤال ونمرر الدور
-                currentQuestionCard.classList.add('answered');
-                currentQuestionCard.style.backgroundColor = '#252525';
-                currentQuestionCard.style.color = '#404040';
-                currentQuestionCard.style.textDecoration = 'line-through';
-                switchTurn(); // نقل الدور للفريق الآخر
+                totalAnsweredQuestions++;
             }
             
-            // إغلاق شاشة السؤال
-            questionScreen.style.display = 'none';
+            closeQuestionScreen();
+            updateDisplay();
+            switchTurn(); 
+            checkGameOver();
+        }
+
+        function closeQuestionScreen() {
             clearInterval(timerInterval);
-            totalAnsweredQuestions++;
-
-            // التحقق من نهاية اللعبة
-            if (totalAnsweredQuestions >= totalQuestions) {
-                setTimeout(endGame, 500);
-            } else {
-                 // تحديث عرض الدور بعد العودة للوحة اللعب
-                updateTurnDisplay();
-            }
-        }
-
-        function endGame() {
-            let winner = '';
-            let finalMsg = '';
-            const nameA = teamANameInputDisplay.value;
-            const nameB = teamBNameInputDisplay.value;
-
-            if (teamAScore > teamBScore) {
-                winner = nameA;
-                finalMsg = `🎉 تهانينا للفريق الفائز: ${winner}! 🎉`;
-            } else if (teamBScore > teamAScore) {
-                winner = nameB;
-                finalMsg = `🎉 تهانينا للفريق الفائز: ${winner}! 🎉`;
-            } else {
-                winner = 'تعادل';
-                finalMsg = '🤝 اللعبة انتهت بالتعادل! 🤝';
-            }
-
-            winnerMessage.textContent = finalMsg;
-            finalScores.innerHTML = `
-                <p><strong>نتيجة ${nameA} (أيسر):</strong> ${teamAScore} نقطة</p>
-                <p><strong>نتيجة ${nameB} (أيمن):</strong> ${teamBScore} نقطة</p>
-            `;
-
-            gameContent.style.display = 'none';
             questionScreen.style.display = 'none';
-            gameOverScreen.style.display = 'flex';
+        }
+        
+        function checkGameOver() {
+            const totalQuestions = document.querySelectorAll('.question-card').length;
+            if (totalAnsweredQuestions === totalQuestions) { 
+                const nameA = teamANameInputDisplay.value || 'فريق أيسر';
+                const nameB = teamBNameInputDisplay.value || 'فريق أيمن';
+                let winnerText;
+                
+                if (teamAScore > teamBScore) {
+                    winnerText = `🏆 مبروك للفريق <b>${nameA}</b>! 🏆`;
+                } else if (teamBScore > teamAScore) {
+                    winnerText = `🏆 مبروك للفريق <b>${nameB}</b>! 🏆`;
+                } else {
+                    winnerText = '🤝 تعادل بين الفريقين! 🤝';
+                }
+                
+                winnerMessage.innerHTML = winnerText;
+                finalScores.innerHTML = `
+                    <p style="margin: 5px 0;">${nameA}: <b>${teamAScore}</b> نقطة</p>
+                    <hr style="border: 0.5px dashed #4a4a4a; width: 80%;">
+                    <p style="margin: 5px 0;">${nameB}: <b>${teamBScore}</b> نقطة</p>
+                `;
+
+                gameOverScreen.style.display = 'flex';
+            }
         }
 
-        // تهيئة عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', () => {
-             // إظهار شاشة البداية أولاً
-             startScreen.style.display = 'flex';
-
-             // لضمان أن وظيفة startGame تعمل بشكل صحيح عند النقر على زر البدء
-             const startButton = document.querySelector('.start-button');
-             if (startButton) {
-                 startButton.onclick = startGame;
-             }
+        document.querySelectorAll('.question-card').forEach(card => {
+            card.addEventListener('click', function() {
+                openQuestionScreen(this);
+            });
         });
+        
+        showAnswerBtn.addEventListener('click', function() {
+            aContent.style.display = 'block';
+            showAnswerBtn.style.display = 'none';
+            scoringSection.style.display = 'flex'; 
+            clearInterval(timerInterval); 
+        });
+
+        updateDisplay(); 
     </script>
 </body>
 </html>
