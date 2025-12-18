@@ -45,7 +45,7 @@ a{color:inherit;text-decoration:none}
   flex-direction:column;
 }
 
-/* ===== Header (Centered) ===== */
+/* ===== Header ===== */
 .top{
   background:rgba(255,255,255,.85);
   border:1px solid var(--stroke);
@@ -53,19 +53,18 @@ a{color:inherit;text-decoration:none}
   box-shadow:var(--shadow);
   padding:14px;
   display:flex;
-  justify-content: center; /* توسيط المحتوى */
+  gap:12px;
   align-items:center;
+  justify-content:space-between;
   backdrop-filter: blur(8px);
   flex-shrink: 0;
 }
 
 .brand{
   display:flex;
-  flex-direction: column;
   align-items:center;
-  gap:5px;
+  gap:10px;
   cursor:pointer;
-  text-align: center;
 }
 .logo{
   width:44px;
@@ -80,14 +79,10 @@ a{color:inherit;text-decoration:none}
   font-weight:900;
 }
 .brand p{
-  margin:0;
+  margin:4px 0 0;
   font-size:12px;
   color:var(--muted);
-}
-
-/* تم إخفاء التصنيفات والعداد بناءً على طلبك */
-.cats, .counter {
-  display: none !important;
+  text-align:center;
 }
 
 /* ===== Main Content ===== */
@@ -95,16 +90,17 @@ a{color:inherit;text-decoration:none}
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
-  overflow-y: auto;
+  gap: 16px;
+  margin-top: 14px;
 }
 
-/* ===== Grid (Compact to fit screen) ===== */
+/* ===== Grid ===== */
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-bottom: 10px;
+  gap:16px;
+  flex: 1;
+  min-height: 0;
 }
 
 .card{
@@ -115,6 +111,11 @@ a{color:inherit;text-decoration:none}
   overflow:hidden;
   cursor:pointer;
   transition:.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover{
+  transform:translateY(-2px);
 }
 
 .thumb{
@@ -123,46 +124,56 @@ a{color:inherit;text-decoration:none}
   object-fit:cover;
   display:block;
   background:#f7eaf1;
+  flex: 1;
+  min-height: 0;
 }
 
 .meta{
-  padding:8px;
+  padding:12px;
   text-align:center;
+  flex-shrink: 0;
 }
 .meta h3{
   margin:0;
-  font-size:13px;
+  font-size:14px;
   font-weight:900;
 }
+.meta span{
+  display:block;
+  margin-top:6px;
+  font-size:12px;
+  color:var(--muted);
+}
 .badge{
-  margin-top:5px;
+  margin-top:10px;
   display:inline-block;
-  padding:6px 12px;
-  font-size:11px;
+  padding:8px 14px;
+  font-size:12px;
   border-radius:999px;
-  background:rgba(246,166,201,.1);
-  border:1px solid rgba(246,166,201,0.4);
+  background:rgba(246,166,201,.18);
+  border:1px solid rgba(246,166,201,.35);
   color:#7a3f5c;
 }
 
 /* ===== Product Page ===== */
-#productView {
-  display:none;
-  position: fixed;
-  top:0; left:0; width:100%; height:100%;
-  background: #fff;
-  z-index: 999;
-}
 .page{
+  background:#fff;
+  border:1px solid var(--stroke);
+  border-radius:calc(var(--radius) + 8px);
+  box-shadow:var(--shadow);
+  overflow:hidden;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
+
 .pageTop{
   padding:14px;
   display:flex;
   align-items:center;
+  gap:10px;
   border-bottom:1px solid var(--stroke);
+  flex-shrink: 0;
 }
 .back{
   border:1px solid var(--stroke);
@@ -170,20 +181,49 @@ a{color:inherit;text-decoration:none}
   padding:10px 14px;
   border-radius:16px;
   cursor:pointer;
+  font-size:13px;
 }
+.ptitle{
+  flex:1;
+  text-align:center;
+  margin:0;
+  font-size:16px;
+  font-weight:900;
+}
+
 .hero{
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  padding: 10px;
+  padding:14px;
+  background:linear-gradient(180deg,#ffeaf4,#f6f0ff);
+  flex-shrink: 0;
 }
 .big{
-  max-width: 100%;
-  max-height: 70vh;
-  border-radius: 20px;
-  object-fit: contain;
+  width:100%;
+  height:50vh;
+  object-fit:contain;
+  border-radius:20px;
+  background:#fff;
+  border:1px solid var(--stroke);
+}
+
+.thumbs{
+  display:flex;
+  gap:10px;
+  overflow:auto;
+  padding:12px 14px;
+  flex-shrink: 0;
+}
+.mini{
+  width:80px;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:16px;
+  border:1px solid var(--stroke);
+  opacity:.6;
+  cursor:pointer;
+}
+.mini.active{
+  opacity:1;
+  outline:2px solid var(--pink);
 }
 
 /* ===== Contact Section ===== */
@@ -191,19 +231,44 @@ a{color:inherit;text-decoration:none}
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--stroke);
   border-radius: var(--radius);
-  padding: 15px;
+  padding: 20px;
   text-align: center;
   box-shadow: var(--shadow);
-  margin-top: auto; /* يدفع القسم للأسفل */
+  flex-shrink: 0;
+  margin-top: auto;
 }
 
-.phone {
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--text);
-  margin: 5px 0;
-  direction: ltr; /* لضمان ترتيب الرمز والأرقام من اليسار */
-  display: block;
+.contact-info {
+  margin-bottom: 15px;
+}
+
+.contact-info p {
+  margin: 8px 0;
+  font-size: 14px;
+  color:var(--text);
+}
+
+.contact-info .phone {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--pink-dark);
+  margin: 10px 0;
+  direction: ltr;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.phone-prefix {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+.phone-number {
+  direction: ltr;
+  unicode-bidi: embed;
+  letter-spacing: 1px;
 }
 
 .whatsapp-btn {
@@ -213,22 +278,54 @@ a{color:inherit;text-decoration:none}
   gap: 8px;
   background: linear-gradient(135deg, var(--pink), var(--purple));
   color: white;
-  padding: 12px;
+  border: none;
+  padding: 12px 24px;
   border-radius: 18px;
   font-size: 14px;
   font-weight: 900;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: transform 0.2s;
   width: 100%;
 }
 
-.actions{ padding:20px; border-top:1px solid var(--stroke); }
+.whatsapp-btn:hover {
+  transform: translateY(-2px);
+}
+
+.whatsapp-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.actions{
+  padding:14px;
+  display:flex;
+  gap:10px;
+  border-top:1px solid var(--stroke);
+  flex-shrink: 0;
+}
+.btn{
+  flex:1;
+  border:none;
+  padding:12px 14px;
+  border-radius:18px;
+  font-size:14px;
+  font-weight:900;
+  cursor:pointer;
+}
 .btn.primary{
-  width: 100%;
   background:linear-gradient(135deg,var(--pink),var(--purple));
   color:#fff;
-  border:none;
-  padding:15px;
-  border-radius:18px;
-  font-weight:900;
+}
+
+/* Responsive adjustments */
+@media(max-width:360px){
+  .grid{grid-template-columns:1fr}
+  .wrap{
+    padding:12px 10px;
+  }
 }
 </style>
 </head>
@@ -236,43 +333,83 @@ a{color:inherit;text-decoration:none}
 <body>
 <div class="wrap">
 
+  <!-- Header -->
   <div class="top">
     <div class="brand" onclick="goHome()">
       <div class="logo"></div>
       <div>
         <h1>Lovingly Framed</h1>
-        <p>@lovingly.framed</p>
+        <p>@lovingly.framed<br>تصاميم فريمات هدايا نسائية</p>
       </div>
     </div>
   </div>
 
+  <!-- Main Content -->
   <div class="main-content" id="listView">
-    <div class="grid" id="grid">
-      </div>
+    <div class="grid" id="grid"></div>
     
+    <!-- Contact Section -->
     <div class="contact-section">
-      <p style="margin:0; font-size:13px;">للتواصل:</p>
-      <span class="phone">+965 6502 2191</span>
+      <div class="contact-info">
+        <p>للتواصل:</p>
+        <p class="phone">
+          <span class="phone-prefix">+965</span>
+          <span class="phone-number">6502 2191</span>
+        </p>
+        <p>نقدم تصاميم فريمات هدايا للنساء بألوان ناعمة</p>
+      </div>
       <a href="https://wa.me/96565022191" class="whatsapp-btn" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" width="20" height="20">
+        <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="واتساب">
         تواصل عبر واتساب
       </a>
     </div>
   </div>
 
-  <div id="productView"></div>
+  <!-- Product -->
+  <div id="productView" style="display:none;"></div>
 
 </div>
 
 <script>
 const WHATSAPP_NUMBER="96565022191";
 
-// البيانات لـ 4 فريمات فقط لتظهر في صفحة واحدة
 const PRODUCTS=[
-  { id:"n1", title:"فريم مواليد", folder:"images/newborn", thumb:"thumb.jpg" },
-  { id:"b1", title:"فريم عروس", folder:"images/bride", thumb:"thumb.jpg" },
-  { id:"g1", title:"فريم تخرج", folder:"images/grad", thumb:"thumb.jpg" },
-  { id:"l1", title:"بالونات", folder:"images/balloons", thumb:"thumb.jpg" }
+  {
+    id:"newborn-1",
+    title:"فريم مواليد وردي",
+    category:"مواليد",
+    folder:"images/newborn1",
+    thumb:"thumb.jpg",
+    photos:["1.jpg","2.jpg","3.jpg"],
+    description:"فريم مواليد بناتي بألوان وردية ناعمة مع تفاصيل زهرية. الاسم والتاريخ قابلين للتغيير."
+  },
+  {
+    id:"newborn-2",
+    title:"فريم مواليد أزرق",
+    category:"مواليد",
+    folder:"images/newborn2",
+    thumb:"thumb.jpg",
+    photos:["1.jpg","2.jpg","3.jpg"],
+    description:"فريم مواليد أولاد بألوان زرقاء وفضية. تصميم أنيق مع مساحة للاسم والتاريخ."
+  },
+  {
+    id:"bride-1",
+    title:"فريم عروس ذهبي",
+    category:"عروس",
+    folder:"images/bride1",
+    thumb:"thumb.jpg",
+    photos:["1.jpg","2.jpg","3.jpg"],
+    description:"فريم تذكاري للعروس بإطار ذهبي وردي. مثالي لصورة الزفاف."
+  },
+  {
+    id:"graduation-1",
+    title:"فريم تخرج وردي",
+    category:"تخرج",
+    folder:"images/graduation1",
+    thumb:"thumb.jpg",
+    photos:["1.jpg","2.jpg","3.jpg"],
+    description:"فريم تخرج جامعي بألوان وردية وذهبية. يحتفل بالإنجاز الأكاديمي."
+  }
 ];
 
 const gridEl=document.getElementById("grid");
@@ -286,16 +423,27 @@ function renderList(){
     c.className="card";
     c.onclick=()=>openProduct(p.id);
     c.innerHTML=`
-      <img class="thumb" src="${p.folder}/${p.thumb}" onerror="this.src='https://via.placeholder.com/300/fde8f2/6a3d57?text=${p.title}'">
+      <img class="thumb" src="${p.folder}/${p.thumb}" onerror="this.src='https://via.placeholder.com/300/ffe4f1/f6a6c9?text=${p.title}'">
       <div class="meta">
         <h3>${p.title}</h3>
-        <div class="badge">اطلب الآن</div>
+        <span>${p.category}</span>
+        <div class="badge">عرض التفاصيل</div>
       </div>`;
     gridEl.appendChild(c);
   });
 }
 
+function goHome(){
+  location.hash="";
+  productView.style.display="none";
+  listView.style.display="block";
+}
+
 function openProduct(id){
+  location.hash="#product/"+id;
+}
+
+function renderProduct(id){
   const p=PRODUCTS.find(x=>x.id===id);
   if(!p)return;
   listView.style.display="none";
@@ -304,29 +452,52 @@ function openProduct(id){
     <div class="page">
       <div class="pageTop">
         <button class="back" onclick="goHome()">رجوع</button>
-        <h2 style="flex:1; text-align:center; font-size:16px; margin:0;">${p.title}</h2>
-        <div style="width:50px"></div>
+        <h2 class="ptitle">${p.title}</h2>
+        <div style="width:60px"></div>
       </div>
+
       <div class="hero">
-        <img class="big" src="${p.folder}/${p.thumb}" onerror="this.src='https://via.placeholder.com/600/fde8f2/6a3d57?text=${p.title}'">
+        <img id="big" class="big" src="${p.folder}/${p.photos[0]}" onerror="this.src='https://via.placeholder.com/600/ffe4f1/f6a6c9?text=${p.title}'">
       </div>
+
+      <div class="thumbs" id="thumbs"></div>
+
       <div class="actions">
         <button class="btn primary" onclick="order('${p.title}')">اطلب عبر واتساب</button>
       </div>
     </div>`;
-}
-
-function goHome(){
-  productView.style.display="none";
-  listView.style.display="flex";
+    
+  const thumbs=document.getElementById("thumbs");
+  const big=document.getElementById("big");
+  p.photos.forEach((ph,i)=>{
+    const im=document.createElement("img");
+    im.className="mini"+(i===0?" active":"");
+    im.src=`${p.folder}/${ph}`;
+    im.onerror="this.src='https://via.placeholder.com/150/ffe4f1/f6a6c9?text=صورة'";
+    im.onclick=()=>{
+      big.src=im.src;
+      document.querySelectorAll(".mini").forEach(x=>x.classList.remove("active"));
+      im.classList.add("active");
+    };
+    thumbs.appendChild(im);
+  });
 }
 
 function order(title){
-  const msg=encodeURIComponent(`السلام عليكم، أود طلب: ${title}`);
+  const msg=encodeURIComponent(`السلام عليكم، أود طلب: ${title}\n${location.href}`);
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,"_blank");
 }
 
-// تشغيل عند التحميل
+function route(){
+  if(location.hash.startsWith("#product/")){
+    renderProduct(location.hash.split("/")[1]);
+  }else{
+    goHome();
+  }
+}
+
+window.addEventListener("hashchange",route);
+
 renderList();
 </script>
 </body>
