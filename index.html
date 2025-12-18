@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Lovingly Framed</title>
-
 <style>
 :root{
   --bg:#fff7fb;
@@ -15,7 +14,8 @@
   --text:#6a3d57;
   --muted:#9b6f86;
   --stroke:rgba(0,0,0,.06);
-  --shadow:0 6px 12px rgba(233,133,179,.12);
+  --shadow:0 8px 16px rgba(233,133,179,.18);
+  --radius:14px;
 }
 
 *{box-sizing:border-box}
@@ -23,113 +23,141 @@
 body{
   margin:0;
   font-family: system-ui, -apple-system, Tahoma, Arial;
-  background: linear-gradient(180deg,var(--bg),var(--bg2));
+  background:
+    radial-gradient(520px 320px at 10% 10%, #ffe4f1, transparent 60%),
+    radial-gradient(520px 320px at 90% 15%, #efe6ff, transparent 60%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
   height:100vh;
-  overflow:hidden; /* يمنع السكرول نهائياً */
+  overflow:hidden;
 }
 
 .wrap{
-  max-width:480px;
+  max-width:520px;
   margin:0 auto;
-  padding:4px;
-  height:100vh;
+  padding:6px;
+  height:100%;
   display:flex;
   flex-direction:column;
 }
 
-/* Header - مصغر جداً */
+/* Header */
 .header{
-  background:rgba(255,255,255,.9);
+  background:rgba(255,255,255,.95);
   border:1px solid var(--stroke);
-  border-radius:12px;
-  padding:4px;
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:6px;
   text-align:center;
   flex-shrink:0;
 }
 .header .logo{
-  width:24px;
-  height:24px;
-  border-radius:8px;
-  margin:0 auto 1px;
+  width:30px;
+  height:30px;
+  border-radius:10px;
+  margin:0 auto 2px;
   background:linear-gradient(135deg,var(--pink),var(--purple));
 }
-.header h1{ margin:0; font-size:11px; font-weight:900; }
-.header p{ margin:0; font-size:9px; color:var(--muted); }
+.header h1{
+  margin:0;
+  font-size:13px;
+  font-weight:900;
+}
+.header p{
+  margin:1px 0 0;
+  font-size:10px;
+  color:var(--muted);
+}
+
+/* Home */
+#homeView{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
 
 /* Grid */
 .grid{
   flex:1;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:5px;
-  margin:5px 0;
-  min-height: 0;
+  gap:6px;
+  margin:6px 0;
 }
 
-/* Card - مصغر لضغط المحتوى للأعلى */
+/* Card */
 .card{
   background:var(--card);
   border:1px solid var(--stroke);
-  border-radius:10px;
+  border-radius:12px;
   box-shadow:var(--shadow);
   overflow:hidden;
   display:flex;
   flex-direction:column;
 }
 
+/* ⭐ الحل هنا: ارتفاع نسبي */
 .thumb{
   width:100%;
-  flex: 1; /* الصورة تأخذ المساحة المتاحة فقط */
+  height: calc((100vh - 220px) / 2);
+  min-height:70px;
+  max-height:110px;
   object-fit:cover;
   background:#f7eaf1;
-  min-height: 50px; /* ضمان عدم اختفاء الصورة */
 }
 
 .meta{
-  padding:2px;
+  padding:4px;
   text-align:center;
 }
-.meta h3{ margin:0; font-size:10px; font-weight:900; }
+.meta h3{
+  margin:0;
+  font-size:11px;
+  font-weight:900;
+}
 .badge{
-  margin-top:1px;
+  margin-top:2px;
   display:inline-block;
-  padding:2px 6px;
+  padding:3px 7px;
   font-size:8px;
   border-radius:999px;
-  background:rgba(246,166,201,.1);
-  border:1px solid rgba(246,166,201,0.3);
+  background:rgba(246,166,201,.18);
+  border:1px solid rgba(246,166,201,.35);
   color:#7a3f5c;
 }
 
-/* Footer - ثابت بالأسفل */
+/* Footer - تم التصغير هنا */
 .footer{
   text-align:center;
-  font-size:9px;
+  font-size:9px; /* كان 10 */
   color:var(--muted);
   flex-shrink:0;
-  padding-bottom: 5px;
+  padding-top:4px;
 }
 .footer .phone{
-  margin-top:1px;
-  font-size:13px;
+  margin-top:2px;
+  font-size:11px; /* كان 12 */
   font-weight:900;
   color:var(--text);
   direction:ltr;
   unicode-bidi:plaintext;
 }
 .wa{
-  margin:2px auto 0;
-  width:32px;
-  height:32px;
-  border-radius:10px;
+  margin:2px auto 0; /* كان 4px auto 2px */
+  width:30px; /* كان 34 */
+  height:30px; /* كان 34 */
+  border-radius:10px; /* كان 12 */
   display:flex;
   align-items:center;
   justify-content:center;
   background:#25D366;
-  cursor: pointer;
+  cursor:pointer;
 }
-.wa svg{ width:18px; height:18px; fill:#fff; }
+.wa svg{
+  width:16px; /* كان 18 */
+  height:16px; /* كان 18 */
+  fill:#fff;
+}
 </style>
 </head>
 
@@ -143,6 +171,7 @@ body{
   </div>
 
   <div id="homeView">
+
     <div class="grid">
       <div class="card">
         <img class="thumb" src="images/covers/newborn.jpg">
@@ -167,7 +196,7 @@ body{
       <div class="phone">+965 6502 2191</div>
       <div class="wa" onclick="window.open('https://wa.me/96565022191','_blank')">
         <svg viewBox="0 0 32 32">
-          <path d="M19.11 17.29c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.15-.42-2.19-1.34-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.02-.22-.52-.45-.45-.61-.46-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27 0 1.34.98 2.64 1.12 2.82.14.18 1.93 2.95 4.68 4.14.65.28 1.16.45 1.56.57.65.21 1.25.18 1.72.11.52-.08 1.6-.65 1.82-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32zM26.73 5.27C24.06 2.6 20.5 1.13 16.73 1.13 9.02 1.13 2.76 7.39 2.76 15.1c0 2.47.65 4.88 1.88 7.01L2.64 30.87l8.96-1.96c2.07 1.13 4.4 1.73 6.78 1.73h.01c7.71 0 13.97-6.26 13.97-13.97 0-3.77-1.47-7.33-4.14-10.4zm-9.99 23.02h-.01c-2.09 0-4.14-.56-5.93-1.61l-.42-.25-5.32 1.16 1.14-5.18-.28-.45c-1.18-1.88-1.8-4.05-1.8-6.26 0-6.57 5.35-11.92 11.92-11.92 3.18 0 6.17 1.24 8.42 3.49 2.25 2.25 3.49 5.24 3.49 8.42 0 6.57-5.35 11.92-11.21 11.92z"/>
+          <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14s-6.3-15.5-15.7-15.5z"/>
         </svg>
       </div>
     </div>
