@@ -30,15 +30,16 @@ body{
     linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
   min-height:100vh;
+  overflow: hidden; /* منع التمرير في الصفحة الرئيسية لضمان الاحتواء */
 }
 
 .wrap{
   max-width:980px;
   margin:0 auto;
-  padding:12px;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
+  padding:10px; /* تقليل البادينج */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header */
@@ -47,47 +48,47 @@ body{
   border:1px solid var(--stroke);
   border-radius:calc(var(--radius) + 8px);
   box-shadow:var(--shadow);
-  padding:10px 12px;
+  padding:8px 10px; /* تصغير الهيدر */
   text-align:center;
   backdrop-filter: blur(8px);
   flex-shrink: 0;
 }
 .header .logo{
-  width:44px;
-  height:44px;
-  border-radius:18px;
-  margin:0 auto 8px;
+  width:38px; /* تصغير اللوجو */
+  height:38px;
+  border-radius:14px;
+  margin:0 auto 4px;
   background:linear-gradient(135deg,var(--pink),var(--purple));
-  box-shadow:0 14px 30px rgba(233,133,179,.35);
+  box-shadow:0 10px 20px rgba(233,133,179,.3);
 }
 .header h1{
   margin:0;
-  font-size:16px;
+  font-size:14px; /* تصغير الخط */
   font-weight:1000;
 }
 .header p{
-  margin:6px 0 0;
-  font-size:12px;
+  margin:2px 0 0;
+  font-size:10px;
   color:var(--muted);
 }
 
 /* ===== Home layout: no scroll ===== */
 #homeView{
   flex: 1;
-  min-height: 0;
   display:flex;
   flex-direction:column;
-  gap:8px;
-  margin-top: 8px;
+  gap:6px;
+  min-height: 0;
 }
 
 /* 2x2 Grid fits screen */
 .grid{
   flex:1;
-  min-height: 0;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:10px;
+  gap:8px;
+  margin-top:8px;
+  min-height: 0;
 }
 
 .card{
@@ -100,43 +101,42 @@ body{
   transition:.15s ease;
   display:flex;
   flex-direction:column;
-  min-height: 0;
+  min-height:0;
 }
 .card:hover{ transform:translateY(-2px); }
 
 .thumb{
   width:100%;
-  height: 120px; /* تصغير ارتفاع الصور */
+  flex:1; /* تجعل الصورة تأخذ المساحة المتاحة */
   object-fit:cover;
   display:block;
   background:#f7eaf1;
+  min-height:0;
 }
 
 .meta{
-  padding:6px 8px 8px;
+  padding:6px; /* تقليص مساحة النصوص */
   text-align:center;
-  flex-shrink: 0;
 }
 .meta h3{
   margin:0;
-  font-size:12px;
+  font-size:12px; /* تصغير حجم الخط */
   font-weight:1000;
-  line-height: 1.3;
 }
 .meta span{
   display:block;
-  margin-top:3px;
-  font-size:10px;
+  margin-top:2px;
+  font-size:9px;
   color:var(--muted);
 }
 .badge{
-  margin-top:6px;
+  margin-top:4px;
   display:inline-block;
   padding:4px 8px;
   font-size:9px;
   border-radius:999px;
-  background:rgba(246,166,201,.18);
-  border:1px solid rgba(246,166,201,.35);
+  background:rgba(246,166,201,.12);
+  border:1px solid rgba(246,166,201,.3);
   color:#7a3f5c;
 }
 
@@ -144,72 +144,67 @@ body{
 .footer{
   text-align:center;
   color:var(--muted);
-  font-size:11px;
-  padding:6px 0 0;
+  font-size:10px;
+  padding:4px 0;
   flex-shrink: 0;
 }
 .footer .phone{
-  margin-top:4px;
-  font-size:13px;
+  margin-top:2px;
+  font-size:14px;
   color:var(--text);
   font-weight:1000;
   direction:ltr;
   unicode-bidi: plaintext;
 }
 .wa{
-  margin:6px auto 0;
-  width:40px;
+  margin:4px auto 0;
+  width:40px; /* تصغير زر الواتساب */
   height:40px;
   border-radius:14px;
   display:flex;
   align-items:center;
   justify-content:center;
   background:#25D366;
-  box-shadow:0 10px 20px rgba(37,211,102,.25);
+  box-shadow:0 10px 20px rgba(37,211,102,.2);
   cursor:pointer;
 }
 .wa svg{width:22px;height:22px;fill:#fff}
 
-/* Category page */
+/* Category page - يسمح بالتمرير هنا فقط */
+#categoryView {
+  overflow-y: auto;
+  height: 100vh;
+}
+
 .pageTop{
+  margin-top:12px;
   background:#fff;
   border:1px solid var(--stroke);
   border-radius:calc(var(--radius) + 8px);
   box-shadow:var(--shadow);
-  padding:10px;
+  padding:12px;
   display:flex;
   align-items:center;
-  gap:8px;
-  flex-shrink: 0;
+  gap:10px;
 }
 .back{
   border:1px solid var(--stroke);
   background:#fff;
-  padding:8px 12px;
-  border-radius:14px;
+  padding:10px 14px;
+  border-radius:16px;
   cursor:pointer;
-  font-size:12px;
+  font-size:13px;
   color:var(--text);
 }
 .ptitle{
   flex:1;
   text-align:center;
   margin:0;
-  font-size:14px;
+  font-size:16px;
   font-weight:1000;
 }
 
-/* Category view container */
-#categoryView {
-  flex: 1;
-  min-height: 0;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  margin-top: 8px;
-}
-
-/* Product viewer modal */
+/* Product modal */
 .modal{
   position:fixed;
   inset:0;
@@ -223,12 +218,10 @@ body{
 
 .viewer{
   width:92%;
-  max-height:90vh;
+  max-width: 400px;
   background:#fff;
   border-radius:26px;
   overflow:hidden;
-  display:flex;
-  flex-direction:column;
 }
 .viewerHeader{
   display:flex;
@@ -236,7 +229,6 @@ body{
   align-items:center;
   padding:12px;
   border-bottom:1px solid var(--stroke);
-  flex-shrink: 0;
 }
 .viewerHeader h3{
   margin:0;
@@ -247,25 +239,22 @@ body{
   border:none;
   background:linear-gradient(135deg,var(--pink),var(--purple));
   color:#fff;
-  padding:8px 12px;
-  border-radius:12px;
+  padding:9px 14px;
+  border-radius:14px;
   cursor:pointer;
   font-weight:900;
-  font-size:12px;
 }
 .big{
   width:100%;
-  height:45vh;
+  max-height:50vh; /* تقليل الارتفاع قليلاً للمودال */
   object-fit:contain;
   background:#fff;
-  flex-shrink: 0;
 }
 .thumbs{
   display:flex;
-  gap:8px;
+  gap:10px;
   overflow:auto;
-  padding:10px;
-  flex-shrink: 0;
+  padding:12px;
 }
 .mini{
   width:70px;
@@ -284,16 +273,15 @@ body{
 
 /* WhatsApp Button */
 .actions{
-  padding:10px;
+  padding:12px;
   border-top:1px solid var(--stroke);
-  flex-shrink: 0;
 }
 .btn{
   width:100%;
   border:none;
-  padding:10px 14px;
-  border-radius:16px;
-  font-size:14px;
+  padding:13px 14px;
+  border-radius:18px;
+  font-size:15px;
   font-weight:1000;
   cursor:pointer;
   background:linear-gradient(135deg,var(--pink),var(--purple));
@@ -311,7 +299,6 @@ body{
     <p>Frames made with love</p>
   </div>
 
-  <!-- Home view -->
   <div id="homeView">
     <div class="grid" id="catGrid"></div>
 
@@ -328,19 +315,17 @@ body{
     </div>
   </div>
 
-  <!-- Category view -->
   <div id="categoryView" style="display:none;">
     <div class="pageTop">
       <button class="back" onclick="goHome()">رجوع</button>
       <h2 class="ptitle" id="catTitle">-</h2>
       <div style="width:64px"></div>
     </div>
-    <div class="grid" id="prodGrid" style="flex:1;"></div>
+    <div class="grid" id="prodGrid" style="margin-top:12px;"></div>
   </div>
 
 </div>
 
-<!-- Product viewer modal -->
 <div class="modal" id="modal">
   <div class="viewer">
     <div class="viewerHeader">
@@ -361,16 +346,16 @@ body{
 const WHATSAPP_NUMBER = "96565022191";
 
 const CATEGORIES = [
-  { key:"newborn",  name:"مواليد",   cover:"images/covers/newborn.jpg" },
-  { key:"bride",    name:"عروس",     cover:"images/covers/bride.jpg" },
-  { key:"grad",     name:"تخرج",     cover:"images/covers/grad.jpg" },
+  { key:"newborn",  name:"مواليد",    cover:"images/covers/newborn.jpg" },
+  { key:"bride",    name:"عروس",      cover:"images/covers/bride.jpg" },
+  { key:"grad",      name:"تخرج",      cover:"images/covers/grad.jpg" },
   { key:"balloons", name:"بالونات",  cover:"images/covers/balloons.jpg" }
 ];
 
 const PRODUCTS = {
   newborn:  [],
   bride:    [],
-  grad:     [],
+  grad:      [],
   balloons: []
 };
 
@@ -393,10 +378,10 @@ function renderCategories(){
     card.className = "card";
     card.onclick = ()=> openCategory(c.key);
     card.innerHTML = `
-      <img class="thumb" src="${c.cover}" alt="${c.name}" onerror="this.src='https://via.placeholder.com/300/ffe4f1/f6a6c9?text=${c.name}'">
+      <img class="thumb" src="${c.cover}" alt="${c.name}">
       <div class="meta">
         <h3>${c.name}</h3>
-        <span>اضغط لعرض المنتجات</span>
+        <span>عرض المنتجات</span>
         <div class="badge">دخول</div>
       </div>
     `;
@@ -419,7 +404,7 @@ function renderCategory(key){
       <div class="card" style="grid-column:1/-1; cursor:default">
         <div class="meta">
           <h3>قريبًا</h3>
-          <span>ضيفي منتجات لهذه الفئة</span>
+          <span>لا يوجد منتجات حالياً</span>
           <div class="badge">فارغة</div>
         </div>
       </div>
@@ -430,10 +415,9 @@ function renderCategory(key){
       card.className = "card";
       card.onclick = ()=> openProduct(p);
       card.innerHTML = `
-        <img class="thumb" src="${p.folder}/${p.thumb}" alt="${p.title}" onerror="this.src='https://via.placeholder.com/300/ffe4f1/f6a6c9?text=${p.title}'">
+        <img class="thumb" src="${p.folder}/${p.thumb}" alt="${p.title}">
         <div class="meta">
           <h3>${p.title}</h3>
-          <span>اضغط لعرض الصور</span>
           <div class="badge">عرض</div>
         </div>
       `;
@@ -442,7 +426,7 @@ function renderCategory(key){
   }
 
   homeView.style.display = "none";
-  categoryView.style.display = "flex";
+  categoryView.style.display = "block";
 }
 
 function openProduct(p){
@@ -454,7 +438,6 @@ function openProduct(p){
     const im = document.createElement("img");
     im.className = "mini" + (i===0 ? " active":"");
     im.src = `${p.folder}/${ph}`;
-    im.onerror = "this.src='https://via.placeholder.com/150/ffe4f1/f6a6c9?text=صورة'";
     im.onclick = ()=>{
       big.src = im.src;
       document.querySelectorAll(".mini").forEach(x=>x.classList.remove("active"));
