@@ -1,966 +1,279 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة سين جيم الكويت - ستايل رسمي</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Changa:wght@400;700;800&display=swap');
-        
-        body {
-            font-family: 'Changa', sans-serif;
-            background-color: #1c1c1c;
-            color: #f0f0f0;
-            margin: 0;
-            padding: 10px;
-            text-align: center;
-            overflow-x: hidden;
-            height: 100vh;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Lovingly Framed</title>
 
-        .start-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #1c1c1c;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .name-input-container {
-            background-color: #303030;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            max-width: 400px;
-            width: 90%;
-            margin: 20px 0;
-            border: 2px solid #b3a369;
-        }
+<style>
+:root{
+  --bg:#fdeee8;
+  --card:#ffffff;
+  --accent:#f3a6b8;
+  --accent2:#cbb7e2;
+  --text:#6b4f4f;
+  --muted:#9b7f7f;
+  --radius:22px;
+}
 
-        .name-input-container input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0 20px;
-            border: 1px solid #555;
-            border-radius: 5px;
-            background-color: #4a4a4a;
-            color: #ffffff;
-            font-family: 'Changa', sans-serif;
-            font-size: 18px;
-            text-align: center;
-        }
+*{box-sizing:border-box}
 
-        .start-button {
-            padding: 15px 30px;
-            font-size: 22px;
-            font-weight: 800;
-            background-color: #b3a369;
-            color: #1c1c1c;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.15s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Tahoma, Arial;
+  background: linear-gradient(180deg,#fff6f2,#fdeee8);
+  color:var(--text);
+}
 
-        .start-button:hover {
-            background-color: #ffcc00;
-            transform: translateY(-2px);
-        }
+/* ===== Header ===== */
+header{
+  padding:16px;
+  text-align:center;
+}
+header h1{
+  margin:0;
+  font-size:20px;
+  font-weight:800;
+}
+header p{
+  margin-top:6px;
+  font-size:13px;
+  color:var(--muted);
+}
 
-        .game-content {
-            display: none;
-        }
+/* ===== Categories ===== */
+.categories{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:0 14px 12px;
+}
+.categories button{
+  flex:0 0 auto;
+  border:none;
+  padding:10px 16px;
+  border-radius:999px;
+  background:#fff;
+  color:var(--text);
+  font-size:13px;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+.categories button.active{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:white;
+}
 
-        .game-header {
-            background-color: #2b2b2b;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            border-bottom: 3px solid #b3a369;
-        }
-        
-        .team-score-panel {
-            background-color: #383838;
-            padding: 10px 15px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 250px;
-            color: white;
-            transition: border 0.3s, box-shadow 0.3s, background-color 0.3s;
-            border: 1px solid #555;
-        }
+/* ===== Grid (2 بالعرض) ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr); /* صورتين */
+  gap:16px;
+  padding:16px;
+}
 
-        .team-score-panel.current-turn {
-            border: 3px solid #ffcc00;
-            box-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
-            background-color: #303030;
-        }
+/* شاشة صغيرة جدًا */
+@media(max-width:360px){
+  .grid{grid-template-columns:1fr}
+}
 
-        .team-score-panel input[type="text"] {
-            background: none; 
-            border: none; 
-            color: #e0e0e0; 
-            font-size: 18px; 
-            width: 150px;
-            font-weight: 700;
-            border-bottom: 1px dashed #b3a369;
-            padding-bottom: 2px;
-            pointer-events: none;
-        }
+/* ===== Card ===== */
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+  cursor:pointer;
+}
 
-        .score-display {
-            font-size: 28px;
-            font-weight: 800;
-            background-color: #b3a369;
-            color: #1c1c1c; 
-            padding: 5px 12px;
-            border-radius: 4px;
-        }
-        
-        .game-board {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            max-width: 98%;
-            margin: 0 auto 20px;
-        }
+/* ===== الصورة الأساسية (أصغر + مربعة) ===== */
+.card img{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  display:block;
+}
 
-        .category {
-            background-color: #303030;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-        }
+/* ===== Info ===== */
+.card .info{
+  padding:10px;
+  text-align:center;
+}
+.card .info h3{
+  margin:0;
+  font-size:14px;
+  font-weight:800;
+}
+.card .info span{
+  font-size:12px;
+  color:var(--muted);
+}
 
-        .category-title {
-            background-color: #4a4a4a;
-            color: #b3a369;
-            padding: 8px 5px;
-            font-size: 16px;
-            font-weight: 700;
-            border-bottom: 2px solid #b3a369;
-        }
+/* ===== Modal ===== */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+.modal.open{display:flex}
 
-        .category-content {
-            display: grid;
-            grid-template-columns: 1fr 1.1fr 1fr;
-            align-items: stretch;
-            gap: 4px;
-            padding: 4px;
-        }
+.viewer{
+  width:92%;
+  background:#fff;
+  border-radius:26px;
+  overflow:hidden;
+}
 
-        .side-col {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            justify-content: center;
-        }
+.viewer-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px;
+}
+.viewer-header h3{
+  margin:0;
+  font-size:14px;
+}
+.viewer-header button{
+  border:none;
+  background:var(--accent);
+  color:white;
+  padding:8px 14px;
+  border-radius:14px;
+  cursor:pointer;
+}
 
-        .category-image {
-            margin: 0 auto;
-            border-radius: 10px;
-            background-color: #e3eef8;
-            border-bottom: 4px solid #ff7a3c;
-            min-height: 110px;
-            max-width: 80%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            padding-bottom: 6px;
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 16px;
-            position: relative;
-            overflow: hidden;
-        }
+.viewer img{
+  width:100%;
+  max-height:60vh;
+  object-fit:contain;
+  background:#fff;
+}
 
-        .category-image span {
-            background-color: rgba(255, 122, 60, 0.9);
-            width: 100%;
-            text-align: center;
-            padding: 5px 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .cat-img-1 { background: linear-gradient(#d9f1ff, #9ac4ff); }
-        .cat-img-5 { background: linear-gradient(#ffe4f0, #ff9bc4); }
-        .cat-img-6 { background: linear-gradient(#ffecc7, #ffb763); }
-
-        /* رسم خاص لفئة القرآن */
-        .quran-box {
-            background: radial-gradient(circle at center, #fefdf4 0, #f3e6c5 40%, #d8c28a 100%);
-            border: 3px solid #c0a567;
-            box-shadow: 0 0 18px rgba(0,0,0,0.35);
-            justify-content: center;
-            padding-bottom: 12px;
-        }
-        .quran-inner-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid #c0a567;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle, #ffffff 0, #f4f4e8 60%, #ddcfaa 100%);
-            font-size: 16px;
-            color: #555035;
-            margin-bottom: 8px;
-        }
-        .quran-inner-circle span {
-            background: none;
-            padding: 0;
-        }
-
-        /* رسم لصندوق "معلومات عامة" */
-        .info-box {
-            background: radial-gradient(circle at top, #ffffff 0, #d9f2ff 35%, #5ca9ff 100%);
-            border-color: #2f7bd6;
-        }
-        .info-icon-wrap {
-            width: 74px;
-            height: 74px;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.8);
-            background: radial-gradient(circle, #ffffff 0, #b7ddff 70%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 14px rgba(0,0,0,0.35);
-            margin-bottom: 6px;
-        }
-        .info-icon {
-            font-size: 32px;
-            color: #2159aa;
-            font-weight: 800;
-        }
-
-        /* رسم لصندوق "جزء عم" */
-        .amma-box {
-            background: radial-gradient(circle at top, #4d3b8f 0, #2f215f 45%, #130b30 100%);
-            border-color: #e7d37c;
-        }
-        .amma-sky {
-            position: relative;
-            width: 80px;
-            height: 60px;
-            margin-bottom: 8px;
-        }
-        .amma-moon {
-            position: absolute;
-            right: 4px;
-            top: 6px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #ffeec2;
-            box-shadow: -10px 0 0 0 #2f215f;
-        }
-        .amma-star {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #fff9c4;
-        }
-        .amma-star.s1 { top: 8px; left: 6px; }
-        .amma-star.s2 { top: 20px; left: 20px; }
-        .amma-star.s3 { top: 12px; left: 34px; }
-        .amma-star.s4 { top: 28px; left: 10px; }
-
-        .question-card {
-            background-color: #404040;
-            color: white;
-            padding: 10px 6px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: 800;
-            transition: background-color 0.2s, transform 0.1s;
-        }
-
-        .question-card:hover:not(.answered) {
-            background-color: #5a5a5a;
-            transform: translateY(-1px);
-        }
-
-        .answered {
-            background-color: #252525; 
-            color: #404040;
-            cursor: not-allowed;
-            text-decoration: line-through;
-        }
-        
-        .question-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #1c1c1c; 
-            display: none; 
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .timer-container { 
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 150px; 
-            height: 100px;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #timer-image {
-            width: 100%;
-            height: 100%;
-            background-color: #6a0dad; 
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        .timer-display {
-            font-size: 40px; 
-            font-weight: 800;
-            color: #ffcc00; 
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-            margin-bottom: 0; 
-            border: none; 
-            padding: 0; 
-            background-color: transparent; 
-        }
-
-        .question-content {
-            font-size: 30px;
-            color: #ffffff;
-            margin-bottom: 30px;
-            max-width: 80%;
-            padding: 25px;
-            border-radius: 8px;
-            background-color: #303030;
-            border: 1px solid #4a4a4a;
-        }
-
-        .action-buttons button {
-            padding: 12px 25px;
-            margin: 0 10px;
-            font-size: 18px;
-            font-weight: 700;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            background-color: #b3a369;
-            color: #1c1c1c;
-            transition: background-color 0.3s, transform 0.15s;
-        }
-        
-        .action-buttons button:hover {
-            background-color: #ffcc00;
-            transform: translateY(-2px);
-        }
-
-        .answer-display {
-            font-size: 28px;
-            color: #66ff66; 
-            margin-top: 25px;
-            padding: 12px;
-            background-color: #202020;
-            border-radius: 6px;
-            display: none; 
-        }
-
-        /* ستايل اختيار من جاوب (الأيسر يسار، الأيمن يمين) */
-        .scoring-section {
-            margin-top: 40px;
-            padding: 18px 10px;
-            border-top: 2px solid #555;
-            display: flex; 
-            justify-content: center;
-            align-items: stretch; 
-            gap: 22px; 
-            width: 80%;
-        }
-
-        .scoring-card {
-            background-color: #262626;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.15);
-            flex: 1;
-            max-width: 260px;
-            min-width: 170px;
-            padding: 16px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-        }
-
-        .scoring-title {
-            font-size: 14px;
-            color: #bbbbbb;
-        }
-
-        .scoring-button {
-            margin-top: 4px;
-            padding: 10px 18px;
-            font-size: 18px;
-            font-weight: 700;
-            border-radius: 12px;
-            border: 0;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
-            font-family: 'Changa', sans-serif;
-        }
-
-        .scoring-button span.icon {
-            font-size: 24px;
-        }
-
-        .scoring-button:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.05);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.5);
-        }
-
-        #btn-teamA-score {
-            background: linear-gradient(135deg, #0b76ff, #2ea7ff);
-            color: #ffffff;
-        }
-
-        #btn-teamB-score {
-            background: linear-gradient(135deg, #0aa6b8, #13c5d6);
-            color: #ffffff;
-        }
-
-        #close-btn {
-            background: linear-gradient(135deg, #d7373f, #ff4d55);
-            color: #ffffff;
-        }
-
-        .game-over-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            display: none; 
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .footer-credit {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #b3a369;
-        }
-
-        @media (max-width: 900px) {
-            .game-board {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .team-score-panel {
-                min-width: 130px;
-                flex-grow: 1;
-            }
-            .team-score-panel input[type="text"] {
-                font-size: 16px;
-                width: 100%;
-            }
-            .score-display {
-                font-size: 24px;
-            }
-            .scoring-section {
-                width: 95%;
-            }
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 5px;
-            }
-            .game-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .team-score-panel {
-                width: 100%;
-                min-width: 100%;
-                justify-content: space-between;
-                padding: 8px 10px;
-            }
-            .logo {
-                font-size: 20px;
-            }
-            .game-board {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            .category-content {
-                grid-template-columns: 1fr; 
-                gap: 10px;
-            }
-            .side-col {
-                flex-direction: row; 
-                flex-wrap: wrap; 
-                justify-content: center;
-                gap: 5px;
-            }
-            .question-card {
-                width: 48%; 
-                font-size: 14px;
-            }
-            .category-image {
-                max-width: 90%;
-            }
-            .scoring-section {
-                flex-direction: column;
-                gap: 15px;
-                width: 95%;
-            }
-        }
-    </style>
+/* صور صغيرة داخل العرض */
+.thumbs{
+  display:flex;
+  gap:10px;
+  padding:12px;
+  overflow-x:auto;
+}
+.thumbs img{
+  width:80px;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:14px;
+  opacity:.6;
+  cursor:pointer;
+}
+.thumbs img.active{
+  opacity:1;
+  outline:2px solid var(--accent);
+}
+</style>
 </head>
+
 <body>
-    
-    <div class="start-screen" id="start-screen">
-        <h1 style="color: #b3a369; font-size: 36px;">مرحباً بكم في لعبة الأسئلة</h1>
-        <div class="name-input-container">
-            <h3 style="color: #ffffff;">الرجاء إدخال أسماء الفريقين:</h3>
-            <label for="input-teamA-name" style="display: block; text-align: right; margin-top: 15px;">اسم الفريق الأيسر (يسار الشاشة):</label>
-            <input type="text" id="input-teamA-name" placeholder="اكتب اسم الفريق هنا" required>
-            
-            <label for="input-teamB-name" style="display: block; text-align: right;">اسم الفريق الأيمن (يمين الشاشة):</label>
-            <input type="text" id="input-teamB-name" placeholder="اكتب اسم الفريق هنا" required>
-            
-            <button class="start-button" onclick="startGame()">ابدأ اللعبة</button>
-        </div>
+
+<header>
+  <h1>Lovingly Framed</h1>
+  <p>@lovingly.framed</p>
+</header>
+
+<div class="categories" id="cats"></div>
+<div class="grid" id="grid"></div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="viewer">
+    <div class="viewer-header">
+      <h3 id="mTitle"></h3>
+      <button onclick="closeModal()">إغلاق</button>
     </div>
+    <img id="bigImg" src="">
+    <div class="thumbs" id="thumbs"></div>
+  </div>
+</div>
 
-    <div class="game-content" id="game-content">
-        <div class="game-header">
-            <div class="team-score-panel" id="teamA-panel">
-                <input type="text" id="teamA-name" value="" style="text-align: right;">
-                <div class="score-display" id="teamA-score">0</div>
-            </div>
-            
-            <div class="logo" style="font-size: 24px; color: #b3a369;">
-                سؤال مع عبدالوهاب
-                <div style="font-size: 16px; color: #aaa;">الدور الحالي: <span id="current-turn-name"></span></div>
-            </div>
-            
-            <div class="team-score-panel" id="teamB-panel">
-                <div class="score-display" id="teamB-score">0</div>
-                <input type="text" id="teamB-name" value="" style="text-align: left;">
-            </div>
-        </div>
+<script>
+/* ===== DATA ===== */
+const DATA = [
+  {
+    title:"Princess Noura",
+    category:"مواليد",
+    folder:"images/newborn/princess-noura",
+    thumb:"thumb.jpg",
+    photos:["1.jpg","2.jpg","3.jpg"]
+  }
+];
 
-        <div class="game-board" id="game-board">
-            <div class="category">
-                <div class="category-title">أسئلة وأسرار</div>
-                <div class="category-content">
-                    <div class="side-col">
-                        <div class="question-card" data-category="أسرار" data-points="200" data-question="ما هي أول عاصمة لدولة الكويت؟" data-answer="القرين">200</div>
-                        <div class="question-card" data-category="أسرار" data-points="400" data-question="كم عدد الدول التي تشترك في حدود برية مع الكويت؟" data-answer="دولتان (العراق والسعودية)">400</div>
-                        <div class="question-card" data-category="أسرار" data-points="600" data-question="ما هو الاسم القديم لجزيرة فيلكا؟" data-answer="إيكاروس">600</div>
-                    </div>
-                    <div class="category-image cat-img-1">
-                        <span>أسئلة وأسرار</span>
-                    </div>
-                    <div class="side-col">
-                        <div class="question-card" data-category="أسرار" data-points="200" data-question="من هو أول أمير لدولة الكويت؟" data-answer="الشيخ صباح الأول بن جابر">200</div>
-                        <div class="question-card" data-category="أسرار" data-points="400" data-question="ما هي السنة التي تم فيها اكتشاف النفط في الكويت؟" data-answer="1938">400</div>
-                        <div class="question-card" data-category="أسرار" data-points="600" data-question="ماذا كان يطلق على لقب حاكم الكويت قبل عام 1961؟" data-answer="شيخ">600</div>
-                    </div>
-                </div>
-            </div>
+const catsEl = document.getElementById("cats");
+const gridEl = document.getElementById("grid");
+const modal = document.getElementById("modal");
+const bigImg = document.getElementById("bigImg");
+const thumbs = document.getElementById("thumbs");
+const mTitle = document.getElementById("mTitle");
 
-            <div class="category">
-                <div class="category-title">معلومات عامة</div>
-                <div class="category-content">
-                    <div class="side-col">
-                        <div class="question-card" data-category="عامة" data-points="200" data-question="ما هو الكوكب الأقرب إلى الشمس؟" data-answer="عطارد">200</div>
-                        <div class="question-card" data-category="عامة" data-points="400" data-question="من هو مخترع المصباح الكهربائي؟" data-answer="توماس إديسون">400</div>
-                        <div class="question-card" data-category="عامة" data-points="600" data-question="ما هو أكبر محيط في العالم؟" data-answer="المحيط الهادئ">600</div>
-                    </div>
-                    <div class="category-image info-box">
-                        <div class="info-icon-wrap">
-                            <div class="info-icon">؟</div>
-                        </div>
-                        <span>معلومات عامة</span>
-                    </div>
-                    <div class="side-col">
-                        <div class="question-card" data-category="عامة" data-points="200" data-question="ما هي عملة اليابان؟" data-answer="الين">200</div>
-                        <div class="question-card" data-category="عامة" data-points="400" data-question="ما هو الغاز الذي يشكل غالبية الغلاف الجوي للأرض؟" data-answer="النيتروجين (حوالي 78%)">400</div>
-                        <div class="question-card" data-category="عامة" data-points="600" data-question="ما هو أطول نهر في العالم؟" data-answer="نهر النيل">600</div>
-                    </div>
-                </div>
-            </div>
+let activeCat = "الكل";
+const categories = ["الكل", ...new Set(DATA.map(d=>d.category))];
 
-            <div class="category">
-                <div class="category-title">القرآن</div>
-                <div class="category-content">
-                    <div class="side-col">
-                        <div class="question-card" data-category="قرآن" data-points="200" data-question="ما هي أطول سورة في القرآن الكريم؟" data-answer="سورة البقرة">200</div>
-                        <div class="question-card" data-category="قرآن" data-points="400" data-question="كم عدد السجدات الموجودة في القرآن الكريم؟" data-answer="15 سجدة">400</div>
-                        <div class="question-card" data-category="قرآن" data-points="600" data-question="ما هي السورة التي بدأت بدون بسملة؟" data-answer="سورة التوبة">600</div>
-                    </div>
-                    <div class="category-image quran-box">
-                        <div class="quran-inner-circle">
-                            <span>القرآن</span>
-                        </div>
-                        <span>القرآن الكريم</span>
-                    </div>
-                    <div class="side-col">
-                        <div class="question-card" data-category="قرآن" data-points="200" data-question="ما هي السورة التي تسمى بـ (قلب القرآن)؟" data-answer="سورة يس">200</div>
-                        <div class="question-card" data-category="قرآن" data-points="400" data-question="ما هو عدد الأنبياء المذكورين صراحةً في القرآن الكريم؟" data-answer="25 نبياً ورسولاً">400</div>
-                        <div class="question-card" data-category="قرآن" data-points="600" data-question="كم عدد أجزاء القرآن الكريم؟" data-answer="30 جزءاً">600</div>
-                    </div>
-                </div>
-            </div>
+categories.forEach(cat=>{
+  const b=document.createElement("button");
+  b.textContent=cat;
+  if(cat==="الكل") b.classList.add("active");
+  b.onclick=()=>{
+    activeCat=cat;
+    document.querySelectorAll(".categories button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    render();
+  };
+  catsEl.appendChild(b);
+});
 
-            <div class="category">
-                <div class="category-title">جزء عم</div>
-                <div class="category-content">
-                    <div class="side-col">
-                        <div class="question-card" data-category="عم" data-points="200" data-question="ما هي أول سورة في جزء عم؟" data-answer="سورة النبأ">200</div>
-                        <div class="question-card" data-category="عم" data-points="400" data-question="ما هي السورة التي ورد فيها (ويل للمطففين)؟" data-answer="سورة المطففين">400</div>
-                        <div class="question-card" data-category="عم" data-points="600" data-question="كم عدد آيات سورة الإخلاص؟" data-answer="أربع آيات">600</div>
-                    </div>
-                    <div class="category-image amma-box">
-                        <div class="amma-sky">
-                            <div class="amma-moon"></div>
-                            <div class="amma-star s1"></div>
-                            <div class="amma-star s2"></div>
-                            <div class="amma-star s3"></div>
-                            <div class="amma-star s4"></div>
-                        </div>
-                        <span>جزء عم</span>
-                    </div>
-                    <div class="side-col">
-                        <div class="question-card" data-category="عم" data-points="200" data-question="ما هي أقصر سورة في القرآن (والموجودة في جزء عم)؟" data-answer="سورة الكوثر">200</div>
-                        <div class="question-card" data-category="عم" data-points="400" data-question="ما هو اسم السورة التي ذكر فيها (عبس وتولى)؟" data-answer="سورة عبس">400</div>
-                        <div class="question-card" data-category="عم" data-points="600" data-question="في أي سورة ورد قوله تعالى (ألم تر كيف فعل ربك بأصحاب الفيل)؟" data-answer="سورة الفيل">600</div>
-                    </div>
-                </div>
-            </div>
+function render(){
+  gridEl.innerHTML="";
+  DATA.filter(d=>activeCat==="الكل"||d.category===activeCat)
+      .forEach(d=>{
+        const c=document.createElement("div");
+        c.className="card";
+        c.innerHTML=`
+          <img src="${d.folder}/${d.thumb}">
+          <div class="info">
+            <h3>${d.title}</h3>
+            <span>${d.category}</span>
+          </div>`;
+        c.onclick=()=>openModal(d);
+        gridEl.appendChild(c);
+      });
+}
 
-            <div class="category">
-                <div class="category-title">حروف</div>
-                <div class="category-content">
-                    <div class="side-col">
-                        <div class="question-card" data-category="حروف" data-points="200" data-question="ما هو الحرف الثالث في الأبجدية العربية؟" data-answer="تاء (ت)">200</div>
-                        <div class="question-card" data-category="حروف" data-points="400" data-question="حرف يقع بين الكاف والميم؟" data-answer="اللام (ل)">400</div>
-                        <div class="question-card" data-category="حروف" data-points="600" data-question="ما اسم قارة يبدأ بحرف (الألف)؟" data-answer="آسيا / أفريقيا">600</div>
-                    </div>
-                    <div class="category-image cat-img-5">
-                        <span>حروف</span>
-                    </div>
-                    <div class="side-col">
-                        <div class="question-card" data-category="حروف" data-points="200" data-question="اسم فاكهة يبدأ بحرف (الزاي)؟" data-answer="زبيب / زعرور مثلاً">200</div>
-                        <div class="question-card" data-category="حروف" data-points="400" data-question="اسم حيوان يبدأ بحرف (الخاء)؟" data-answer="خروف">400</div>
-                        <div class="question-card" data-category="حروف" data-points="600" data-question="أعطِ اسم شخصية كرتونية شهيرة يبدأ اسمها بحرف (السين)؟" data-answer="سيمبا / سندريلا">600</div>
-                    </div>
-                </div>
-            </div>
+function openModal(item){
+  modal.classList.add("open");
+  mTitle.textContent=item.title;
+  bigImg.src=`${item.folder}/${item.photos[0]}`;
+  thumbs.innerHTML="";
+  item.photos.forEach((p,i)=>{
+    const im=document.createElement("img");
+    im.src=`${item.folder}/${p}`;
+    if(i===0) im.classList.add("active");
+    im.onclick=()=>{
+      bigImg.src=im.src;
+      document.querySelectorAll(".thumbs img").forEach(x=>x.classList.remove("active"));
+      im.classList.add("active");
+    };
+    thumbs.appendChild(im);
+  });
+}
 
-            <div class="category">
-                <div class="category-title">قصص الأنبياء</div>
-                <div class="category-content">
-                    <div class="side-col">
-                        <div class="question-card" data-category="قصص" data-points="200" data-question="من هو النبي الذي ألقي في النار ونجا منها بإذن الله؟" data-answer="إبراهيم عليه السلام">200</div>
-                        <div class="question-card" data-category="قصص" data-points="400" data-question="من هو النبي الذي سخر له الجن والريح؟" data-answer="سليمان عليه السلام">400</div>
-                        <div class="question-card" data-category="قصص" data-points="600" data-question="ما هو اسم والد يوسف عليه السلام؟" data-answer="يعقوب عليه السلام">600</div>
-                    </div>
-                    <div class="category-image cat-img-6">
-                        <span>قصص الأنبياء</span>
-                    </div>
-                    <div class="side-col">
-                        <div class="question-card" data-category="قصص" data-points="200" data-question="من هو النبي الذي كانت معجزته إحياء الموتى بإذن الله؟" data-answer="عيسى عليه السلام">200</div>
-                        <div class="question-card" data-category="قصص" data-points="400" data-question="من هو النبي الذي أمره الله بصنع سفينة ضخمة؟" data-answer="نوح عليه السلام">400</div>
-                        <div class="question-card" data-category="قصص" data-points="600" data-question="من هو النبي الذي لُقِّب بـ (ذو النون)؟" data-answer="يونس عليه السلام">600</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+function closeModal(){
+  modal.classList.remove("open");
+}
 
-        <div class="footer-credit">
-            تم العمل بواسطة عبدالوهاب العنزي
-        </div>
-    </div>
+render();
+</script>
 
-    <div class="question-screen" id="question-screen">
-        <div class="timer-container">
-            <div id="timer-image"></div>
-            <div class="timer-display" id="timer">90</div>
-        </div>
-
-        <div class="question-content" id="q-content"></div>
-        
-        <div class="action-buttons">
-            <button id="show-answer-btn">إظهار الإجابة</button>
-        </div>
-        
-        <div class="answer-display" id="a-content"></div>
-
-        <!-- الأيسر يسار – لا أحد في النص – الأيمن يمين -->
-        <div class="scoring-section" id="scoring-section" style="display: none;"> 
-
-            <div class="scoring-card">
-                <div class="scoring-title">  (يسار الشاشة)</div>
-                <button onclick="recordAnswer('A')" id="btn-teamA-score" class="scoring-button">
-                    <span class="icon">⬅️</span>
-                    <span class="label">الفريق الأيسر</span>
-                </button>
-            </div>
-
-            <div class="scoring-card">
-                <div class="scoring-title">لم يجب أحد إجابة صحيحة</div>
-                <button onclick="recordAnswer('None')" id="close-btn" class="scoring-button">
-                    لا أحد
-                </button>
-            </div>
-
-            <div class="scoring-card">
-                <div class="scoring-title">  (يمين الشاشة)</div>
-                <button onclick="recordAnswer('B')" id="btn-teamB-score" class="scoring-button">
-                    <span class="icon">➡️</span>
-                    <span class="label">الفريق الأيمن</span>
-                </button>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="game-over-screen" id="game-over-screen">
-        <h2 id="winner-message" style="font-size: 40px; color: #ffcc00; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);"></h2>
-        <div id="final-scores" style="font-size: 24px; color: #ffffff; background-color: #303030; padding: 20px; border-radius: 8px; min-width: 300px; border: 2px solid #b3a369;">
-        </div>
-        <button onclick="window.location.reload()" style="margin-top: 30px; padding: 10px 25px; font-size: 20px; background-color: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer;">إعادة تشغيل اللعبة</button>
-    </div>
-
-    <script>
-        let currentTimer = 90;
-        let timerInterval;
-        let teamAScore = 0;
-        let teamBScore = 0;
-        let currentQuestionPoints = 0;
-        let currentQuestionCard = null;
-        let totalAnsweredQuestions = 0;
-        let currentTurn = 'A'; 
-
-        const teamANameInputDisplay = document.getElementById('teamA-name');
-        const teamBNameInputDisplay = document.getElementById('teamB-name');
-        const teamANameInputStart = document.getElementById('input-teamA-name');
-        const teamBNameInputStart = document.getElementById('input-teamB-name');
-        
-        const startScreen = document.getElementById('start-screen');
-        const gameContent = document.getElementById('game-content');
-
-        const teamAScoreDisplay = document.getElementById('teamA-score');
-        const teamBScoreDisplay = document.getElementById('teamB-score');
-        const questionScreen = document.getElementById('question-screen');
-        const qContent = document.getElementById('q-content');
-        const aContent = document.getElementById('a-content');
-        const showAnswerBtn = document.getElementById('show-answer-btn');
-        const timerDisplay = document.getElementById('timer');
-        const currentTurnName = document.getElementById('current-turn-name');
-        const teamAPanel = document.getElementById('teamA-panel');
-        const teamBPanel = document.getElementById('teamB-panel');
-        const gameOverScreen = document.getElementById('game-over-screen'); 
-        const winnerMessage = document.getElementById('winner-message');     
-        const finalScores = document.getElementById('final-scores');         
-        const scoringSection = document.getElementById('scoring-section');
-        const timerImage = document.getElementById('timer-image');
-
-        function startGame() {
-            const nameA = teamANameInputStart.value.trim() || 'فريق أيسر';
-            const nameB = teamBNameInputStart.value.trim() || 'فريق أيمن';
-
-            teamANameInputDisplay.value = nameA;
-            teamBNameInputDisplay.value = nameB;
-
-            updateDisplay();
-            
-            startScreen.style.display = 'none';
-            gameContent.style.display = 'block'; 
-        }
-
-        function updateDisplay() {
-            teamAScoreDisplay.textContent = teamAScore;
-            teamBScoreDisplay.textContent = teamBScore;
-            
-            const teamAName = teamANameInputDisplay.value || 'فريق أيسر';
-            const teamBName = teamBNameInputDisplay.value || 'فريق أيمن';
-
-            currentTurnName.textContent = (currentTurn === 'A' ? teamAName : teamBName);
-            
-            teamAPanel.classList.toggle('current-turn', currentTurn === 'A');
-            teamBPanel.classList.toggle('current-turn', currentTurn === 'B');
-            
-            document.getElementById('btn-teamA-score').querySelector('.label').textContent = teamAName;
-            document.getElementById('btn-teamB-score').querySelector('.label').textContent = teamBName;
-        }
-
-        function switchTurn() {
-            currentTurn = (currentTurn === 'A' ? 'B' : 'A');
-            updateDisplay();
-        }
-
-        function startTimer() {
-            clearInterval(timerInterval); 
-            currentTimer = 90;
-            timerDisplay.textContent = currentTimer;
-            timerDisplay.style.color = '#ffcc00'; 
-            timerImage.style.backgroundColor = '#6a0dad'; 
-
-            timerInterval = setInterval(() => {
-                currentTimer--;
-                timerDisplay.textContent = currentTimer;
-
-                if (currentTimer <= 10) {
-                    timerDisplay.style.color = '#fff'; 
-                    timerImage.style.backgroundColor = '#dc3545';
-                } else {
-                    timerDisplay.style.color = '#ffcc00';
-                    timerImage.style.backgroundColor = '#6a0dad';
-                }
-                
-                if (currentTimer <= 0) {
-                    clearInterval(timerInterval);
-                    timerDisplay.textContent = 'انتهى الوقت!';
-                    timerImage.style.backgroundColor = '#555';
-                }
-            }, 1000);
-        }
-        
-        function openQuestionScreen(questionElement) {
-            if (questionElement.classList.contains('answered')) return;
-
-            currentQuestionCard = questionElement;
-
-            const question = questionElement.getAttribute('data-question');
-            const answer = questionElement.getAttribute('data-answer');
-            const points = parseInt(questionElement.getAttribute('data-points'));
-            
-            currentQuestionPoints = points;
-            
-            qContent.textContent = question;
-            aContent.textContent = "الإجابة: " + answer;
-            aContent.style.display = 'none';
-            showAnswerBtn.style.display = 'block';
-            scoringSection.style.display = 'none'; 
-
-            questionScreen.style.display = 'flex'; 
-            
-            startTimer();
-        }
-
-        function recordAnswer(team) {
-            if (team === 'A') {
-                teamAScore += currentQuestionPoints;
-            } else if (team === 'B') {
-                teamBScore += currentQuestionPoints;
-            }
-
-            if (currentQuestionCard) {
-                currentQuestionCard.classList.add('answered');
-                totalAnsweredQuestions++;
-            }
-            
-            closeQuestionScreen();
-            updateDisplay();
-            switchTurn(); 
-            checkGameOver();
-        }
-
-        function closeQuestionScreen() {
-            clearInterval(timerInterval);
-            questionScreen.style.display = 'none';
-        }
-        
-        function checkGameOver() {
-            const totalQuestions = document.querySelectorAll('.question-card').length;
-            if (totalAnsweredQuestions === totalQuestions) { 
-                const nameA = teamANameInputDisplay.value || 'فريق أيسر';
-                const nameB = teamBNameInputDisplay.value || 'فريق أيمن';
-                let winnerText;
-                
-                if (teamAScore > teamBScore) {
-                    winnerText = `🏆 مبروك للفريق <b>${nameA}</b>! 🏆`;
-                } else if (teamBScore > teamAScore) {
-                    winnerText = `🏆 مبروك للفريق <b>${nameB}</b>! 🏆`;
-                } else {
-                    winnerText = '🤝 تعادل بين الفريقين! 🤝';
-                }
-                
-                winnerMessage.innerHTML = winnerText;
-                finalScores.innerHTML = `
-                    <p style="margin: 5px 0;">${nameA}: <b>${teamAScore}</b> نقطة</p>
-                    <hr style="border: 0.5px dashed #4a4a4a; width: 80%;">
-                    <p style="margin: 5px 0;">${nameB}: <b>${teamBScore}</b> نقطة</p>
-                `;
-
-                gameOverScreen.style.display = 'flex';
-            }
-        }
-
-        document.querySelectorAll('.question-card').forEach(card => {
-            card.addEventListener('click', function() {
-                openQuestionScreen(this);
-            });
-        });
-        
-        showAnswerBtn.addEventListener('click', function() {
-            aContent.style.display = 'block';
-            showAnswerBtn.style.display = 'none';
-            scoringSection.style.display = 'flex'; 
-            clearInterval(timerInterval); 
-        });
-
-        updateDisplay(); 
-    </script>
 </body>
 </html>
