@@ -2,22 +2,19 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Lovingly Framed</title>
 
 <style>
 :root{
   --bg:#fff7fb;
-  --bg2:#fde8f2;
-  --card:#ffffff;
   --pink:#f6a6c9;
   --pink-dark:#e985b3;
   --purple:#c9b6e4;
   --text:#6a3d57;
   --muted:#9b6f86;
   --stroke:rgba(0,0,0,.06);
-  --shadow:0 14px 35px rgba(233,133,179,.18);
-  --radius:24px;
+  --shadow:0 10px 25px rgba(233,133,179,.12);
 }
 
 *{box-sizing:border-box}
@@ -25,291 +22,130 @@
 body{
   margin:0;
   font-family: system-ui, -apple-system, Tahoma, Arial;
-  background:
-    radial-gradient(600px 400px at 10% 10%, #ffe4f1, transparent 60%),
-    radial-gradient(600px 400px at 90% 20%, #efe6ff, transparent 60%),
-    linear-gradient(180deg,var(--bg),var(--bg2));
+  background: linear-gradient(180deg, #fff7fb, #fde8f2);
   color:var(--text);
-  min-height:100vh;
+  height: 100vh;
+  overflow: hidden; /* لمنع النزول تحت في الصفحة الرئيسية */
 }
-
-a{color:inherit;text-decoration:none}
 
 .wrap{
-  max-width:950px;
+  max-width:500px;
   margin:0 auto;
-  padding:16px 14px 60px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-/* ===== Header ===== */
+/* ===== Header (Compact) ===== */
 .top{
-  background:rgba(255,255,255,.85);
-  border:1px solid var(--stroke);
-  border-radius:calc(var(--radius) + 8px);
-  box-shadow:var(--shadow);
-  padding:14px;
-  display:flex;
-  gap:12px;
-  align-items:center;
-  justify-content:space-between;
-  backdrop-filter: blur(8px);
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  cursor:pointer;
+  text-align: center;
+  padding: 10px 0;
 }
 .logo{
-  width:44px;
-  height:44px;
-  border-radius:18px;
+  width:40px;
+  height:40px;
+  border-radius:14px;
   background:linear-gradient(135deg,var(--pink),var(--purple));
-  box-shadow:0 12px 28px rgba(233,133,179,.35);
+  margin: 0 auto 5px;
 }
-.brand h1{
-  margin:0;
-  font-size:17px;
-  font-weight:900;
-}
-.brand p{
-  margin:4px 0 0;
-  font-size:12px;
-  color:var(--muted);
-  text-align:center;
-}
+.brand h1{ margin:0; font-size:16px; font-weight:900; }
+.brand p{ margin:2px 0 0; font-size:11px; color:var(--muted); }
 
-.counter{
-  font-size:12px;
-  color:var(--muted);
-  background:#fff;
-  border:1px solid var(--stroke);
-  padding:10px 12px;
-  border-radius:999px;
-}
-
-/* ===== Categories ===== */
+/* ===== Categories (Small) ===== */
 .cats{
-  margin-top:14px;
-  display:flex;
-  gap:10px;
-  overflow:auto;
-  padding-bottom:6px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 10px 0;
 }
 .catbtn{
-  flex:0 0 auto;
-  border:1px solid var(--stroke);
-  background:#fff;
-  padding:10px 16px;
-  border-radius:999px;
-  font-size:13px;
-  cursor:pointer;
-  color:var(--text);
+  border: 1px solid var(--stroke);
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  cursor: pointer;
 }
 .catbtn.active{
-  background:linear-gradient(135deg,var(--pink),var(--purple));
-  color:#fff;
-  border-color:transparent;
+  background: linear-gradient(135deg,var(--pink),var(--purple));
+  color: #fff;
+  border-color: transparent;
 }
 
-/* ===== Grid ===== */
-.grid{
-  margin-top:16px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
+/* ===== Grid (One View) ===== */
+#listView {
+  flex: 1;
+  overflow-y: auto;
 }
-@media(max-width:360px){
-  .grid{grid-template-columns:1fr}
+.grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 }
 
 .card{
-  background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  cursor:pointer;
-  transition:.15s ease;
-}
-.card:hover{
-  transform:translateY(-2px);
-}
-
-.thumb{
-  width:100%;
-  aspect-ratio:1/1;
-  object-fit:cover;
-  display:block;
-  background:#f7eaf1;
-}
-
-.meta{
-  padding:12px;
-  text-align:center;
-}
-.meta h3{
-  margin:0;
-  font-size:14px;
-  font-weight:900;
-}
-.meta span{
-  display:block;
-  margin-top:6px;
-  font-size:12px;
-  color:var(--muted);
-}
-.badge{
-  margin-top:10px;
-  display:inline-block;
-  padding:8px 14px;
-  font-size:12px;
-  border-radius:999px;
-  background:rgba(246,166,201,.18);
-  border:1px solid rgba(246,166,201,.35);
-  color:#7a3f5c;
-}
-
-/* ===== Product Page ===== */
-.page{
-  margin-top:16px;
-  background:#fff;
-  border:1px solid var(--stroke);
-  border-radius:calc(var(--radius) + 8px);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-}
-
-.pageTop{
-  padding:14px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  border-bottom:1px solid var(--stroke);
-}
-.back{
-  border:1px solid var(--stroke);
-  background:#fff;
-  padding:10px 14px;
-  border-radius:16px;
-  cursor:pointer;
-  font-size:13px;
-}
-.ptitle{
-  flex:1;
-  text-align:center;
-  margin:0;
-  font-size:16px;
-  font-weight:900;
-}
-
-.hero{
-  padding:14px;
-  background:linear-gradient(180deg,#ffeaf4,#f6f0ff);
-}
-.big{
-  width:100%;
-  max-height:55vh;
-  object-fit:contain;
-  border-radius:20px;
-  background:#fff;
-  border:1px solid var(--stroke);
-}
-
-.thumbs{
-  display:flex;
-  gap:10px;
-  overflow:auto;
-  padding:12px 14px;
-}
-.mini{
-  width:80px;
-  aspect-ratio:1/1;
-  object-fit:cover;
-  border-radius:16px;
-  border:1px solid var(--stroke);
-  opacity:.6;
-  cursor:pointer;
-}
-.mini.active{
-  opacity:1;
-  outline:2px solid var(--pink);
-}
-
-/* ===== Contact Section ===== */
-.contact-section {
-  margin-top: 25px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid var(--stroke);
-  border-radius: var(--radius);
-  padding: 20px;
-  text-align: center;
+  background: #fff;
+  border-radius: 15px;
   box-shadow: var(--shadow);
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid var(--stroke);
+}
+.thumb{
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  background: #eee;
+}
+.meta h3{ margin: 5px 0; font-size: 12px; }
+.badge{
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff5f9;
+  border: 1px solid var(--pink);
+  margin-bottom: 8px;
+  display: inline-block;
 }
 
-.contact-info {
-  margin-bottom: 15px;
+/* ===== Product Page (Full Screen Over) ===== */
+#productView {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #fff;
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+}
+.pageTop { padding: 15px; display: flex; align-items: center; border-bottom: 1px solid #eee; }
+.hero { flex: 1; background: #fafafa; display: flex; align-items: center; justify-content: center; padding: 10px; }
+.big { max-width: 100%; max-height: 80%; border-radius: 10px; }
+.actions { padding: 15px; }
+.btn.primary { 
+    width: 100%; background: #25D366; color: #fff; border: none; padding: 15px; 
+    border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer;
 }
 
-.contact-info p {
-  margin: 8px 0;
-  font-size: 14px;
+/* ===== Contact Section (Fixed Bottom) ===== */
+.contact-footer {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid var(--stroke);
+}
+.phone-num {
+  direction: ltr; /* لضمان ظهور الرقم من اليسار لليمين */
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 5px;
   color: var(--text);
 }
-
-.contact-info .phone {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--pink-dark);
-  margin: 10px 0;
-}
-
-.whatsapp-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: linear-gradient(135deg, var(--pink), var(--purple));
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 18px;
-  font-size: 14px;
-  font-weight: 900;
-  cursor: pointer;
-  text-decoration: none;
-  margin-top: 10px;
-  transition: transform 0.2s;
-}
-
-.whatsapp-btn:hover {
-  transform: translateY(-2px);
-}
-
-.whatsapp-btn img {
-  width: 20px;
-  height: 20px;
-}
-
-.actions{
-  padding:14px;
-  display:flex;
-  gap:10px;
-  border-top:1px solid var(--stroke);
-}
-.btn{
-  flex:1;
-  border:none;
-  padding:12px 14px;
-  border-radius:18px;
-  font-size:14px;
-  font-weight:900;
-  cursor:pointer;
-}
-.btn.primary{
-  background:linear-gradient(135deg,var(--pink),var(--purple));
-  color:#fff;
+.whatsapp-icon {
+  display: inline-block;
+  color: #25D366;
+  vertical-align: middle;
+  margin-right: 8px;
 }
 </style>
 </head>
@@ -317,131 +153,49 @@ a{color:inherit;text-decoration:none}
 <body>
 <div class="wrap">
 
-  <!-- Header -->
   <div class="top">
     <div class="brand" onclick="goHome()">
       <div class="logo"></div>
-      <div>
-        <h1>Lovingly Framed</h1>
-        <p>@lovingly.framed<br>تصاميم فريمات هدايا نسائية</p>
-      </div>
+      <h1>Lovingly Framed</h1>
+      <p>@lovingly.framed</p>
     </div>
-
-    <div class="counter" id="count">0</div>
   </div>
 
-  <!-- Categories -->
   <div class="cats" id="cats"></div>
 
-  <!-- List -->
   <div id="listView">
     <div class="grid" id="grid"></div>
-    
-    <!-- Contact Section -->
-    <div class="contact-section">
-      <div class="contact-info">
-        <p>للتواصل:</p>
-        <p class="phone">+965 6502 2191</p>
-        <p>نقدم تصاميم فريمات هدايا للنساء بألوان ناعمة</p>
-      </div>
-      <a href="https://wa.me/96565022191" class="whatsapp-btn" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="واتساب">
-        تواصل عبر واتساب
-      </a>
-    </div>
   </div>
 
-  <!-- Product -->
-  <div id="productView" style="display:none;"></div>
+  <div class="contact-footer">
+    <p style="font-size: 12px; margin: 0 0 5px;">للتواصل :</p>
+    <a href="https://wa.me/96565022191" style="text-decoration:none">
+        <span class="whatsapp-icon">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.06 3.973L0 16l4.204-1.102a7.934 7.934 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+        </span>
+        <span class="phone-num">+965 6502 2191</span>
+    </a>
+  </div>
 
 </div>
+
+<div id="productView"></div>
 
 <script>
 const WHATSAPP_NUMBER="96565022191";
 
 const PRODUCTS=[
-  {
-    id:"newborn-1",
-    title:"فريم مواليد وردي",
-    category:"مواليد",
-    folder:"images/newborn1",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم مواليد بناتي بألوان وردية ناعمة مع تفاصيل زهرية. الاسم والتاريخ قابلين للتغيير."
-  },
-  {
-    id:"newborn-2",
-    title:"فريم مواليد أزرق",
-    category:"مواليد",
-    folder:"images/newborn2",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم مواليد أولاد بألوان زرقاء وفضية. تصميم أنيق مع مساحة للاسم والتاريخ."
-  },
-  {
-    id:"bride-1",
-    title:"فريم عروس ذهبي",
-    category:"عروس",
-    folder:"images/bride1",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم تذكاري للعروس بإطار ذهبي وردي. مثالي لصورة الزفاف."
-  },
-  {
-    id:"bride-2",
-    title:"فريم عروس كلاسيك",
-    category:"عروس",
-    folder:"images/bride2",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم عروس كلاسيكي باللون الأبيض والعاجي مع زخارف ناعمة."
-  },
-  {
-    id:"graduation-1",
-    title:"فريم تخرج وردي",
-    category:"تخرج",
-    folder:"images/graduation1",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم تخرج جامعي بألوان وردية وذهبية. يحتفل بالإنجاز الأكاديمي."
-  },
-  {
-    id:"graduation-2",
-    title:"فريم تخرج أزرق",
-    category:"تخرج",
-    folder:"images/graduation2",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم تخرج بتصميم حديث بألوان زرقاء وفضية. مناسب للخريجين والخريجات."
-  },
-  {
-    id:"balloons-1",
-    title:"فريم بالونات وردي",
-    category:"بالونات",
-    folder:"images/balloons1",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم ديكور بالبالونات الوردية والخزامى. مثالي لحفلات الميلاد والمناسبات."
-  },
-  {
-    id:"balloons-2",
-    title:"فريم بالونات ذهبي",
-    category:"بالونات",
-    folder:"images/balloons2",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم بالونات ذهبية وبيضاء. إضافة رائعة لديكور الحفلات والمناسبات."
-  }
+  { id:"m1", title:"فريم مواليد", category:"مواليد", folder:"images/newborn/1", thumb:"thumb.jpg" },
+  { id:"c1", title:"فريم عروس", category:"عروس", folder:"images/bride/1", thumb:"thumb.jpg" },
+  { id:"g1", title:"هدية تخرج", category:"تخرج", folder:"images/grad/1", thumb:"thumb.jpg" },
+  { id:"b1", title:"بالونات", category:"بالونات", folder:"images/balloons/1", thumb:"thumb.jpg" }
 ];
 
 const catsEl=document.getElementById("cats");
 const gridEl=document.getElementById("grid");
 const productView=document.getElementById("productView");
-const listView=document.getElementById("listView");
-const countEl=document.getElementById("count");
-
+const categories=["مواليد", "عروس", "تخرج", "بالونات"];
 let activeCat="مواليد";
-const categories=["مواليد","عروس","تخرج","بالونات"];
 
 function buildCats(){
   catsEl.innerHTML="";
@@ -456,88 +210,32 @@ function buildCats(){
 
 function renderList(){
   gridEl.innerHTML="";
-  const items=PRODUCTS.filter(p=>p.category===activeCat);
-  countEl.textContent=items.length;
+  const items=PRODUCTS.filter(p=> p.category===activeCat);
   items.forEach(p=>{
     const c=document.createElement("div");
     c.className="card";
     c.onclick=()=>openProduct(p.id);
-    c.innerHTML=`
-      <img class="thumb" src="${p.folder}/${p.thumb}" onerror="this.src='https://via.placeholder.com/300/ffe4f1/f6a6c9?text=${p.title}'">
-      <div class="meta">
-        <h3>${p.title}</h3>
-        <span>${p.category}</span>
-        <div class="badge">عرض التفاصيل</div>
-      </div>`;
+    c.innerHTML=`<img class="thumb" src="${p.folder}/${p.thumb}"><div class="meta"><h3>${p.title}</h3><div class="badge">طلب واتساب</div></div>`;
     gridEl.appendChild(c);
   });
 }
 
-function goHome(){
-  location.hash="";
-  productView.style.display="none";
-  listView.style.display="block";
-  renderList();
-}
-
 function openProduct(id){
-  location.hash="#product/"+id;
-}
-
-function renderProduct(id){
   const p=PRODUCTS.find(x=>x.id===id);
-  if(!p)return;
-  listView.style.display="none";
-  productView.style.display="block";
-  let current=0;
+  productView.style.display="flex";
   productView.innerHTML=`
-    <div class="page">
-      <div class="pageTop">
-        <button class="back" onclick="goHome()">رجوع</button>
-        <h2 class="ptitle">${p.title}</h2>
-        <div style="width:60px"></div>
-      </div>
-
-      <div class="hero">
-        <img id="big" class="big" src="${p.folder}/${p.photos[0]}" onerror="this.src='https://via.placeholder.com/600/ffe4f1/f6a6c9?text=${p.title}'">
-      </div>
-
-      <div class="thumbs" id="thumbs"></div>
-
-      <div class="actions">
-        <button class="btn primary" onclick="order('${p.title}')">اطلب عبر واتساب</button>
-      </div>
-    </div>`;
-  const thumbs=document.getElementById("thumbs");
-  const big=document.getElementById("big");
-  p.photos.forEach((ph,i)=>{
-    const im=document.createElement("img");
-    im.className="mini"+(i===0?" active":"");
-    im.src=`${p.folder}/${ph}`;
-    im.onerror="this.src='https://via.placeholder.com/150/ffe4f1/f6a6c9?text=صورة'";
-    im.onclick=()=>{
-      big.src=im.src;
-      document.querySelectorAll(".mini").forEach(x=>x.classList.remove("active"));
-      im.classList.add("active");
-    };
-    thumbs.appendChild(im);
-  });
+    <div class="pageTop"><button onclick="closeProduct()" style="border:none; background:none; font-size:20px;">✕</button><h2 style="flex:1; text-align:center; font-size:16px;">${p.title}</h2></div>
+    <div class="hero"><img class="big" src="${p.folder}/${p.thumb}"></div>
+    <div class="actions"><button class="btn primary" onclick="order('${p.title}')">أنا مهتم بهذا التصميم</button></div>`;
 }
+
+function closeProduct(){ productView.style.display="none"; }
+function goHome(){ closeProduct(); }
 
 function order(title){
-  const msg=encodeURIComponent(`السلام عليكم، أود طلب: ${title}\n${location.href}`);
+  const msg=encodeURIComponent(`السلام عليكم، استفسار عن: ${title}`);
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,"_blank");
 }
-
-function route(){
-  if(location.hash.startsWith("#product/")){
-    renderProduct(location.hash.split("/")[1]);
-  }else{
-    goHome();
-  }
-}
-
-window.addEventListener("hashchange",route);
 
 buildCats();
 renderList();
