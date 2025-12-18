@@ -7,13 +7,17 @@
 
 <style>
 :root{
-  --bg:#fdeee8;
+  --bg:#fff7fb;
+  --bg2:#fde8f2;
   --card:#ffffff;
-  --accent:#f3a6b8;
-  --accent2:#cbb7e2;
-  --text:#6b4f4f;
-  --muted:#9b7f7f;
-  --radius:22px;
+  --pink:#f6a6c9;
+  --pink-dark:#e985b3;
+  --purple:#c9b6e4;
+  --text:#6a3d57;
+  --muted:#9b6f86;
+  --stroke:rgba(0,0,0,.06);
+  --shadow:0 14px 35px rgba(233,133,179,.18);
+  --radius:24px;
 }
 
 *{box-sizing:border-box}
@@ -21,259 +25,446 @@
 body{
   margin:0;
   font-family: system-ui, -apple-system, Tahoma, Arial;
-  background: linear-gradient(180deg,#fff6f2,#fdeee8);
+  background:
+    radial-gradient(600px 400px at 10% 10%, #ffe4f1, transparent 60%),
+    radial-gradient(600px 400px at 90% 20%, #efe6ff, transparent 60%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
+  min-height:100vh;
+}
+
+a{color:inherit;text-decoration:none}
+
+.wrap{
+  max-width:950px;
+  margin:0 auto;
+  padding:16px 14px 60px;
 }
 
 /* ===== Header ===== */
-header{
-  padding:16px;
-  text-align:center;
-}
-header h1{
-  margin:0;
-  font-size:20px;
-  font-weight:800;
-}
-header p{
-  margin-top:6px;
-  font-size:13px;
-  color:var(--muted);
-}
-
-/* ===== Categories ===== */
-.categories{
+.top{
+  background:rgba(255,255,255,.85);
+  border:1px solid var(--stroke);
+  border-radius:calc(var(--radius) + 8px);
+  box-shadow:var(--shadow);
+  padding:14px;
   display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  backdrop-filter: blur(8px);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
   gap:10px;
-  overflow-x:auto;
-  padding:0 14px 12px;
-}
-.categories button{
-  flex:0 0 auto;
-  border:none;
-  padding:10px 16px;
-  border-radius:999px;
-  background:#fff;
-  color:var(--text);
-  font-size:13px;
-  cursor:pointer;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
-}
-.categories button.active{
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:white;
-}
-
-/* ===== Grid (2 بالعرض) ===== */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr); /* صورتين */
-  gap:16px;
-  padding:16px;
-}
-
-/* شاشة صغيرة جدًا */
-@media(max-width:360px){
-  .grid{grid-template-columns:1fr}
-}
-
-/* ===== Card ===== */
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
   cursor:pointer;
 }
-
-/* ===== الصورة الأساسية (أصغر + مربعة) ===== */
-.card img{
-  width:100%;
-  aspect-ratio:1/1;
-  object-fit:cover;
-  display:block;
+.logo{
+  width:44px;
+  height:44px;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  box-shadow:0 12px 28px rgba(233,133,179,.35);
 }
-
-/* ===== Info ===== */
-.card .info{
-  padding:10px;
-  text-align:center;
-}
-.card .info h3{
+.brand h1{
   margin:0;
-  font-size:14px;
-  font-weight:800;
+  font-size:17px;
+  font-weight:900;
 }
-.card .info span{
+.brand p{
+  margin:4px 0 0;
   font-size:12px;
   color:var(--muted);
 }
 
-/* ===== Modal ===== */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
+.search{
+  flex:1;
 }
-.modal.open{display:flex}
-
-.viewer{
-  width:92%;
+.search input{
+  width:100%;
+  border:1px solid var(--stroke);
   background:#fff;
-  border-radius:26px;
+  padding:12px 14px;
+  border-radius:16px;
+  outline:none;
+  font-size:13px;
+}
+
+.counter{
+  font-size:12px;
+  color:var(--muted);
+  background:#fff;
+  border:1px solid var(--stroke);
+  padding:10px 12px;
+  border-radius:999px;
+}
+
+/* ===== Categories ===== */
+.cats{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  overflow:auto;
+  padding-bottom:6px;
+}
+.catbtn{
+  flex:0 0 auto;
+  border:1px solid var(--stroke);
+  background:#fff;
+  padding:10px 16px;
+  border-radius:999px;
+  font-size:13px;
+  cursor:pointer;
+  color:var(--text);
+}
+.catbtn.active{
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  color:#fff;
+  border-color:transparent;
+}
+
+/* ===== Grid ===== */
+.grid{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+@media(max-width:360px){
+  .grid{grid-template-columns:1fr}
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  cursor:pointer;
+  transition:.15s ease;
+}
+.card:hover{
+  transform:translateY(-2px);
+}
+
+.thumb{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  display:block;
+  background:#f7eaf1;
+}
+
+.meta{
+  padding:12px;
+  text-align:center;
+}
+.meta h3{
+  margin:0;
+  font-size:14px;
+  font-weight:900;
+}
+.meta span{
+  display:block;
+  margin-top:6px;
+  font-size:12px;
+  color:var(--muted);
+}
+.badge{
+  margin-top:10px;
+  display:inline-block;
+  padding:8px 14px;
+  font-size:12px;
+  border-radius:999px;
+  background:rgba(246,166,201,.18);
+  border:1px solid rgba(246,166,201,.35);
+  color:#7a3f5c;
+}
+
+/* ===== Product Page ===== */
+.page{
+  margin-top:16px;
+  background:#fff;
+  border:1px solid var(--stroke);
+  border-radius:calc(var(--radius) + 8px);
+  box-shadow:var(--shadow);
   overflow:hidden;
 }
 
-.viewer-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.pageTop{
   padding:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid var(--stroke);
 }
-.viewer-header h3{
-  margin:0;
-  font-size:14px;
-}
-.viewer-header button{
-  border:none;
-  background:var(--accent);
-  color:white;
-  padding:8px 14px;
-  border-radius:14px;
-  cursor:pointer;
-}
-
-.viewer img{
-  width:100%;
-  max-height:60vh;
-  object-fit:contain;
+.back{
+  border:1px solid var(--stroke);
   background:#fff;
+  padding:10px 14px;
+  border-radius:16px;
+  cursor:pointer;
+  font-size:13px;
+}
+.ptitle{
+  flex:1;
+  text-align:center;
+  margin:0;
+  font-size:16px;
+  font-weight:900;
 }
 
-/* صور صغيرة داخل العرض */
+.hero{
+  padding:14px;
+  background:linear-gradient(180deg,#ffeaf4,#f6f0ff);
+}
+.big{
+  width:100%;
+  max-height:55vh;
+  object-fit:contain;
+  border-radius:20px;
+  background:#fff;
+  border:1px solid var(--stroke);
+}
+
 .thumbs{
   display:flex;
   gap:10px;
-  padding:12px;
-  overflow-x:auto;
+  overflow:auto;
+  padding:12px 14px;
 }
-.thumbs img{
+.mini{
   width:80px;
   aspect-ratio:1/1;
   object-fit:cover;
-  border-radius:14px;
+  border-radius:16px;
+  border:1px solid var(--stroke);
   opacity:.6;
   cursor:pointer;
 }
-.thumbs img.active{
+.mini.active{
   opacity:1;
-  outline:2px solid var(--accent);
+  outline:2px solid var(--pink);
+}
+
+.details{
+  padding:14px;
+  display:grid;
+  gap:10px;
+}
+.row{
+  background:#fff;
+  border:1px solid var(--stroke);
+  border-radius:18px;
+  padding:12px;
+}
+.row h4{
+  margin:0;
+  font-size:13px;
+  font-weight:900;
+}
+.row p{
+  margin:8px 0 0;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.actions{
+  padding:14px;
+  display:flex;
+  gap:10px;
+  border-top:1px solid var(--stroke);
+}
+.btn{
+  flex:1;
+  border:none;
+  padding:12px 14px;
+  border-radius:18px;
+  font-size:14px;
+  font-weight:900;
+  cursor:pointer;
+}
+.btn.primary{
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  color:#fff;
+}
+.btn.secondary{
+  background:#fff;
+  border:1px solid var(--stroke);
+  color:var(--text);
 }
 </style>
 </head>
 
 <body>
+<div class="wrap">
 
-<header>
-  <h1>Lovingly Framed</h1>
-  <p>@lovingly.framed</p>
-</header>
-
-<div class="categories" id="cats"></div>
-<div class="grid" id="grid"></div>
-
-<!-- Modal -->
-<div class="modal" id="modal">
-  <div class="viewer">
-    <div class="viewer-header">
-      <h3 id="mTitle"></h3>
-      <button onclick="closeModal()">إغلاق</button>
+  <!-- Header -->
+  <div class="top">
+    <div class="brand" onclick="goHome()">
+      <div class="logo"></div>
+      <div>
+        <h1>Lovingly Framed</h1>
+        <p>@lovingly.framed</p>
+      </div>
     </div>
-    <img id="bigImg" src="">
-    <div class="thumbs" id="thumbs"></div>
+
+    <div class="search" id="searchWrap">
+      <input id="q" placeholder="ابحث عن تصميم..." />
+    </div>
+
+    <div class="counter" id="count">0</div>
   </div>
+
+  <!-- Categories -->
+  <div class="cats" id="cats"></div>
+
+  <!-- List -->
+  <div id="listView">
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <!-- Product -->
+  <div id="productView" style="display:none;"></div>
+
 </div>
 
 <script>
-/* ===== DATA ===== */
-const DATA = [
+const WHATSAPP_NUMBER="965XXXXXXXX";
+
+const PRODUCTS=[
   {
+    id:"princess-noura",
     title:"Princess Noura",
     category:"مواليد",
     folder:"images/newborn/princess-noura",
     thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"]
+    photos:["1.jpg","2.jpg","3.jpg"],
+    description:"فريم مواليد بناتي ناعم. الاسم والتاريخ قابلين للتغيير.",
+    options:"ألوان باستيل – مقاسات متعددة – تغليف هدية"
   }
 ];
 
-const catsEl = document.getElementById("cats");
-const gridEl = document.getElementById("grid");
-const modal = document.getElementById("modal");
-const bigImg = document.getElementById("bigImg");
-const thumbs = document.getElementById("thumbs");
-const mTitle = document.getElementById("mTitle");
+const catsEl=document.getElementById("cats");
+const gridEl=document.getElementById("grid");
+const productView=document.getElementById("productView");
+const listView=document.getElementById("listView");
+const qEl=document.getElementById("q");
+const countEl=document.getElementById("count");
 
-let activeCat = "الكل";
-const categories = ["الكل", ...new Set(DATA.map(d=>d.category))];
+let activeCat="الكل";
+const categories=["الكل",...new Set(PRODUCTS.map(p=>p.category))];
 
-categories.forEach(cat=>{
-  const b=document.createElement("button");
-  b.textContent=cat;
-  if(cat==="الكل") b.classList.add("active");
-  b.onclick=()=>{
-    activeCat=cat;
-    document.querySelectorAll(".categories button").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active");
-    render();
-  };
-  catsEl.appendChild(b);
-});
-
-function render(){
-  gridEl.innerHTML="";
-  DATA.filter(d=>activeCat==="الكل"||d.category===activeCat)
-      .forEach(d=>{
-        const c=document.createElement("div");
-        c.className="card";
-        c.innerHTML=`
-          <img src="${d.folder}/${d.thumb}">
-          <div class="info">
-            <h3>${d.title}</h3>
-            <span>${d.category}</span>
-          </div>`;
-        c.onclick=()=>openModal(d);
-        gridEl.appendChild(c);
-      });
+function buildCats(){
+  catsEl.innerHTML="";
+  categories.forEach(c=>{
+    const b=document.createElement("button");
+    b.className="catbtn"+(c===activeCat?" active":"");
+    b.textContent=c;
+    b.onclick=()=>{activeCat=c;buildCats();renderList();};
+    catsEl.appendChild(b);
+  });
 }
 
-function openModal(item){
-  modal.classList.add("open");
-  mTitle.textContent=item.title;
-  bigImg.src=`${item.folder}/${item.photos[0]}`;
-  thumbs.innerHTML="";
-  item.photos.forEach((p,i)=>{
+function renderList(){
+  gridEl.innerHTML="";
+  const q=(qEl.value||"").toLowerCase();
+  const items=PRODUCTS.filter(p=>
+    (activeCat==="الكل"||p.category===activeCat) &&
+    (!q||p.title.toLowerCase().includes(q))
+  );
+  countEl.textContent=items.length;
+  items.forEach(p=>{
+    const c=document.createElement("div");
+    c.className="card";
+    c.onclick=()=>openProduct(p.id);
+    c.innerHTML=`
+      <img class="thumb" src="${p.folder}/${p.thumb}">
+      <div class="meta">
+        <h3>${p.title}</h3>
+        <span>${p.category}</span>
+        <div class="badge">عرض التفاصيل</div>
+      </div>`;
+    gridEl.appendChild(c);
+  });
+}
+
+function goHome(){
+  location.hash="";
+  productView.style.display="none";
+  listView.style.display="block";
+}
+
+function openProduct(id){
+  location.hash="#product/"+id;
+}
+
+function renderProduct(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p)return;
+  listView.style.display="none";
+  productView.style.display="block";
+  let current=0;
+  productView.innerHTML=`
+    <div class="page">
+      <div class="pageTop">
+        <button class="back" onclick="goHome()">رجوع</button>
+        <h2 class="ptitle">${p.title}</h2>
+        <div style="width:60px"></div>
+      </div>
+
+      <div class="hero">
+        <img id="big" class="big" src="${p.folder}/${p.photos[0]}">
+      </div>
+
+      <div class="thumbs" id="thumbs"></div>
+
+      <div class="details">
+        <div class="row"><h4>الوصف</h4><p>${p.description}</p></div>
+        <div class="row"><h4>التخصيص</h4><p>${p.options}</p></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary" onclick="navigator.clipboard.writeText(location.href)">نسخ الرابط</button>
+        <button class="btn primary" onclick="order('${p.title}')">اطلب واتساب</button>
+      </div>
+    </div>`;
+  const thumbs=document.getElementById("thumbs");
+  const big=document.getElementById("big");
+  p.photos.forEach((ph,i)=>{
     const im=document.createElement("img");
-    im.src=`${item.folder}/${p}`;
-    if(i===0) im.classList.add("active");
+    im.className="mini"+(i===0?" active":"");
+    im.src=`${p.folder}/${ph}`;
     im.onclick=()=>{
-      bigImg.src=im.src;
-      document.querySelectorAll(".thumbs img").forEach(x=>x.classList.remove("active"));
+      big.src=im.src;
+      document.querySelectorAll(".mini").forEach(x=>x.classList.remove("active"));
       im.classList.add("active");
     };
     thumbs.appendChild(im);
   });
 }
 
-function closeModal(){
-  modal.classList.remove("open");
+function order(title){
+  const msg=encodeURIComponent(`السلام عليكم، أبي أطلب: ${title}\n${location.href}`);
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,"_blank");
 }
 
-render();
-</script>
+function route(){
+  if(location.hash.startsWith("#product/")){
+    renderProduct(location.hash.split("/")[1]);
+  }else{
+    goHome();renderList();
+  }
+}
 
+qEl.addEventListener("input",renderList);
+window.addEventListener("hashchange",route);
+
+buildCats();
+renderList();
+</script>
 </body>
 </html>
