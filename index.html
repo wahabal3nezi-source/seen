@@ -45,7 +45,7 @@ a{color:inherit;text-decoration:none}
   flex-direction:column;
 }
 
-/* ===== Header ===== */
+/* ===== Header (Centered) ===== */
 .top{
   background:rgba(255,255,255,.85);
   border:1px solid var(--stroke);
@@ -53,18 +53,19 @@ a{color:inherit;text-decoration:none}
   box-shadow:var(--shadow);
   padding:14px;
   display:flex;
-  gap:12px;
+  justify-content: center; /* توسيط المحتوى */
   align-items:center;
-  justify-content:space-between;
   backdrop-filter: blur(8px);
   flex-shrink: 0;
 }
 
 .brand{
   display:flex;
+  flex-direction: column;
   align-items:center;
-  gap:10px;
+  gap:5px;
   cursor:pointer;
+  text-align: center;
 }
 .logo{
   width:44px;
@@ -79,10 +80,14 @@ a{color:inherit;text-decoration:none}
   font-weight:900;
 }
 .brand p{
-  margin:4px 0 0;
+  margin:0;
   font-size:12px;
   color:var(--muted);
-  text-align:center;
+}
+
+/* تم إخفاء التصنيفات والعداد بناءً على طلبك */
+.cats, .counter {
+  display: none !important;
 }
 
 /* ===== Main Content ===== */
@@ -90,17 +95,16 @@ a{color:inherit;text-decoration:none}
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 14px;
+  margin-top: 10px;
+  overflow-y: auto;
 }
 
-/* ===== Grid ===== */
+/* ===== Grid (Compact to fit screen) ===== */
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:16px;
-  flex: 1;
-  min-height: 0;
+  gap:12px;
+  margin-bottom: 10px;
 }
 
 .card{
@@ -111,11 +115,6 @@ a{color:inherit;text-decoration:none}
   overflow:hidden;
   cursor:pointer;
   transition:.15s ease;
-  display: flex;
-  flex-direction: column;
-}
-.card:hover{
-  transform:translateY(-2px);
 }
 
 .thumb{
@@ -124,56 +123,46 @@ a{color:inherit;text-decoration:none}
   object-fit:cover;
   display:block;
   background:#f7eaf1;
-  flex: 1;
-  min-height: 0;
 }
 
 .meta{
-  padding:12px;
+  padding:8px;
   text-align:center;
-  flex-shrink: 0;
 }
 .meta h3{
   margin:0;
-  font-size:14px;
+  font-size:13px;
   font-weight:900;
 }
-.meta span{
-  display:block;
-  margin-top:6px;
-  font-size:12px;
-  color:var(--muted);
-}
 .badge{
-  margin-top:10px;
+  margin-top:5px;
   display:inline-block;
-  padding:8px 14px;
-  font-size:12px;
+  padding:6px 12px;
+  font-size:11px;
   border-radius:999px;
-  background:rgba(246,166,201,.18);
-  border:1px solid rgba(246,166,201,.35);
+  background:rgba(246,166,201,.1);
+  border:1px solid rgba(246,166,201,0.4);
   color:#7a3f5c;
 }
 
 /* ===== Product Page ===== */
+#productView {
+  display:none;
+  position: fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: #fff;
+  z-index: 999;
+}
 .page{
-  background:#fff;
-  border:1px solid var(--stroke);
-  border-radius:calc(var(--radius) + 8px);
-  box-shadow:var(--shadow);
-  overflow:hidden;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-
 .pageTop{
   padding:14px;
   display:flex;
   align-items:center;
-  gap:10px;
   border-bottom:1px solid var(--stroke);
-  flex-shrink: 0;
 }
 .back{
   border:1px solid var(--stroke);
@@ -181,49 +170,20 @@ a{color:inherit;text-decoration:none}
   padding:10px 14px;
   border-radius:16px;
   cursor:pointer;
-  font-size:13px;
 }
-.ptitle{
-  flex:1;
-  text-align:center;
-  margin:0;
-  font-size:16px;
-  font-weight:900;
-}
-
 .hero{
-  padding:14px;
-  background:linear-gradient(180deg,#ffeaf4,#f6f0ff);
-  flex-shrink: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 10px;
 }
 .big{
-  width:100%;
-  height:50vh;
-  object-fit:contain;
-  border-radius:20px;
-  background:#fff;
-  border:1px solid var(--stroke);
-}
-
-.thumbs{
-  display:flex;
-  gap:10px;
-  overflow:auto;
-  padding:12px 14px;
-  flex-shrink: 0;
-}
-.mini{
-  width:80px;
-  aspect-ratio:1/1;
-  object-fit:cover;
-  border-radius:16px;
-  border:1px solid var(--stroke);
-  opacity:.6;
-  cursor:pointer;
-}
-.mini.active{
-  opacity:1;
-  outline:2px solid var(--pink);
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 20px;
+  object-fit: contain;
 }
 
 /* ===== Contact Section ===== */
@@ -231,44 +191,19 @@ a{color:inherit;text-decoration:none}
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--stroke);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 15px;
   text-align: center;
   box-shadow: var(--shadow);
-  flex-shrink: 0;
-  margin-top: auto;
+  margin-top: auto; /* يدفع القسم للأسفل */
 }
 
-.contact-info {
-  margin-bottom: 15px;
-}
-
-.contact-info p {
-  margin: 8px 0;
-  font-size: 14px;
-  color:var(--text);
-}
-
-.contact-info .phone {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--pink-dark);
-  margin: 10px 0;
-  direction: ltr;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-}
-
-.phone-prefix {
-  direction: ltr;
-  unicode-bidi: embed;
-}
-
-.phone-number {
-  direction: ltr;
-  unicode-bidi: embed;
-  letter-spacing: 1px;
+.phone {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text);
+  margin: 5px 0;
+  direction: ltr; /* لضمان ترتيب الرمز والأرقام من اليسار */
+  display: block;
 }
 
 .whatsapp-btn {
@@ -278,54 +213,22 @@ a{color:inherit;text-decoration:none}
   gap: 8px;
   background: linear-gradient(135deg, var(--pink), var(--purple));
   color: white;
-  border: none;
-  padding: 12px 24px;
+  padding: 12px;
   border-radius: 18px;
   font-size: 14px;
   font-weight: 900;
-  cursor: pointer;
-  text-decoration: none;
-  margin-top: 10px;
-  transition: transform 0.2s;
   width: 100%;
 }
 
-.whatsapp-btn:hover {
-  transform: translateY(-2px);
-}
-
-.whatsapp-btn img {
-  width: 20px;
-  height: 20px;
-}
-
-.actions{
-  padding:14px;
-  display:flex;
-  gap:10px;
-  border-top:1px solid var(--stroke);
-  flex-shrink: 0;
-}
-.btn{
-  flex:1;
-  border:none;
-  padding:12px 14px;
-  border-radius:18px;
-  font-size:14px;
-  font-weight:900;
-  cursor:pointer;
-}
+.actions{ padding:20px; border-top:1px solid var(--stroke); }
 .btn.primary{
+  width: 100%;
   background:linear-gradient(135deg,var(--pink),var(--purple));
   color:#fff;
-}
-
-/* Responsive adjustments */
-@media(max-width:360px){
-  .grid{grid-template-columns:1fr}
-  .wrap{
-    padding:12px 10px;
-  }
+  border:none;
+  padding:15px;
+  border-radius:18px;
+  font-weight:900;
 }
 </style>
 </head>
@@ -333,83 +236,43 @@ a{color:inherit;text-decoration:none}
 <body>
 <div class="wrap">
 
-  <!-- Header -->
   <div class="top">
     <div class="brand" onclick="goHome()">
       <div class="logo"></div>
       <div>
         <h1>Lovingly Framed</h1>
-        <p>@lovingly.framed<br>تصاميم فريمات هدايا نسائية</p>
+        <p>@lovingly.framed</p>
       </div>
     </div>
   </div>
 
-  <!-- Main Content -->
   <div class="main-content" id="listView">
-    <div class="grid" id="grid"></div>
-    
-    <!-- Contact Section -->
-    <div class="contact-section">
-      <div class="contact-info">
-        <p>للتواصل:</p>
-        <p class="phone">
-          <span class="phone-prefix">+965</span>
-          <span class="phone-number">6502 2191</span>
-        </p>
-        <p>نقدم تصاميم فريمات هدايا للنساء بألوان ناعمة</p>
+    <div class="grid" id="grid">
       </div>
+    
+    <div class="contact-section">
+      <p style="margin:0; font-size:13px;">للتواصل:</p>
+      <span class="phone">+965 6502 2191</span>
       <a href="https://wa.me/96565022191" class="whatsapp-btn" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="واتساب">
+        <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" width="20" height="20">
         تواصل عبر واتساب
       </a>
     </div>
   </div>
 
-  <!-- Product -->
-  <div id="productView" style="display:none;"></div>
+  <div id="productView"></div>
 
 </div>
 
 <script>
 const WHATSAPP_NUMBER="96565022191";
 
+// البيانات لـ 4 فريمات فقط لتظهر في صفحة واحدة
 const PRODUCTS=[
-  {
-    id:"newborn-1",
-    title:"فريم مواليد وردي",
-    category:"مواليد",
-    folder:"images/newborn1",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم مواليد بناتي بألوان وردية ناعمة مع تفاصيل زهرية. الاسم والتاريخ قابلين للتغيير."
-  },
-  {
-    id:"newborn-2",
-    title:"فريم مواليد أزرق",
-    category:"مواليد",
-    folder:"images/newborn2",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم مواليد أولاد بألوان زرقاء وفضية. تصميم أنيق مع مساحة للاسم والتاريخ."
-  },
-  {
-    id:"bride-1",
-    title:"فريم عروس ذهبي",
-    category:"عروس",
-    folder:"images/bride1",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم تذكاري للعروس بإطار ذهبي وردي. مثالي لصورة الزفاف."
-  },
-  {
-    id:"graduation-1",
-    title:"فريم تخرج وردي",
-    category:"تخرج",
-    folder:"images/graduation1",
-    thumb:"thumb.jpg",
-    photos:["1.jpg","2.jpg","3.jpg"],
-    description:"فريم تخرج جامعي بألوان وردية وذهبية. يحتفل بالإنجاز الأكاديمي."
-  }
+  { id:"n1", title:"فريم مواليد", folder:"images/newborn", thumb:"thumb.jpg" },
+  { id:"b1", title:"فريم عروس", folder:"images/bride", thumb:"thumb.jpg" },
+  { id:"g1", title:"فريم تخرج", folder:"images/grad", thumb:"thumb.jpg" },
+  { id:"l1", title:"بالونات", folder:"images/balloons", thumb:"thumb.jpg" }
 ];
 
 const gridEl=document.getElementById("grid");
@@ -423,27 +286,16 @@ function renderList(){
     c.className="card";
     c.onclick=()=>openProduct(p.id);
     c.innerHTML=`
-      <img class="thumb" src="${p.folder}/${p.thumb}" onerror="this.src='https://via.placeholder.com/300/ffe4f1/f6a6c9?text=${p.title}'">
+      <img class="thumb" src="${p.folder}/${p.thumb}" onerror="this.src='https://via.placeholder.com/300/fde8f2/6a3d57?text=${p.title}'">
       <div class="meta">
         <h3>${p.title}</h3>
-        <span>${p.category}</span>
-        <div class="badge">عرض التفاصيل</div>
+        <div class="badge">اطلب الآن</div>
       </div>`;
     gridEl.appendChild(c);
   });
 }
 
-function goHome(){
-  location.hash="";
-  productView.style.display="none";
-  listView.style.display="block";
-}
-
 function openProduct(id){
-  location.hash="#product/"+id;
-}
-
-function renderProduct(id){
   const p=PRODUCTS.find(x=>x.id===id);
   if(!p)return;
   listView.style.display="none";
@@ -452,52 +304,29 @@ function renderProduct(id){
     <div class="page">
       <div class="pageTop">
         <button class="back" onclick="goHome()">رجوع</button>
-        <h2 class="ptitle">${p.title}</h2>
-        <div style="width:60px"></div>
+        <h2 style="flex:1; text-align:center; font-size:16px; margin:0;">${p.title}</h2>
+        <div style="width:50px"></div>
       </div>
-
       <div class="hero">
-        <img id="big" class="big" src="${p.folder}/${p.photos[0]}" onerror="this.src='https://via.placeholder.com/600/ffe4f1/f6a6c9?text=${p.title}'">
+        <img class="big" src="${p.folder}/${p.thumb}" onerror="this.src='https://via.placeholder.com/600/fde8f2/6a3d57?text=${p.title}'">
       </div>
-
-      <div class="thumbs" id="thumbs"></div>
-
       <div class="actions">
         <button class="btn primary" onclick="order('${p.title}')">اطلب عبر واتساب</button>
       </div>
     </div>`;
-    
-  const thumbs=document.getElementById("thumbs");
-  const big=document.getElementById("big");
-  p.photos.forEach((ph,i)=>{
-    const im=document.createElement("img");
-    im.className="mini"+(i===0?" active":"");
-    im.src=`${p.folder}/${ph}`;
-    im.onerror="this.src='https://via.placeholder.com/150/ffe4f1/f6a6c9?text=صورة'";
-    im.onclick=()=>{
-      big.src=im.src;
-      document.querySelectorAll(".mini").forEach(x=>x.classList.remove("active"));
-      im.classList.add("active");
-    };
-    thumbs.appendChild(im);
-  });
+}
+
+function goHome(){
+  productView.style.display="none";
+  listView.style.display="flex";
 }
 
 function order(title){
-  const msg=encodeURIComponent(`السلام عليكم، أود طلب: ${title}\n${location.href}`);
+  const msg=encodeURIComponent(`السلام عليكم، أود طلب: ${title}`);
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,"_blank");
 }
 
-function route(){
-  if(location.hash.startsWith("#product/")){
-    renderProduct(location.hash.split("/")[1]);
-  }else{
-    goHome();
-  }
-}
-
-window.addEventListener("hashchange",route);
-
+// تشغيل عند التحميل
 renderList();
 </script>
 </body>
