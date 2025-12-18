@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Lovingly Framed</title>
 
 <style>
@@ -11,12 +11,13 @@
   --bg2:#fde8f2;
   --card:#ffffff;
   --pink:#f6a6c9;
+  --pink-dark:#e985b3;
   --purple:#c9b6e4;
   --text:#6a3d57;
   --muted:#9b6f86;
   --stroke:rgba(0,0,0,.06);
-  --shadow:0 14px 35px rgba(233,133,179,.18);
-  --radius:24px;
+  --shadow:0 10px 25px rgba(233,133,179,.12);
+  --radius:20px;
 }
 
 *{box-sizing:border-box}
@@ -24,64 +25,63 @@
 body{
   margin:0;
   font-family: system-ui, -apple-system, Tahoma, Arial;
-  background:
-    radial-gradient(700px 420px at 10% 10%, #ffe4f1, transparent 60%),
-    radial-gradient(700px 420px at 90% 15%, #efe6ff, transparent 60%),
-    linear-gradient(180deg,var(--bg),var(--bg2));
+  background: linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
-  min-height:100vh;
+  height: 100vh;
+  overflow: hidden; /* يمنع السكرول في الشاشة الرئيسية */
 }
 
 .wrap{
-  max-width:980px;
+  max-width:500px;
   margin:0 auto;
-  padding:12px 12px 12px;
-}
-
-/* Header */
-.header{
-  background:rgba(255,255,255,.88);
-  border:1px solid var(--stroke);
-  border-radius:calc(var(--radius) + 8px);
-  box-shadow:var(--shadow);
-  padding:12px 12px;
-  text-align:center;
-  backdrop-filter: blur(8px);
-}
-.header .logo{
-  width:46px;
-  height:46px;
-  border-radius:18px;
-  margin:0 auto 8px;
-  background:linear-gradient(135deg,var(--pink),var(--purple));
-  box-shadow:0 14px 30px rgba(233,133,179,.35);
-}
-.header h1{
-  margin:0;
-  font-size:16px;
-  font-weight:1000;
-}
-.header p{
-  margin:6px 0 0;
-  font-size:12px;
-  color:var(--muted);
-}
-
-/* ===== Home layout: no scroll ===== */
-#homeView{
-  height: calc(100vh - 24px); /* تقريبًا الشاشة */
+  padding:10px 14px;
+  height:100vh;
   display:flex;
   flex-direction:column;
-  gap:10px;
 }
 
-/* 2x2 Grid fits screen */
+/* ===== Header ===== */
+.top{
+  background:rgba(255,255,255,.85);
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:10px;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  backdrop-filter: blur(8px);
+  flex-shrink: 0;
+}
+
+.brand{
+  text-align: center;
+  cursor:pointer;
+}
+.logo{
+  width:35px;
+  height:35px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  margin: 0 auto 5px;
+}
+.brand h1{ margin:0; font-size:15px; font-weight:900; }
+.brand p{ margin:2px 0 0; font-size:11px; color:var(--muted); }
+
+/* ===== Grid (4 Items Fixed) ===== */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
 .grid{
-  flex:1;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-top:10px;
+  gap:10px;
 }
 
 .card{
@@ -91,394 +91,175 @@ body{
   box-shadow:var(--shadow);
   overflow:hidden;
   cursor:pointer;
-  transition:.15s ease;
-  display:flex;
-  flex-direction:column;
-  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
-.card:hover{ transform:translateY(-2px); }
 
 .thumb{
   width:100%;
-  flex:1;
+  aspect-ratio: 1 / 0.9;
   object-fit:cover;
   display:block;
   background:#f7eaf1;
-  min-height:0;
 }
 
 .meta{
-  padding:10px;
+  padding:8px;
   text-align:center;
 }
-.meta h3{
-  margin:0;
-  font-size:14px;
-  font-weight:1000;
-}
-.meta span{
-  display:block;
-  margin-top:6px;
-  font-size:11px;
-  color:var(--muted);
-}
+.meta h3{ margin:0; font-size:13px; font-weight:900; }
 .badge{
-  margin-top:8px;
+  margin-top:5px;
   display:inline-block;
-  padding:7px 12px;
-  font-size:11px;
+  padding:4px 10px;
+  font-size:10px;
   border-radius:999px;
-  background:rgba(246,166,201,.18);
-  border:1px solid rgba(246,166,201,.35);
-  color:#7a3f5c;
+  border:1px solid var(--pink);
+  color:var(--pink-dark);
 }
 
-/* Footer contact (inside same screen) */
-.footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding:8px 0 0;
+/* ===== Contact Section ===== */
+.contact-section {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+  flex-shrink: 0;
 }
-.footer .phone{
-  margin-top:6px;
-  font-size:14px;
-  color:var(--text);
-  font-weight:1000;
 
-  /* Fix direction */
-  direction:ltr;
-  unicode-bidi: plaintext;
-}
-.wa{
-  margin:10px auto 0;
-  width:48px;
-  height:48px;
-  border-radius:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#25D366;
-  box-shadow:0 14px 25px rgba(37,211,102,.25);
-  cursor:pointer;
-}
-.wa svg{width:26px;height:26px;fill:#fff}
+.contact-info p { margin: 2px 0; font-size: 13px; font-weight: bold;}
 
-/* Category page */
-.pageTop{
-  margin-top:12px;
+/* تنسيق الرقم المطلوب */
+.phone {
+  direction: ltr; 
+  display: block;
+  font-size: 17px;
+  font-weight: 900;
+  margin: 5px 0;
+  color: var(--text);
+}
+
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  color: white;
+  padding: 10px;
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+/* ===== Product Page Overlay ===== */
+#productView {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
   background:#fff;
-  border:1px solid var(--stroke);
-  border-radius:calc(var(--radius) + 8px);
-  box-shadow:var(--shadow);
-  padding:12px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.back{
-  border:1px solid var(--stroke);
-  background:#fff;
-  padding:10px 14px;
-  border-radius:16px;
-  cursor:pointer;
-  font-size:13px;
-  color:var(--text);
-}
-.ptitle{
-  flex:1;
-  text-align:center;
-  margin:0;
-  font-size:16px;
-  font-weight:1000;
-}
-
-/* Product modal */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
+  z-index: 1000;
   display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
+  flex-direction:column;
 }
-.modal.open{display:flex}
+.pageTop{ padding:15px; display:flex; align-items:center; border-bottom:1px solid var(--stroke); }
+.back{ border:1px solid var(--stroke); background:#fff; padding:8px 15px; border-radius:12px; cursor:pointer; }
+.hero{ flex:1; display:flex; align-items:center; justify-content:center; padding:15px; background:#fffcfd; }
+.big{ max-width:100%; max-height:100%; border-radius:15px; object-fit: contain; }
+.actions{ padding:20px; }
+.btn.primary{ width:100%; background:linear-gradient(135deg,var(--pink),var(--purple)); color:#fff; border:none; padding:15px; border-radius:15px; font-weight:900; font-size:16px; }
 
-.viewer{
-  width:92%;
-  background:#fff;
-  border-radius:26px;
-  overflow:hidden;
-}
-.viewerHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px;
-  border-bottom:1px solid var(--stroke);
-}
-.viewerHeader h3{
-  margin:0;
-  font-size:14px;
-  font-weight:1000;
-}
-.closeBtn{
-  border:none;
-  background:linear-gradient(135deg,var(--pink),var(--purple));
-  color:#fff;
-  padding:9px 14px;
-  border-radius:14px;
-  cursor:pointer;
-  font-weight:900;
-}
-.big{
-  width:100%;
-  max-height:60vh;
-  object-fit:contain;
-  background:#fff;
-}
-.thumbs{
-  display:flex;
-  gap:10px;
-  overflow:auto;
-  padding:12px;
-}
-.mini{
-  width:80px;
-  aspect-ratio:1/1;
-  object-fit:cover;
-  border-radius:16px;
-  border:1px solid var(--stroke);
-  opacity:.65;
-  cursor:pointer;
-  background:#f2f2f2;
-}
-.mini.active{
-  opacity:1;
-  outline:2px solid var(--pink);
-}
-
-/* WhatsApp Button */
-.actions{
-  padding:12px;
-  border-top:1px solid var(--stroke);
-}
-.btn{
-  width:100%;
-  border:none;
-  padding:13px 14px;
-  border-radius:18px;
-  font-size:15px;
-  font-weight:1000;
-  cursor:pointer;
-  background:linear-gradient(135deg,var(--pink),var(--purple));
-  color:#fff;
-}
 </style>
 </head>
 
 <body>
 <div class="wrap">
 
-  <div class="header" onclick="goHome()" style="cursor:pointer">
-    <div class="logo"></div>
-    <h1>lovingly.framed</h1>
-    <p>Frames made with love</p>
+  <div class="top">
+    <div class="brand" onclick="goHome()">
+      <div class="logo"></div>
+      <h1>Lovingly Framed</h1>
+      <p>@lovingly.framed</p>
+    </div>
   </div>
 
-  <!-- Home view -->
-  <div id="homeView">
-    <div class="grid" id="catGrid"></div>
+  <div class="main-content" id="listView">
+    <div class="grid" id="grid">
+      <div class="card" onclick="openProduct('newborn')">
+        <img class="thumb" src="images/newborn/thumb.jpg" onerror="this.src='https://via.placeholder.com/300/ffe4f1/f6a6c9?text=مواليد'">
+        <div class="meta"><h3>فريم مواليد</h3><div class="badge">اطلب الآن</div></div>
+      </div>
+      
+      <div class="card" onclick="openProduct('bride')">
+        <img class="thumb" src="images/bride/thumb.jpg" onerror="this.src='https://via.placeholder.com/300/ffe4f1/f6a6c9?text=عروس'">
+        <div class="meta"><h3>فريم عروس</h3><div class="badge">اطلب الآن</div></div>
+      </div>
 
-    <div class="footer">
-      <div>للتواصل:</div>
-      <div class="phone">+965 6502 2191</div>
+      <div class="card" onclick="openProduct('grad')">
+        <img class="thumb" src="images/grad/thumb.jpg" onerror="this.src='https://via.placeholder.com/300/ffe4f1/f6a6c9?text=تخرج'">
+        <div class="meta"><h3>فريم تخرج</h3><div class="badge">اطلب الآن</div></div>
+      </div>
 
-      <div class="wa" onclick="openWhatsAppGeneral()" title="WhatsApp">
-        <svg viewBox="0 0 32 32" aria-hidden="true">
-          <path d="M19.11 17.29c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.15-.42-2.19-1.34-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.02-.22-.52-.45-.45-.61-.46-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27 0 1.34.98 2.64 1.12 2.82.14.18 1.93 2.95 4.68 4.14.65.28 1.16.45 1.56.57.65.21 1.25.18 1.72.11.52-.08 1.6-.65 1.82-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32z"/>
-          <path d="M26.73 5.27C24.06 2.6 20.5 1.13 16.73 1.13 9.02 1.13 2.76 7.39 2.76 15.1c0 2.47.65 4.88 1.88 7.01L2.64 30.87l8.96-1.96c2.07 1.13 4.4 1.73 6.78 1.73h.01c7.71 0 13.97-6.26 13.97-13.97 0-3.77-1.47-7.33-4.14-10.4zm-9.99 23.02h-.01c-2.09 0-4.14-.56-5.93-1.61l-.42-.25-5.32 1.16 1.14-5.18-.28-.45c-1.18-1.88-1.8-4.05-1.8-6.26 0-6.57 5.35-11.92 11.92-11.92 3.18 0 6.17 1.24 8.42 3.49 2.25 2.25 3.49 5.24 3.49 8.42 0 6.57-5.35 11.92-11.21 11.92z"/>
-        </svg>
+      <div class="card" onclick="openProduct('balloons')">
+        <img class="thumb" src="images/balloons/thumb.jpg" onerror="this.src='https://via.placeholder.com/300/ffe4f1/f6a6c9?text=بالونات'">
+        <div class="meta"><h3>بالونات</h3><div class="badge">اطلب الآن</div></div>
       </div>
     </div>
-  </div>
-
-  <!-- Category view -->
-  <div id="categoryView" style="display:none;">
-    <div class="pageTop">
-      <button class="back" onclick="goHome()">رجوع</button>
-      <h2 class="ptitle" id="catTitle">-</h2>
-      <div style="width:64px"></div>
-    </div>
-    <div class="grid" id="prodGrid" style="margin-top:12px;"></div>
-  </div>
-
-</div>
-
-<!-- Product viewer modal -->
-<div class="modal" id="modal">
-  <div class="viewer">
-    <div class="viewerHeader">
-      <h3 id="mTitle">-</h3>
-      <button class="closeBtn" onclick="closeModal()">إغلاق</button>
-    </div>
-
-    <img id="big" class="big" src="" alt="">
-    <div class="thumbs" id="thumbs"></div>
-
-    <div class="actions">
-      <button class="btn" id="waBtn">اطلب واتساب</button>
+    
+    <div class="contact-section">
+      <div class="contact-info">
+        <p>للتواصل:</p>
+        <span class="phone">+965 6502 2191</span>
+      </div>
+      <a href="https://wa.me/96565022191" class="whatsapp-btn" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" width="18" height="18">
+        تواصل عبر واتساب
+      </a>
     </div>
   </div>
+
+  <div id="productView"></div>
+
 </div>
 
 <script>
-const WHATSAPP_NUMBER = "96565022191";
+const WHATSAPP_NUMBER="96565022191";
 
-const CATEGORIES = [
-  { key:"newborn",  name:"مواليد",   cover:"images/covers/newborn.jpg" },
-  { key:"bride",    name:"عروس",     cover:"images/covers/bride.jpg" },
-  { key:"grad",     name:"تخرج",     cover:"images/covers/grad.jpg" },
-  { key:"balloons", name:"بالونات",  cover:"images/covers/balloons.jpg" }
-];
-
-const PRODUCTS = {
-  newborn:  [],
-  bride:    [],
-  grad:     [],
-  balloons: []
+const DATA = {
+  'newborn': { title: "فريم مواليد", img: "images/newborn/thumb.jpg" },
+  'bride': { title: "فريم عروس", img: "images/bride/thumb.jpg" },
+  'grad': { title: "فريم تخرج", img: "images/grad/thumb.jpg" },
+  'balloons': { title: "بالونات", img: "images/balloons/thumb.jpg" }
 };
 
-const homeView = document.getElementById("homeView");
-const categoryView = document.getElementById("categoryView");
-const catGrid = document.getElementById("catGrid");
-const prodGrid = document.getElementById("prodGrid");
-const catTitle = document.getElementById("catTitle");
-
-const modal = document.getElementById("modal");
-const mTitle = document.getElementById("mTitle");
-const big = document.getElementById("big");
-const thumbs = document.getElementById("thumbs");
-const waBtn = document.getElementById("waBtn");
-
-let currentProduct = null;
-
-function renderCategories(){
-  catGrid.innerHTML = "";
-  CATEGORIES.forEach(c=>{
-    const card = document.createElement("div");
-    card.className = "card";
-    card.onclick = ()=> openCategory(c.key);
-    card.innerHTML = `
-      <img class="thumb" src="${c.cover}" alt="${c.name}">
-      <div class="meta">
-        <h3>${c.name}</h3>
-        <span>اضغط لعرض المنتجات</span>
-        <div class="badge">دخول</div>
-      </div>
-    `;
-    catGrid.appendChild(card);
-  });
+function openProduct(id) {
+  const p = DATA[id];
+  const view = document.getElementById('productView');
+  view.style.display = 'flex';
+  view.innerHTML = `
+    <div class="pageTop">
+      <button class="back" onclick="goHome()">رجوع</button>
+      <h2 style="flex:1; text-align:center; font-size:16px; margin:0;">${p.title}</h2>
+      <div style="width:50px"></div>
+    </div>
+    <div class="hero">
+      <img class="big" src="${p.img}" onerror="this.src='https://via.placeholder.com/600/ffe4f1/f6a6c9?text=${p.title}'">
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="order('${p.title}')">اطلب عبر واتساب</button>
+    </div>
+  `;
 }
 
-function openCategory(key){
-  location.hash = "#category/" + key;
+function goHome() {
+  document.getElementById('productView').style.display = 'none';
 }
 
-function renderCategory(key){
-  const cat = CATEGORIES.find(x=>x.key===key);
-  catTitle.textContent = cat ? cat.name : "";
-  prodGrid.innerHTML = "";
-
-  const items = (PRODUCTS[key] || []);
-  if(items.length === 0){
-    prodGrid.innerHTML = `
-      <div class="card" style="grid-column:1/-1; cursor:default">
-        <div class="meta">
-          <h3>قريبًا</h3>
-          <span>ضيفي منتجات لهذه الفئة</span>
-          <div class="badge">فارغة</div>
-        </div>
-      </div>
-    `;
-  } else {
-    items.forEach(p=>{
-      const card = document.createElement("div");
-      card.className = "card";
-      card.onclick = ()=> openProduct(p);
-      card.innerHTML = `
-        <img class="thumb" src="${p.folder}/${p.thumb}" alt="${p.title}">
-        <div class="meta">
-          <h3>${p.title}</h3>
-          <span>اضغط لعرض الصور</span>
-          <div class="badge">عرض</div>
-        </div>
-      `;
-      prodGrid.appendChild(card);
-    });
-  }
-
-  homeView.style.display = "none";
-  categoryView.style.display = "block";
+function order(title) {
+  const msg = encodeURIComponent(`السلام عليكم، أود طلب: ${title}`);
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
 }
-
-function openProduct(p){
-  currentProduct = p;
-  mTitle.textContent = p.title;
-  big.src = `${p.folder}/${p.photos[0]}`;
-
-  thumbs.innerHTML = "";
-  p.photos.forEach((ph,i)=>{
-    const im = document.createElement("img");
-    im.className = "mini" + (i===0 ? " active":"");
-    im.src = `${p.folder}/${ph}`;
-    im.onclick = ()=>{
-      big.src = im.src;
-      document.querySelectorAll(".mini").forEach(x=>x.classList.remove("active"));
-      im.classList.add("active");
-    };
-    thumbs.appendChild(im);
-  });
-
-  waBtn.onclick = ()=> orderWhatsApp(p.title);
-  modal.classList.add("open");
-}
-
-function closeModal(){
-  modal.classList.remove("open");
-}
-
-function orderWhatsApp(title){
-  const msg = encodeURIComponent(`السلام عليكم، أبي أطلب: ${title}`);
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,"_blank");
-}
-
-function openWhatsAppGeneral(){
-  const msg = encodeURIComponent("السلام عليكم، أبي استفسر عن الفريمات.");
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,"_blank");
-}
-
-function goHome(){
-  location.hash = "";
-  categoryView.style.display = "none";
-  homeView.style.display = "flex";
-  closeModal();
-}
-
-function route(){
-  const h = location.hash || "";
-  if(h.startsWith("#category/")){
-    renderCategory(h.split("/")[1]);
-  } else {
-    goHome();
-  }
-}
-
-window.addEventListener("hashchange", route);
-
-renderCategories();
-route();
 </script>
 </body>
 </html>
