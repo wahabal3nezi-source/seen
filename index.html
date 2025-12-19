@@ -22,146 +22,188 @@
 html,body{
   height:100%;
   width:100%;
-  overflow:hidden;
   font-family:system-ui,-apple-system,Tahoma,Arial;
   background:linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
 }
 
-/* الحاوية */
-.container{
-  max-width:520px;
+/* ====== الصفحات ====== */
+.page{
+  display:none;
   height:100vh;
-  margin:0 auto;
-  padding:4px;
+}
+.page.active{
   display:flex;
   flex-direction:column;
+}
+
+/* ====== الحاوية ====== */
+.container{
+  max-width:520px;
+  margin:0 auto;
+  padding:4px;
+  flex:1;
   transform:translateY(-28px);
 }
 
-/* المحتوى */
-#homeView{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:3px;
-  min-height:0;
-}
-
-/* الشبكة */
+/* ====== GRID ====== */
 .grid{
   flex:1;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:3px;
+  gap:4px;
 }
 
-/* الكارد */
 .card{
   background:var(--card);
   border:1px solid var(--stroke);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   overflow:hidden;
+  cursor:pointer;
 }
 
-/* الصورة فقط بدون عنوان */
-.card-image{
-  width:100%;
-  height:100%;
-  background:#f8eaf1;
-}
-.card-image img{
+.card img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
 }
 
-/* صندوق التواصل */
-.footer-box{
+/* ====== FOOTER ====== */
+.footer{
   background:var(--card);
   border:1px solid var(--stroke);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   padding:6px;
   text-align:center;
+  margin-top:6px;
 }
 
-.contact-text{font-size:10px;color:var(--muted);}
-.phone{font-size:12px;font-weight:900;direction:ltr;}
+.phone{
+  font-weight:900;
+  font-size:12px;
+  direction:ltr;
+}
 
-/* واتساب */
-.whatsapp-button{
-  width:32px;
-  height:32px;
-  margin:4px auto 0;
+/* ====== واتساب ====== */
+.whatsapp{
+  width:40px;
+  height:40px;
+  margin:6px auto 0;
   background:#25D366;
-  border-radius:8px;
+  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-.whatsapp-button svg{
-  width:18px;
-  height:18px;
+.whatsapp svg{
+  width:22px;
+  height:22px;
   fill:#fff;
 }
 
-/* البوكس السفلي */
-.bottom-box{
-  background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:6px;
-  text-align:center;
-  margin-bottom:0;
+/* ====== صفحة الصور ====== */
+.gallery{
+  flex:1;
+  overflow-y:auto;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:4px;
 }
-.bottom-box h2{font-size:13px;font-weight:900;}
-.bottom-box p{font-size:10px;color:var(--muted);}
+
+.gallery img{
+  width:100%;
+  border-radius:var(--radius);
+}
+
+/* زر رجوع */
+.back{
+  text-align:center;
+  font-size:12px;
+  font-weight:900;
+  padding:6px;
+  cursor:pointer;
+}
 </style>
 </head>
 
 <body>
-<div class="container">
 
-  <div id="homeView">
+<!-- ====== الصفحة الرئيسية ====== -->
+<div id="home" class="page active">
+  <div class="container">
 
     <div class="grid">
-      <div class="card">
-        <div class="card-image"><img src="bride.jpg"></div>
+      <div class="card" onclick="openGallery('bride')">
+        <img src="bride.jpg">
       </div>
-
-      <div class="card">
-        <div class="card-image"><img src="newborn.jpg"></div>
+      <div class="card" onclick="openGallery('newborn')">
+        <img src="newborn.jpg">
       </div>
-
-      <div class="card">
-        <div class="card-image"><img src="balloons.jpg"></div>
+      <div class="card" onclick="openGallery('balloons')">
+        <img src="balloons.jpg">
       </div>
-
-      <div class="card">
-        <div class="card-image"><img src="grad.jpg"></div>
+      <div class="card" onclick="openGallery('grad')">
+        <img src="grad.jpg">
       </div>
     </div>
 
-    <div class="footer-box">
-      <div class="contact-text">للتواصل</div>
+    <div class="footer">
+      <div>للتواصل</div>
       <div class="phone">+965 6502 2191</div>
-      <div class="whatsapp-button" onclick="window.open('https://wa.me/96565022191')">
+
+      <div class="whatsapp" onclick="window.open('https://wa.me/96565022191')">
         <svg viewBox="0 0 32 32">
           <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/>
         </svg>
       </div>
     </div>
 
-    <div class="bottom-box">
-      <h2>lovingly.framed</h2>
-      <p>Frames made with love</p>
+  </div>
+</div>
+
+<!-- ====== صفحة الكتالوج ====== -->
+<div id="galleryPage" class="page">
+  <div class="container">
+
+    <div class="back" onclick="goHome()">رجوع</div>
+
+    <div id="gallery" class="gallery">
+      <!-- الصور تنحط هنا -->
     </div>
 
   </div>
 </div>
+
+<script>
+const galleries = {
+  bride: ['bride1.jpg','bride2.jpg','bride3.jpg'],
+  newborn: ['new1.jpg','new2.jpg','new3.jpg'],
+  balloons: ['bal1.jpg','bal2.jpg','bal3.jpg'],
+  grad: ['grad1.jpg','grad2.jpg','grad3.jpg']
+};
+
+function openGallery(type){
+  document.getElementById('home').classList.remove('active');
+  document.getElementById('galleryPage').classList.add('active');
+
+  const g = document.getElementById('gallery');
+  g.innerHTML = '';
+
+  galleries[type].forEach(src=>{
+    const img = document.createElement('img');
+    img.src = src;
+    g.appendChild(img);
+  });
+}
+
+function goHome(){
+  document.getElementById('galleryPage').classList.remove('active');
+  document.getElementById('home').classList.add('active');
+}
+</script>
+
 </body>
 </html>
