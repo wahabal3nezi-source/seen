@@ -36,7 +36,6 @@ html,body{
   padding:4px;
   display:flex;
   flex-direction:column;
-  transform:translateY(-28px);
 }
 
 /* المحتوى */
@@ -133,32 +132,47 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:8px;
+  padding:12px 8px;
   background:var(--card);
   border-bottom:1px solid var(--stroke);
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 2px 4px rgba(0,0,0,0.05);
 }
 
 .back-button{
-  background:none;
-  border:none;
-  font-size:14px;
+  background:var(--card);
+  border:1px solid var(--stroke);
+  border-radius:6px;
+  font-size:12px;
   color:var(--text);
   cursor:pointer;
-  padding:4px 8px;
+  padding:6px 10px;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  box-shadow:0 2px 4px rgba(0,0,0,0.05);
+}
+
+.back-button:hover{
+  background:var(--bg2);
 }
 
 .catalog-title{
   font-size:14px;
   font-weight:900;
+  text-align:center;
 }
 
 .catalog-grid{
   flex:1;
   overflow-y:auto;
-  padding:4px;
+  padding:8px 4px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:4px;
+  gap:8px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .catalog-item{
@@ -167,11 +181,16 @@ html,body{
   overflow:hidden;
   border:1px solid var(--stroke);
   box-shadow:var(--shadow);
+  transition:transform 0.2s;
+}
+
+.catalog-item:hover{
+  transform:translateY(-2px);
 }
 
 .catalog-item img{
   width:100%;
-  height:180px;
+  height:200px;
   object-fit:cover;
   display:block;
 }
@@ -196,12 +215,36 @@ html,body{
   border:1px solid var(--stroke);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
-  padding:8px;
+  padding:10px;
   text-align:center;
-  margin:2px 0;
+  margin:4px 0;
   cursor:pointer;
   font-weight:900;
   font-size:12px;
+  transition:all 0.2s;
+}
+
+.catalog-button:hover{
+  background:var(--bg2);
+}
+
+/* تخصيص شريط التمرير */
+.catalog-grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.catalog-grid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.catalog-grid::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+.catalog-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
 }
 </style>
 </head>
@@ -213,25 +256,25 @@ html,body{
   <div id="homeView">
     <div class="grid">
       <div class="card" onclick="showCatalog('bridal')">
-        <div class="card-image"><img src="bride.jpg"></div>
+        <div class="card-image"><img src="bride.jpg" alt="إطارات العروس"></div>
       </div>
 
       <div class="card" onclick="showCatalog('newborn')">
-        <div class="card-image"><img src="newborn.jpg"></div>
+        <div class="card-image"><img src="newborn.jpg" alt="إطارات المواليد"></div>
       </div>
 
       <div class="card" onclick="showCatalog('balloons')">
-        <div class="card-image"><img src="balloons.jpg"></div>
+        <div class="card-image"><img src="balloons.jpg" alt="إطارات البالونات"></div>
       </div>
 
       <div class="card" onclick="showCatalog('grad')">
-        <div class="card-image"><img src="grad.jpg"></div>
+        <div class="card-image"><img src="grad.jpg" alt="إطارات التخرج"></div>
       </div>
     </div>
 
     <!-- زر الكتالوج -->
     <div class="catalog-button" onclick="showCatalog('all')">
-      تصفح الكتالوج الكامل
+      📁 تصفح الكتالوج الكامل
     </div>
 
     <div class="footer-box">
@@ -260,7 +303,9 @@ html,body{
   <!-- صفحة الكتالوج -->
   <div id="catalogView" class="view-hidden">
     <div class="catalog-header">
-      <button class="back-button" onclick="goBack()">← رجوع</button>
+      <button class="back-button" onclick="goBack()">
+        <span>←</span> رجوع
+      </button>
       <div class="catalog-title" id="catalogTitle">كتالوج الأعمال</div>
       <div style="width:60px;"></div>
     </div>
@@ -278,23 +323,31 @@ const catalogImages = {
   'bridal': [
     'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=500&fit=crop',
     'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w-400&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=500&fit=crop'
+    'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop'
   ],
   'newborn': [
     'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop',
     'https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=400&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=400&h=500&fit=crop'
+    'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=500&fit=crop'
   ],
   'balloons': [
     'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=500&fit=crop',
     'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1545235617-9465d2a55698?w=400&h=500&fit=crop'
+    'https://images.unsplash.com/photo-1545235617-9465d2a55698?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=500&fit=crop'
   ],
   'grad': [
     'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=500&fit=crop',
     'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=400&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1524178234883-043d5c3f3cf4?w=400&h=500&fit=crop'
+    'https://images.unsplash.com/photo-1524178234883-043d5c3f3cf4?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=500&fit=crop'
   ],
   'all': [
     'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=500&fit=crop',
@@ -304,16 +357,18 @@ const catalogImages = {
     'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=500&fit=crop',
     'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=500&fit=crop',
     'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=400&h=500&fit=crop'
+    'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1524178234883-043d5c3f3cf4?w=400&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=500&fit=crop'
   ]
 };
 
 const catalogTitles = {
-  'bridal': 'إطارات العروس',
-  'newborn': 'إطارات المواليد',
-  'balloons': 'إطارات البالونات',
-  'grad': 'إطارات التخرج',
-  'all': 'الكتالوج الكامل'
+  'bridal': 'إطارات العروس 👰',
+  'newborn': 'إطارات المواليد 👶',
+  'balloons': 'إطارات البالونات 🎈',
+  'grad': 'إطارات التخرج 🎓',
+  'all': 'الكتالوج الكامل 📁'
 };
 
 // عرض الكتالوج
@@ -329,10 +384,22 @@ function showCatalog(category) {
   
   const images = catalogImages[category] || [];
   
+  if (images.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+        <p style="color: var(--muted);">لا توجد صور في هذا القسم بعد</p>
+        <button onclick="goBack()" style="margin-top: 10px; padding: 8px 16px; background: var(--card); border: 1px solid var(--stroke); border-radius: 6px; cursor: pointer;">
+          العودة
+        </button>
+      </div>
+    `;
+    return;
+  }
+  
   images.forEach(imgUrl => {
     const item = document.createElement('div');
     item.className = 'catalog-item';
-    item.innerHTML = `<img src="${imgUrl}" alt="إطار">`;
+    item.innerHTML = `<img src="${imgUrl}" alt="إطار" loading="lazy">`;
     grid.appendChild(item);
   });
 }
@@ -346,26 +413,33 @@ function goBack() {
 // إضافة صورك الخاصة - ضع روابط صورك هنا
 function loadCustomImages() {
   // استبدل هذه الأمثلة بصورك الحقيقية
+  // يمكنك إضافة الصور المحلية أو روابط خارجية
   catalogImages.bridal = [
     'bride.jpg',
     'bride2.jpg',
-    'bride3.jpg'
+    'bride3.jpg',
+    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=500&fit=crop'
   ];
   catalogImages.newborn = [
     'newborn.jpg',
     'newborn2.jpg',
-    'newborn3.jpg'
+    'newborn3.jpg',
+    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop'
   ];
   catalogImages.balloons = [
     'balloons.jpg',
     'balloons2.jpg',
-    'balloons3.jpg'
+    'balloons3.jpg',
+    'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=500&fit=crop'
   ];
   catalogImages.grad = [
     'grad.jpg',
     'grad2.jpg',
-    'grad3.jpg'
+    'grad3.jpg',
+    'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=500&fit=crop'
   ];
+  
+  // الكتالوج الكامل يجمع كل الصور
   catalogImages.all = [
     ...catalogImages.bridal,
     ...catalogImages.newborn,
@@ -378,13 +452,26 @@ function loadCustomImages() {
 window.onload = function() {
   loadCustomImages();
   
-  // تحميل الصور الأساسية
+  // تحميل الصور الأساسية مع معالجة الأخطاء
   const cards = document.querySelectorAll('.card-image img');
   cards.forEach(card => {
     card.onerror = function() {
       this.src = 'https://via.placeholder.com/400x500/f8eaf1/6a3d57?text=صورة+العمل';
+      this.onerror = null;
     };
   });
+  
+  // إضافة دعم التمرير السلس
+  document.querySelectorAll('.catalog-grid').forEach(grid => {
+    grid.style.overflowY = 'auto';
+  });
+};
+
+// دعم زر الرجوع في المتصفح
+window.onpopstate = function(event) {
+  if (!document.getElementById('catalogView').classList.contains('view-hidden')) {
+    goBack();
+  }
 };
 </script>
 </body>
