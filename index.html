@@ -118,8 +118,8 @@ body{
   display:block;
 }
 
-/* الفوتر - مصغر */
-.footer{
+/* الفوتر - مربع إضافي في الأسفل */
+.footer-box{
   background:var(--card);
   border:1px solid var(--stroke);
   border-radius:12px;
@@ -128,6 +128,11 @@ body{
   text-align:center;
   margin-top:4px;
   flex-shrink:0;
+}
+
+/* معلومات التواصل داخل المربع */
+.contact-info{
+  margin-bottom:4px;
 }
 .contact-text{
   font-size:9px;
@@ -142,7 +147,7 @@ body{
   unicode-bidi:plaintext;
 }
 
-/* زر الواتساب - مصغر */
+/* زر الواتساب */
 .whatsapp-button{
   width:30px;
   height:30px;
@@ -159,12 +164,35 @@ body{
   height:16px;
   fill:white;
 }
+
+/* المربع الإضافي في الأسفل - نفس تصميم الهيدر */
+.bottom-box{
+  background:var(--card);
+  border:1px solid var(--stroke);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  padding:6px;
+  text-align:center;
+  margin-top:4px;
+  flex-shrink:0;
+}
+.bottom-box h2{
+  font-size:12px;
+  font-weight:900;
+  margin:0;
+}
+.bottom-box .tagline{
+  font-size:9px;
+  color:var(--muted);
+  margin-top:1px;
+}
 </style>
 </head>
 
 <body>
 <div class="container">
 
+  <!-- الهيدر العلوي -->
   <div class="header">
     <h1>lovingly.framed</h1>
     <p>Frames made with love</p>
@@ -214,14 +242,23 @@ body{
       </div>
     </div>
 
-    <div class="footer">
-      <div class="contact-text">للتواصل</div>
-      <div class="phone">+965 6502 2191</div>
+    <!-- المربع الأوسط - معلومات التواصل -->
+    <div class="footer-box">
+      <div class="contact-info">
+        <div class="contact-text">للتواصل</div>
+        <div class="phone">+965 6502 2191</div>
+      </div>
       <div class="whatsapp-button" onclick="window.open('https://wa.me/96565022191','_blank')">
         <svg viewBox="0 0 32 32">
           <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14s-6.3-15.5-15.7-15.5z"/>
         </svg>
       </div>
+    </div>
+
+    <!-- المربع الإضافي في الأسفل - نفس تصميم الهيدر -->
+    <div class="bottom-box">
+      <h2>lovingly.framed</h2>
+      <p class="tagline">Frames made with love</p>
     </div>
 
   </div>
@@ -250,13 +287,17 @@ function adjustForSmallScreen() {
       title.style.fontSize = '9px';
     });
     
-    document.querySelector('.footer').style.padding = '5px';
+    document.querySelector('.footer-box').style.padding = '5px';
     document.querySelector('.phone').style.fontSize = '9px';
     
     document.querySelector('.whatsapp-button').style.width = '28px';
     document.querySelector('.whatsapp-button').style.height = '28px';
     document.querySelector('.whatsapp-button svg').style.width = '14px';
     document.querySelector('.whatsapp-button svg').style.height = '14px';
+    
+    document.querySelector('.bottom-box').style.padding = '4px';
+    document.querySelector('.bottom-box h2').style.fontSize = '11px';
+    document.querySelector('.bottom-box .tagline').style.fontSize = '8px';
   }
 }
 
