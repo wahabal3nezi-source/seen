@@ -182,15 +182,18 @@ html,body{
   background:linear-gradient(90deg, #ff6b9d, #25D366);
 }
 
-/* التعديل هنا: تصغير صندوق التواصل */
+/* التعديل هنا: تصغير ورفع صندوق التواصل */
 .contact-box{
   background:var(--card);
   border:1px solid var(--stroke);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
-  padding:14px; /* تصغير من 16px إلى 14px */
+  padding:12px; /* تصغير من 14px إلى 12px (-2px) */
   margin:0 16px 16px;
   text-align:center;
+  margin-top: -32px; /* رفع للأعلى 32px (2 انش تقريباً) */
+  position: relative;
+  z-index: 10;
 }
 
 .contact-title{
@@ -214,7 +217,7 @@ html,body{
 /* التعديل هنا: تصغير زر الواتساب */
 .whatsapp-button-large{
   width:100%;
-  height:46px; /* تصغير من 48px إلى 46px */
+  height:44px; /* تصغير من 46px إلى 44px (-2px) */
   background:#25D366;
   border-radius:var(--radius);
   display:flex;
@@ -419,8 +422,9 @@ html,body{
   
   /* التعديل هنا للجوال */
   .contact-box{
-    padding:12px; /* تصغير من 14px إلى 12px */
+    padding:10px; /* تصغير من 12px إلى 10px */
     margin:0 12px 12px;
+    margin-top: -28px; /* رفع للأعلى على الجوال */
   }
   
   .phone-number{
@@ -429,7 +433,7 @@ html,body{
   }
   
   .whatsapp-button-large{
-    height:44px; /* تصغير من 44px إلى 42px */
+    height:42px; /* تصغير من 44px إلى 42px */
   }
   
   .whatsapp-button-large span{
