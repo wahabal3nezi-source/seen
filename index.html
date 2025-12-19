@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>lovingly.framed</title>
 
   <style>
@@ -14,135 +14,128 @@
       --stroke:rgba(0,0,0,.06);
       --shadow:0 6px 14px rgba(233,133,179,.18);
       --radius:12px;
+      --pink-header: #fdecf4; /* اللون الوردي للعنوان العلوي */
     }
 
     *{ box-sizing:border-box; }
-    html, body{ height:100%; }
+    html, body{ height:100%; margin: 0; padding: 0; }
 
     body{
-      margin:0;
       font-family: system-ui, -apple-system, Tahoma, Arial;
       background: linear-gradient(180deg,var(--bg),var(--bg2));
       color:var(--text);
-      overflow:hidden; /* صفحة وحدة */
+      overflow:hidden; 
       -webkit-tap-highlight-color: transparent;
     }
 
     .wrap{
       max-width:520px;
       margin:0 auto;
-      height:100vh;
-      padding:6px;
+      height: 100vh;
+      padding: 8px 10px;
       display:flex;
       flex-direction:column;
-      gap:6px;
+      justify-content: space-between; /* توزيع العناصر لملء الشاشة */
     }
 
-    /* Header صغير */
+    /* Header */
     .header{
-      background:#fff;
+      background:rgba(255, 255, 255, 0.9);
       border:1px solid var(--stroke);
       border-radius:14px;
       box-shadow:var(--shadow);
-      padding:6px;
+      padding:5px;
       text-align:center;
       flex:0 0 auto;
     }
-    .header h1{
-      margin:0;
-      font-size:13px;
-      font-weight:900;
-    }
-    .header p{
-      margin:2px 0 0;
-      font-size:10px;
-      color:var(--muted);
-    }
+    .header h1{ margin:0; font-size:14px; font-weight:900; }
+    .header p{ margin:1px 0 0; font-size:10px; color:var(--muted); }
 
     /* Grid 2x2 */
     .grid{
-      flex:1 1 auto;
+      flex: 1;
       display:grid;
       grid-template-columns: repeat(2, 1fr);
-      gap:6px;
-      align-content:stretch;
+      grid-template-rows: repeat(2, 1fr);
+      gap: 8px;
+      margin: 8px 0;
     }
 
-    /* الكارت كـ رابط عشان التاتش يصير مضمون */
+    /* الكارت المعدل */
     .cat{
       display:flex;
       flex-direction:column;
       text-decoration:none;
       color:inherit;
-
       background:#fff;
       border:1px solid var(--stroke);
-      border-radius:12px;
+      border-radius:14px;
       box-shadow:var(--shadow);
       overflow:hidden;
-
       touch-action: manipulation;
-      user-select:none;
-      -webkit-user-select:none;
-    }
-    .cat:active{
-      transform: scale(0.99);
     }
 
-    /* الصورة فقط */
+    /* العنوان الوردي (فوق) */
+    .label{
+      background: var(--pink-header);
+      padding: 5px;
+      text-align:center;
+      font-size:12px;
+      font-weight:900;
+      border-bottom: 1px solid var(--stroke);
+      flex-shrink: 0;
+    }
+
+    /* المربع الأبيض للصورة (تحت) */
+    .img-box {
+      flex: 1;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
     .cat img{
       width:100%;
-      /* أهم سطر: يخليها تناسب أي تلفون */
-      height: clamp(62px, 17vh, 95px);
+      height: 100%;
       object-fit:cover;
       display:block;
-      background:#f6eaf0;
+      border-radius: 8px; /* تقويس بسيط للصورة داخل المربع الأبيض */
     }
 
-    /* اسم الكاتيجوري تحت */
-    .label{
-      padding:6px 6px 7px;
-      text-align:center;
-      font-size:11px;
-      font-weight:900;
-      line-height:1.1;
-    }
-
-    /* Footer ثابت وتحت */
+    /* Footer */
     .footer{
       flex:0 0 auto;
       text-align:center;
       font-size:10px;
       color:var(--muted);
-      padding-bottom:2px;
+      padding-bottom: 10px; /* مساحة لأزرار الأيفون السفلية */
     }
     .phone{
       margin-top:2px;
-      font-size:12px;
+      font-size:13px;
       font-weight:900;
       color:var(--text);
-      direction:ltr;           /* عشان ما ينعكس */
-      unicode-bidi: plaintext; /* تثبيت */
+      direction:ltr;
+      unicode-bidi: plaintext;
     }
 
     .wa{
-      margin:4px auto 0;
-      width:30px;
-      height:30px;
-      border-radius:12px;
+      margin:5px auto 0;
+      width:34px;
+      height:34px;
+      border-radius:10px;
       display:flex;
       align-items:center;
       justify-content:center;
       background:#25D366;
-      box-shadow:0 8px 16px rgba(37,211,102,.18);
-
-      touch-action: manipulation;
+      box-shadow:0 4px 10px rgba(37,211,102,0.3);
     }
     .wa svg{
-      width:16px;
-      height:16px;
+      width:20px;
+      height:20px;
       fill:#fff;
-      display:block;
     }
   </style>
 </head>
@@ -156,24 +149,32 @@
     </div>
 
     <div class="grid">
-      <a class="cat" href="#category/newborn" aria-label="مواليد">
-        <img src="images/covers/newborn.jpg" alt="مواليد">
+      <a class="cat" href="#category/newborn">
         <div class="label">مواليد</div>
+        <div class="img-box">
+           <img src="images/covers/newborn.jpg" alt="مواليد">
+        </div>
       </a>
 
-      <a class="cat" href="#category/bride" aria-label="عروس">
-        <img src="images/covers/bride.jpg" alt="عروس">
+      <a class="cat" href="#category/bride">
         <div class="label">عروس</div>
+        <div class="img-box">
+           <img src="images/covers/bride.jpg" alt="عروس">
+        </div>
       </a>
 
-      <a class="cat" href="#category/grad" aria-label="تخرج">
-        <img src="images/covers/grad.jpg" alt="تخرج">
+      <a class="cat" href="#category/grad">
         <div class="label">تخرج</div>
+        <div class="img-box">
+           <img src="images/covers/grad.jpg" alt="تخرج">
+        </div>
       </a>
 
-      <a class="cat" href="#category/balloons" aria-label="بالونات">
-        <img src="images/covers/balloons.jpg" alt="بالونات">
+      <a class="cat" href="#category/balloons">
         <div class="label">بالونات</div>
+        <div class="img-box">
+           <img src="images/covers/balloons.jpg" alt="بالونات">
+        </div>
       </a>
     </div>
 
@@ -181,7 +182,7 @@
       <div>للتواصل</div>
       <div class="phone">+965 6502 2191</div>
 
-      <a class="wa" href="https://wa.me/96565022191" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <a class="wa" href="https://wa.me/96565022191" target="_blank" rel="noopener">
         <svg viewBox="0 0 32 32" aria-hidden="true">
           <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14s-6.3-15.5-15.7-15.5z"/>
         </svg>
@@ -191,11 +192,9 @@
   </div>
 
   <script>
-    // تحسين لمس: امنع “الضغط” من يصير تحديد نص أو غباء متصفح
     document.querySelectorAll(".cat").forEach(a=>{
       a.addEventListener("click", (e)=>{
-        // حاليا بس يغير الهاش. إذا تبي صفحة منتجات لاحقًا نكملها.
-        // e.preventDefault(); openCategory(...)
+        // هنا يمكنك إضافة منطق فتح القسم لاحقاً
       }, { passive:true });
     });
   </script>
