@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>Lovingly Framed</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#fff7fb;
@@ -23,7 +23,7 @@ html,body{
   height:100%;
   width:100%;
   overflow:hidden;
-  font-family:'Noto Sans Arabic', Tahoma, Geneva, Verdana, sans-serif; /* تغيير الخط */
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif; /* خط عربي */
   background:linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
   -webkit-tap-highlight-color:transparent;
@@ -75,7 +75,7 @@ html,body{
   color:var(--muted);
   margin-bottom:6px;
   letter-spacing:1.5px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* تطبيق نفس الخط */
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .brand-name{
@@ -83,7 +83,7 @@ html,body{
   font-weight:900;
   color:var(--text);
   letter-spacing:-0.5px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* تطبيق نفس الخط */
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .grid{
@@ -111,7 +111,6 @@ html,body{
   box-shadow:0 10px 20px rgba(233,133,179,0.25);
 }
 
-/* شريط الأسماء فوق الصور */
 .card-label{
   position:absolute;
   top:0;
@@ -128,7 +127,7 @@ html,body{
   border-top-right-radius:var(--radius);
   backdrop-filter:blur(5px);
   border-bottom:1px solid var(--stroke);
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .card-image{
@@ -144,20 +143,6 @@ html,body{
   height:100%;
   object-fit:cover;
   display:block;
-}
-
-/* إعادة الترتيب حسب الطلب */
-.card:nth-child(1) .card-label { /* فوق يسار - العروس */
-  content:'المواليد';
-}
-.card:nth-child(2) .card-label { /* فوق يمين - المواليد */
-  content:'العروس';
-}
-.card:nth-child(3) .card-label { /* تحت يسار - البالونات */
-  content:'التخرج';
-}
-.card:nth-child(4) .card-label { /* تحت يمين - التخرج */
-  content:'البالونات';
 }
 
 .full-catalog-button{
@@ -179,7 +164,7 @@ html,body{
   gap:10px;
   position:relative;
   overflow:hidden;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .full-catalog-button:active{
@@ -212,7 +197,7 @@ html,body{
   color:var(--muted);
   margin-bottom:8px;
   font-weight:500;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .phone-number{
@@ -222,7 +207,7 @@ html,body{
   color:var(--text);
   margin-bottom:12px;
   letter-spacing:1px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .whatsapp-button-large{
@@ -256,7 +241,7 @@ html,body{
   color:#fff;
   font-weight:700;
   font-size:15px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .bottom-box{
@@ -277,7 +262,7 @@ html,body{
   justify-content:center;
   gap:6px;
   flex-wrap:wrap;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .catalog-header{
@@ -311,7 +296,7 @@ html,body{
   font-weight:500;
   border-radius:8px;
   transition:background 0.2s;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .back-button:active{
@@ -329,7 +314,7 @@ html,body{
   font-weight:900;
   text-align:center;
   flex:1;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .slider-container {
@@ -404,7 +389,7 @@ html,body{
   font-weight: 500;
   box-shadow: var(--shadow);
   border: 1px solid var(--stroke);
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
 }
 
 @media (max-width: 480px) {
@@ -488,28 +473,28 @@ html,body{
     </div>
 
     <div class="grid">
-      <!-- فوق يسار - العروس -->
-      <div class="card" onclick="showCatalog('bridal')">
-        <div class="card-label">العروس 👰</div>
-        <div class="card-image"><img src="bride.jpg" alt="العروس"></div>
-      </div>
-
-      <!-- فوق يمين - المواليد -->
+      <!-- أعلى يسار - المواليد -->
       <div class="card" onclick="showCatalog('newborn')">
-        <div class="card-label">المواليد 👶</div>
+        <div class="card-label">المواليد</div>
         <div class="card-image"><img src="newborn.jpg" alt="المواليد"></div>
       </div>
 
-      <!-- تحت يسار - البالونات -->
-      <div class="card" onclick="showCatalog('balloons')">
-        <div class="card-label">البالونات 🎈</div>
-        <div class="card-image"><img src="balloons.jpg" alt="البالونات"></div>
+      <!-- أعلى يمين - العروس -->
+      <div class="card" onclick="showCatalog('bridal')">
+        <div class="card-label">العروس</div>
+        <div class="card-image"><img src="bride.jpg" alt="العروس"></div>
       </div>
 
-      <!-- تحت يمين - التخرج -->
+      <!-- أسفل يسار - التخرج -->
       <div class="card" onclick="showCatalog('grad')">
-        <div class="card-label">التخرج 🎓</div>
+        <div class="card-label">التخرج</div>
         <div class="card-image"><img src="grad.jpg" alt="التخرج"></div>
+      </div>
+
+      <!-- أسفل يمين - البالونات -->
+      <div class="card" onclick="showCatalog('balloons')">
+        <div class="card-label">البالونات</div>
+        <div class="card-image"><img src="balloons.jpg" alt="البالونات"></div>
       </div>
     </div>
 
@@ -582,11 +567,11 @@ const catalogImages = {
 };
 
 const catalogTitles = {
-  'bridal': 'العروس 👰',
-  'newborn': 'المواليد 👶',
-  'balloons': 'البالونات 🎈',
-  'grad': 'التخرج 🎓',
-  'all': 'الكتالوج الكامل 📁'
+  'bridal': 'العروس',
+  'newborn': 'المواليد',
+  'balloons': 'البالونات',
+  'grad': 'التخرج',
+  'all': 'الكتالوج الكامل'
 };
 
 class ImageSlider {
@@ -789,4 +774,3 @@ window.onload = function() {
 </script>
 </body>
 </html>
-
