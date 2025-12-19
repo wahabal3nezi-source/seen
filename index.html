@@ -25,10 +25,10 @@ html,body{
   font-family:system-ui,-apple-system,Tahoma,Arial;
   background:linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
-  overflow:hidden;
+  overflow:hidden; /* الصفحة الرئيسية ثابتة */
 }
 
-/* حاوية مع safe-area عشان سفاري */
+/* الحاوية مع safe-area عشان سفاري */
 .container{
   max-width:520px;
   margin:0 auto;
@@ -43,7 +43,6 @@ html,body{
   gap:6px;
 }
 
-/* fallback لو المتصفح ما يدعم dvh */
 @supports not (height: 100dvh){
   .container{height:100vh;}
 }
@@ -68,7 +67,7 @@ html,body{
   min-height:0;
 }
 
-/* كروت */
+/* كروت الصفحة الرئيسية */
 .card{
   background:var(--card);
   border:1px solid var(--stroke);
@@ -78,6 +77,7 @@ html,body{
   cursor:pointer;
   touch-action:manipulation;
 }
+.card:active{transform:scale(.99);}
 
 .card-image{
   width:100%;
@@ -121,7 +121,7 @@ html,body{
 .contact-text{font-size:10px;color:var(--muted);}
 .phone{font-size:12px;font-weight:900;direction:ltr;}
 
-/* واتساب */
+/* زر واتساب */
 .whatsapp-button{
   width:34px;
   height:34px;
@@ -158,6 +158,10 @@ html,body{
 .whatsapp-logo svg{width:12px;height:12px;fill:#25D366;}
 
 /* صفحة الكتالوج */
+#catalogView{
+  overflow:hidden; /* الهيدر ثابت */
+}
+
 .catalog-header{
   display:flex;
   align-items:center;
@@ -195,20 +199,19 @@ html,body{
   text-align:center;
 }
 
-/* هنا التغيير المهم: قائمة عمودية + صورة واحدة بالسطر + سكرول لمس */
+/* مهم: الكتالوج يسكرول مثل الانستا */
 .catalog-grid{
   flex:1;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
-  padding:8px 2px 12px;
+  padding:8px 2px 16px;
   display:flex;
   flex-direction:column;
-  gap:10px;
-  overscroll-behavior:contain;
+  gap:12px;
   touch-action:pan-y;
 }
 
-/* عنصر صورة كبيرة 9:16 */
+/* بوست واحد بكل سطر + تيك توك ستايل 9:16 */
 .catalog-item{
   background:var(--card);
   border-radius:var(--radius);
@@ -219,7 +222,7 @@ html,body{
 
 .catalog-item .img-wrap{
   width:100%;
-  aspect-ratio: 9 / 16; /* عمودي مثل ستوري */
+  aspect-ratio: 9 / 16;
   background:#f8eaf1;
 }
 
@@ -230,7 +233,7 @@ html,body{
   display:block;
 }
 
-/* تمرير أنظف */
+/* سكرول بار */
 .catalog-grid::-webkit-scrollbar{width:4px;}
 .catalog-grid::-webkit-scrollbar-track{background:#f1f1f1;border-radius:4px;}
 .catalog-grid::-webkit-scrollbar-thumb{background:var(--muted);border-radius:4px;}
@@ -305,19 +308,23 @@ const catalogImages = {
     'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=900&h=1600&fit=crop',
     'https://images.unsplash.com/photo-1519741497674-611481863552?w=900&h=1600&fit=crop',
     'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=900&h=1600&fit=crop',
-    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900&h=1600&fit=crop'
+    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900&h=1600&fit=crop',
+    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&h=1600&fit=crop'
   ],
   newborn: [
     'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=900&h=1600&fit=crop',
-    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900&h=1600&fit=crop'
+    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900&h=1600&fit=crop',
+    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=900&h=1600&fit=crop'
   ],
   balloons: [
     'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=900&h=1600&fit=crop',
-    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&h=1600&fit=crop'
+    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&h=1600&fit=crop',
+    'https://images.unsplash.com/photo-1545235617-9465d2a55698?w=900&h=1600&fit=crop'
   ],
   grad: [
     'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=900&h=1600&fit=crop',
-    'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=900&h=1600&fit=crop'
+    'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=900&h=1600&fit=crop',
+    'https://images.unsplash.com/photo-1524178234883-043d5c3f3cf4?w=900&h=1600&fit=crop'
   ],
   all: []
 };
@@ -345,12 +352,12 @@ function showCatalog(category){
 
   document.getElementById('catalogTitle').textContent = catalogTitles[category] || 'الكتالوج';
 
-  const list = document.getElementById('catalogGrid');
-  list.innerHTML = '';
+  const grid = document.getElementById('catalogGrid');
+  grid.innerHTML = '';
 
   const images = catalogImages[category] || [];
   if(!images.length){
-    list.innerHTML = `
+    grid.innerHTML = `
       <div style="text-align:center;padding:30px;color:var(--muted)">
         لا توجد صور في هذا القسم بعد
       </div>
@@ -358,19 +365,18 @@ function showCatalog(category){
     return;
   }
 
-  images.forEach((url) => {
+  images.forEach((imgUrl) => {
     const item = document.createElement('div');
     item.className = 'catalog-item';
     item.innerHTML = `
       <div class="img-wrap">
-        <img src="${url}" alt="صورة" loading="lazy">
+        <img src="${imgUrl}" alt="صورة" loading="lazy">
       </div>
     `;
-    list.appendChild(item);
+    grid.appendChild(item);
   });
 
-  // ارفع التمرير للأعلى عند فتح قسم
-  list.scrollTop = 0;
+  grid.scrollTop = 0;
 }
 
 function goBack(){
@@ -378,11 +384,10 @@ function goBack(){
   document.getElementById('homeView').classList.remove('view-hidden');
 }
 
-/* صورك المحلية (اختياري) */
+/* اختياري: صورك المحلية */
 function loadCustomImages(){
-  // مثال: استبدلها بصورك
+  // مثال:
   // catalogImages.bridal = ['bride1.jpg','bride2.jpg'];
-  // بعد التعديل:
   buildAll();
 }
 
@@ -390,7 +395,7 @@ window.addEventListener('load', () => {
   loadCustomImages();
   buildAll();
 
-  // fallback لصور الهوم لو ما لقاها
+  // fallback لصور الصفحة الرئيسية لو ما لقاها
   document.querySelectorAll('.card-image img').forEach(img => {
     img.onerror = function(){
       this.src = 'https://via.placeholder.com/900x1600/f8eaf1/6a3d57?text=صورة';
@@ -398,7 +403,7 @@ window.addEventListener('load', () => {
     };
   });
 
-  // Fix سفاري: تحديث ارتفاع dvh عند تدوير الشاشة
+  // تحديث ارتفاع سفاري عند تدوير الشاشة
   const fixVH = () => {
     document.documentElement.style.setProperty('--appHeight', `${window.innerHeight}px`);
   };
