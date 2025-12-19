@@ -30,32 +30,17 @@ html,body{
   color:var(--text);
 }
 
-/* container مضبوط لسفاري */
+/* container */
 .container{
   max-width:520px;
   height:calc(100vh - env(safe-area-inset-bottom));
   margin:0 auto;
-  padding:6px 4px 14px 4px;
+  padding:4px 4px 14px 4px;
   display:flex;
   flex-direction:column;
-  transform:translateY(-14px);
 }
 
-/* Header */
-.header{
-  background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:5px;
-  text-align:center;
-  margin-bottom:3px;
-  flex-shrink:0;
-}
-.header h1{font-size:12px;font-weight:900;}
-.header p{font-size:9px;color:var(--muted);margin-top:1px;}
-
-/* Content */
+/* المحتوى */
 #homeView{
   flex:1;
   display:flex;
@@ -64,16 +49,15 @@ html,body{
   min-height:0;
 }
 
-/* Grid */
+/* grid */
 .grid{
   flex:1;
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:3px;
-  min-height:0;
 }
 
-/* Card */
+/* card */
 .card{
   background:var(--card);
   border:1px solid var(--stroke);
@@ -84,16 +68,19 @@ html,body{
   overflow:hidden;
 }
 
-/* Card header */
+/* card header */
 .card-header{
   background:linear-gradient(135deg,var(--pink),var(--purple));
   color:#fff;
-  padding:4px;
+  padding:5px;
   text-align:center;
 }
-.card-header h3{font-size:10px;font-weight:900;}
+.card-header h3{
+  font-size:11px;
+  font-weight:900;
+}
 
-/* Image */
+/* image */
 .card-image{
   flex:1;
   background:#f8eaf1;
@@ -104,54 +91,66 @@ html,body{
   object-fit:cover;
 }
 
-/* Footer contact */
+/* footer contact */
 .footer-box{
   background:var(--card);
   border:1px solid var(--stroke);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
-  padding:5px;
+  padding:6px;
   text-align:center;
-  flex-shrink:0;
 }
 
-.contact-text{font-size:9px;color:var(--muted);}
-.phone{
+.contact-text{
   font-size:10px;
+  color:var(--muted);
+}
+.phone{
+  font-size:12px;
   font-weight:900;
   direction:ltr;
 }
 
-/* WhatsApp */
+/* whatsapp */
 .whatsapp-button{
-  width:28px;
-  height:28px;
-  margin:3px auto 0;
+  width:32px;
+  height:32px;
+  margin:4px auto 0;
   background:#25D366;
   border-radius:8px;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-.whatsapp-button svg{width:15px;height:15px;fill:#fff;}
+.whatsapp-button svg{
+  width:18px;
+  height:18px;
+  fill:#fff;
+}
 
-/* Bottom box */
+/* bottom branding */
 .bottom-box{
   background:var(--card);
   border:1px solid var(--stroke);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
-  padding:5px;
+  padding:6px;
   text-align:center;
   margin-bottom:env(safe-area-inset-bottom);
 }
-.bottom-box h2{font-size:12px;font-weight:900;}
-.bottom-box p{font-size:9px;color:var(--muted);}
+.bottom-box h2{
+  font-size:13px;
+  font-weight:900;
+}
+.bottom-box p{
+  font-size:10px;
+  color:var(--muted);
+}
 
 /* شاشات قصيرة */
 @media (max-height:670px){
-  .container{transform:translateY(-16px);}
-  .card-header h3{font-size:9px;}
+  .card-header h3{font-size:10px;}
+  .phone{font-size:11px;}
 }
 </style>
 </head>
@@ -159,32 +158,27 @@ html,body{
 <body>
 <div class="container">
 
-  <div class="header">
-    <h1>lovingly.framed</h1>
-    <p>Frames made with love</p>
-  </div>
-
   <div id="homeView">
 
     <div class="grid">
-      <div class="card">
-        <div class="card-header"><h3>مواليد</h3></div>
-        <div class="card-image"><img src="newborn.jpg"></div>
-      </div>
-
       <div class="card">
         <div class="card-header"><h3>عروس</h3></div>
         <div class="card-image"><img src="bride.jpg"></div>
       </div>
 
       <div class="card">
-        <div class="card-header"><h3>تخرج</h3></div>
-        <div class="card-image"><img src="grad.jpg"></div>
+        <div class="card-header"><h3>مواليد</h3></div>
+        <div class="card-image"><img src="newborn.jpg"></div>
       </div>
 
       <div class="card">
         <div class="card-header"><h3>بالونات</h3></div>
         <div class="card-image"><img src="balloons.jpg"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>تخرج</h3></div>
+        <div class="card-image"><img src="grad.jpg"></div>
       </div>
     </div>
 
