@@ -23,7 +23,7 @@ html,body{
   height:100%;
   width:100%;
   overflow:hidden;
-  font-family:system-ui,-apple-system,Tahoma,Arial;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* تغيير الخط */
   background:linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
   -webkit-tap-highlight-color:transparent;
@@ -57,7 +57,6 @@ html,body{
   padding-top: 0;
 }
 
-/* التعديل هنا: تكبير وتسمين "صنع بحب" */
 .main-header{
   background:var(--card);
   border-bottom:1px solid var(--stroke);
@@ -71,11 +70,12 @@ html,body{
 }
 
 .logo-text{
-  font-size:17px; /* تغيير من 15px إلى 17px (+2px) */
-  font-weight:700; /* إضافة تسمين للخط */
+  font-size:17px;
+  font-weight:700;
   color:var(--muted);
   margin-bottom:6px;
-  letter-spacing:1.5px; /* زيادة تباعد الحروف قليلاً */
+  letter-spacing:1.5px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* تطبيق نفس الخط */
 }
 
 .brand-name{
@@ -83,6 +83,7 @@ html,body{
   font-weight:900;
   color:var(--text);
   letter-spacing:-0.5px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* تطبيق نفس الخط */
 }
 
 .grid{
@@ -110,18 +111,53 @@ html,body{
   box-shadow:0 10px 20px rgba(233,133,179,0.25);
 }
 
+/* شريط الأسماء فوق الصور */
+.card-label{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  background:rgba(255,255,255,0.95);
+  padding:8px 12px;
+  font-size:14px;
+  font-weight:700;
+  color:var(--text);
+  text-align:center;
+  z-index:2;
+  border-top-left-radius:var(--radius);
+  border-top-right-radius:var(--radius);
+  backdrop-filter:blur(5px);
+  border-bottom:1px solid var(--stroke);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .card-image{
   width:100%;
   height:100%;
   background:#f8eaf1;
   border-radius:var(--radius);
   overflow:hidden;
+  position:relative;
 }
 .card-image img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
+}
+
+/* إعادة الترتيب حسب الطلب */
+.card:nth-child(1) .card-label { /* فوق يسار - العروس */
+  content:'العروس 👰';
+}
+.card:nth-child(2) .card-label { /* فوق يمين - المواليد */
+  content:'المواليد 👶';
+}
+.card:nth-child(3) .card-label { /* تحت يسار - البالونات */
+  content:'البالونات 🎈';
+}
+.card:nth-child(4) .card-label { /* تحت يمين - التخرج */
+  content:'التخرج 🎓';
 }
 
 .full-catalog-button{
@@ -143,6 +179,7 @@ html,body{
   gap:10px;
   position:relative;
   overflow:hidden;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .full-catalog-button:active{
@@ -175,6 +212,7 @@ html,body{
   color:var(--muted);
   margin-bottom:8px;
   font-weight:500;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .phone-number{
@@ -184,6 +222,7 @@ html,body{
   color:var(--text);
   margin-bottom:12px;
   letter-spacing:1px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .whatsapp-button-large{
@@ -217,6 +256,7 @@ html,body{
   color:#fff;
   font-weight:700;
   font-size:15px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .bottom-box{
@@ -237,6 +277,7 @@ html,body{
   justify-content:center;
   gap:6px;
   flex-wrap:wrap;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .catalog-header{
@@ -270,6 +311,7 @@ html,body{
   font-weight:500;
   border-radius:8px;
   transition:background 0.2s;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .back-button:active{
@@ -287,6 +329,7 @@ html,body{
   font-weight:900;
   text-align:center;
   flex:1;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .slider-container {
@@ -361,6 +404,7 @@ html,body{
   font-weight: 500;
   box-shadow: var(--shadow);
   border: 1px solid var(--stroke);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 @media (max-width: 480px) {
@@ -371,6 +415,11 @@ html,body{
   
   .card{
     height:160px;
+  }
+  
+  .card-label{
+    font-size:13px;
+    padding:6px 10px;
   }
   
   .full-catalog-button{
@@ -408,8 +457,8 @@ html,body{
   }
   
   .logo-text{
-    font-size:15px; /* تكبير للجوال أيضاً */
-    font-weight:700; /* تسمين للجوال أيضاً */
+    font-size:15px;
+    font-weight:700;
   }
   
   .slide {
@@ -439,19 +488,27 @@ html,body{
     </div>
 
     <div class="grid">
+      <!-- فوق يسار - العروس -->
       <div class="card" onclick="showCatalog('bridal')">
+        <div class="card-label">العروس 👰</div>
         <div class="card-image"><img src="bride.jpg" alt="العروس"></div>
       </div>
 
+      <!-- فوق يمين - المواليد -->
       <div class="card" onclick="showCatalog('newborn')">
+        <div class="card-label">المواليد 👶</div>
         <div class="card-image"><img src="newborn.jpg" alt="المواليد"></div>
       </div>
 
+      <!-- تحت يسار - البالونات -->
       <div class="card" onclick="showCatalog('balloons')">
+        <div class="card-label">البالونات 🎈</div>
         <div class="card-image"><img src="balloons.jpg" alt="البالونات"></div>
       </div>
 
+      <!-- تحت يمين - التخرج -->
       <div class="card" onclick="showCatalog('grad')">
+        <div class="card-label">التخرج 🎓</div>
         <div class="card-image"><img src="grad.jpg" alt="التخرج"></div>
       </div>
     </div>
