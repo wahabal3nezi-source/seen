@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>Lovingly Framed</title>
+
 <style>
 :root{
   --bg:#fff7fb;
@@ -18,28 +19,29 @@
   --radius:10px;
 }
 
-*{box-sizing:border-box; margin:0; padding:0;}
+*{box-sizing:border-box;margin:0;padding:0;}
 
-html, body{
+html,body{
   height:100%;
   width:100%;
   overflow:hidden;
-  font-family: system-ui, -apple-system, Tahoma, Arial;
-  background: linear-gradient(180deg,var(--bg),var(--bg2));
+  font-family:system-ui,-apple-system,Tahoma,Arial;
+  background:linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
 }
 
+/* container مضبوط لسفاري */
 .container{
   max-width:520px;
-  height:100vh;
+  height:calc(100vh - env(safe-area-inset-bottom));
   margin:0 auto;
-  padding:4px 4px 2px 4px; /* تصغير شديد للبادنج السفلي */
+  padding:6px 4px 14px 4px;
   display:flex;
   flex-direction:column;
-  transform: translateY(-8px); /* رفع المحتوى كله */
+  transform:translateY(-14px);
 }
 
-/* Header - مصغر جداً */
+/* Header */
 .header{
   background:var(--card);
   border:1px solid var(--stroke);
@@ -50,37 +52,28 @@ html, body{
   margin-bottom:3px;
   flex-shrink:0;
 }
-.header h1{
-  font-size:12px;
-  font-weight:900;
-  margin:0;
-}
-.header p{
-  font-size:9px;
-  color:var(--muted);
-  margin-top:1px;
-}
+.header h1{font-size:12px;font-weight:900;}
+.header p{font-size:9px;color:var(--muted);margin-top:1px;}
 
-/* الصفحة الرئيسية - بدون gaps كبيرة */
+/* Content */
 #homeView{
   flex:1;
   display:flex;
   flex-direction:column;
+  gap:3px;
   min-height:0;
-  gap:3px; /* تصغير الجاب */
 }
 
-/* شبكة الصور - تصغير الجاب */
+/* Grid */
 .grid{
   flex:1;
   display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:3px; /* تصغير الجاب بين البطاقات */
+  grid-template-columns:repeat(2,1fr);
+  gap:3px;
   min-height:0;
-  margin:0; /* إزالة المارجن */
 }
 
-/* البطاقة - خفض الارتفاع */
+/* Card */
 .card{
   background:var(--card);
   border:1px solid var(--stroke);
@@ -89,42 +82,29 @@ html, body{
   display:flex;
   flex-direction:column;
   overflow:hidden;
-  min-height:0;
-  height:100%;
 }
 
-/* العنوان - تصغير */
+/* Card header */
 .card-header{
-  background:linear-gradient(135deg, var(--pink), var(--purple));
-  color:white;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  color:#fff;
   padding:4px;
   text-align:center;
-  flex-shrink:0;
 }
-.card-header h3{
-  font-size:10px;
-  font-weight:900;
-  margin:0;
-}
+.card-header h3{font-size:10px;font-weight:900;}
 
-/* الصورة - تأخذ مساحة أقل */
+/* Image */
 .card-image{
   flex:1;
-  min-height:0;
-  position:relative;
-  overflow:hidden;
-  background: #f8eaf1;
+  background:#f8eaf1;
 }
-
-/* الصورة الحقيقية */
 .card-image img{
   width:100%;
   height:100%;
   object-fit:cover;
-  display:block;
 }
 
-/* مربع التواصل - مصغر */
+/* Footer contact */
 .footer-box{
   background:var(--card);
   border:1px solid var(--stroke);
@@ -132,45 +112,30 @@ html, body{
   box-shadow:var(--shadow);
   padding:5px;
   text-align:center;
-  margin-top:2px; /* تصغير المارجن العلوي */
   flex-shrink:0;
 }
 
-.contact-info{
-  margin-bottom:3px;
-}
-.contact-text{
-  font-size:9px;
-  color:var(--muted);
-  margin-bottom:1px;
-}
+.contact-text{font-size:9px;color:var(--muted);}
 .phone{
   font-size:10px;
   font-weight:900;
-  color:var(--text);
   direction:ltr;
-  unicode-bidi:plaintext;
 }
 
-/* زر الواتساب - مصغر */
+/* WhatsApp */
 .whatsapp-button{
   width:28px;
   height:28px;
-  border-radius:8px;
+  margin:3px auto 0;
   background:#25D366;
+  border-radius:8px;
   display:flex;
   align-items:center;
   justify-content:center;
-  margin:2px auto 0;
-  cursor:pointer;
 }
-.whatsapp-button svg{
-  width:15px;
-  height:15px;
-  fill:white;
-}
+.whatsapp-button svg{width:15px;height:15px;fill:#fff;}
 
-/* المربع السفلي - مصغر */
+/* Bottom box */
 .bottom-box{
   background:var(--card);
   border:1px solid var(--stroke);
@@ -178,60 +143,15 @@ html, body{
   box-shadow:var(--shadow);
   padding:5px;
   text-align:center;
-  margin-top:2px; /* تصغير المارجن العلوي */
-  flex-shrink:0;
+  margin-bottom:env(safe-area-inset-bottom);
 }
-.bottom-box h2{
-  font-size:12px;
-  font-weight:900;
-  margin:0;
-}
-.bottom-box .tagline{
-  font-size:9px;
-  color:var(--muted);
-  margin-top:1px;
-}
+.bottom-box h2{font-size:12px;font-weight:900;}
+.bottom-box p{font-size:9px;color:var(--muted);}
 
-/* تحسين للشاشات الصغيرة */
-@media (max-height: 670px) {
-  .container{
-    padding:3px 3px 1px 3px;
-    transform: translateY(-10px);
-  }
-  .header{
-    padding:4px;
-    margin-bottom:2px;
-  }
-  .header h1{
-    font-size:11px;
-  }
-  .header p{
-    font-size:8px;
-  }
-  .grid{
-    gap:2px;
-  }
-  .card-header{
-    padding:3px;
-  }
-  .card-header h3{
-    font-size:9px;
-  }
-  .footer-box, .bottom-box{
-    padding:4px;
-    margin-top:1px;
-  }
-  .phone{
-    font-size:9px;
-  }
-  .whatsapp-button{
-    width:26px;
-    height:26px;
-  }
-  .whatsapp-button svg{
-    width:14px;
-    height:14px;
-  }
+/* شاشات قصيرة */
+@media (max-height:670px){
+  .container{transform:translateY(-16px);}
+  .card-header h3{font-size:9px;}
 }
 </style>
 </head>
@@ -247,100 +167,43 @@ html, body{
   <div id="homeView">
 
     <div class="grid">
-      <!-- مواليد -->
       <div class="card">
-        <div class="card-header">
-          <h3>مواليد</h3>
-        </div>
-        <div class="card-image">
-          <img src="newborn.jpg" alt="إطار مواليد" onerror="this.style.display='none'">
-        </div>
+        <div class="card-header"><h3>مواليد</h3></div>
+        <div class="card-image"><img src="newborn.jpg"></div>
       </div>
 
-      <!-- عروس -->
       <div class="card">
-        <div class="card-header">
-          <h3>عروس</h3>
-        </div>
-        <div class="card-image">
-          <img src="bride.jpg" alt="إطار عروس" onerror="this.style.display='none'">
-        </div>
+        <div class="card-header"><h3>عروس</h3></div>
+        <div class="card-image"><img src="bride.jpg"></div>
       </div>
 
-      <!-- تخرج -->
       <div class="card">
-        <div class="card-header">
-          <h3>تخرج</h3>
-        </div>
-        <div class="card-image">
-          <img src="grad.jpg" alt="إطار تخرج" onerror="this.style.display='none'">
-        </div>
+        <div class="card-header"><h3>تخرج</h3></div>
+        <div class="card-image"><img src="grad.jpg"></div>
       </div>
 
-      <!-- بالونات -->
       <div class="card">
-        <div class="card-header">
-          <h3>بالونات</h3>
-        </div>
-        <div class="card-image">
-          <img src="balloons.jpg" alt="إطار بالونات" onerror="this.style.display='none'">
-        </div>
+        <div class="card-header"><h3>بالونات</h3></div>
+        <div class="card-image"><img src="balloons.jpg"></div>
       </div>
     </div>
 
     <div class="footer-box">
-      <div class="contact-info">
-        <div class="contact-text">للتواصل</div>
-        <div class="phone">+965 6502 2191</div>
-      </div>
-      <div class="whatsapp-button" onclick="window.open('https://wa.me/96565022191','_blank')">
+      <div class="contact-text">للتواصل</div>
+      <div class="phone">+965 6502 2191</div>
+      <div class="whatsapp-button" onclick="window.open('https://wa.me/96565022191')">
         <svg viewBox="0 0 32 32">
-          <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14s-6.3-15.5-15.7-15.5z"/>
+          <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/>
         </svg>
       </div>
     </div>
 
     <div class="bottom-box">
       <h2>lovingly.framed</h2>
-      <p class="tagline">Frames made with love</p>
+      <p>Frames made with love</p>
     </div>
 
   </div>
 </div>
-
-<script>
-// تشغيل عند التحميل للتأكد من العرض الصحيح
-window.addEventListener('load', function() {
-  const container = document.querySelector('.container');
-  const body = document.body;
-  
-  // إذا كان المحتوى يتجاوز الشاشة، نصغر أكثر
-  if (container.scrollHeight > body.clientHeight) {
-    // تصغير الـ gaps
-    document.querySelector('#homeView').style.gap = '2px';
-    document.querySelector('.grid').style.gap = '2px';
-    
-    // تصغير البادنج
-    document.querySelector('.header').style.padding = '4px';
-    document.querySelector('.footer-box').style.padding = '4px';
-    document.querySelector('.bottom-box').style.padding = '4px';
-    
-    // رفع أكثر
-    container.style.transform = 'translateY(-12px)';
-    container.style.padding = '3px 3px 0px 3px';
-  }
-  
-  // التأكد من عرض كل المحتوى
-  setTimeout(() => {
-    const view = document.getElementById('homeView');
-    if (view.scrollHeight > view.clientHeight) {
-      // خفض حجم الخطوط قليلاً
-      document.querySelectorAll('.card-header h3').forEach(h3 => {
-        h3.style.fontSize = '9px';
-      });
-    }
-  }, 100);
-});
-</script>
 </body>
 </html>
