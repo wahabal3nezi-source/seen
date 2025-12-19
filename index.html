@@ -14,7 +14,8 @@
   --muted:#9b6f86;
   --stroke:rgba(0,0,0,.06);
   --shadow:0 6px 12px rgba(233,133,179,.15);
-  --radius:10px;
+  --radius:15px;
+  --whatsapp:#25D366;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -22,186 +23,217 @@
 html,body{
   height:100%;
   width:100%;
+  overflow:hidden;
   font-family:system-ui,-apple-system,Tahoma,Arial;
   background:linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
 }
 
-/* ====== الصفحات ====== */
-.page{
-  display:none;
-  height:100vh;
-}
-.page.active{
-  display:flex;
-  flex-direction:column;
-}
-
-/* ====== الحاوية ====== */
+/* الحاوية الرئيسية */
 .container{
   max-width:520px;
+  height:100vh;
   margin:0 auto;
-  padding:4px;
-  flex:1;
-  transform:translateY(-28px);
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  position: relative;
 }
 
-/* ====== GRID ====== */
+/* تنقل الصفحات */
+.view {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.view.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* الشبكة في الصفحة الرئيسية */
 .grid{
-  flex:1;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:4px;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
 }
 
 .card{
-  background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  cursor:pointer;
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  aspect-ratio: 1/1;
 }
 
 .card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-/* ====== FOOTER ====== */
-.footer{
-  background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:6px;
-  text-align:center;
-  margin-top:6px;
+/* صندوق التواصل */
+.footer-box{
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 8px;
 }
 
-.phone{
-  font-weight:900;
-  font-size:12px;
-  direction:ltr;
+.contact-text{font-size: 12px; color: var(--muted); margin-bottom: 4px;}
+.phone{font-size: 16px; font-weight: 900; direction: ltr; margin-bottom: 8px; display: block;}
+
+/* زر واتساب */
+.whatsapp-button{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--whatsapp);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+  cursor: pointer;
 }
 
-/* ====== واتساب ====== */
-.whatsapp{
-  width:40px;
-  height:40px;
-  margin:6px auto 0;
-  background:#25D366;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.whatsapp svg{
-  width:22px;
-  height:22px;
-  fill:#fff;
+.whatsapp-button svg { width: 20px; fill: white; }
+
+/* البوكس السفلي / زر الكتالوج */
+.bottom-box{
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-/* ====== صفحة الصور ====== */
-.gallery{
-  flex:1;
-  overflow-y:auto;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:4px;
+.bottom-box:active { transform: scale(0.98); }
+.bottom-box h2{font-size: 15px; font-weight: 900;}
+.bottom-box p{font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px;}
+
+/* صفحة الكتالوج */
+#catalogView {
+  height: 100%;
 }
 
-.gallery img{
-  width:100%;
-  border-radius:var(--radius);
+.catalog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 5px;
 }
 
-/* زر رجوع */
-.back{
-  text-align:center;
-  font-size:12px;
-  font-weight:900;
-  padding:6px;
-  cursor:pointer;
+.back-btn {
+  background: var(--text);
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.catalog-grid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+/* إخفاء شريط التمرير */
+.catalog-grid::-webkit-scrollbar { width: 0; }
+
+.catalog-item {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.catalog-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ====== الصفحة الرئيسية ====== -->
-<div id="home" class="page active">
-  <div class="container">
+<div class="container">
 
+  <div id="homeView" class="view active">
     <div class="grid">
-      <div class="card" onclick="openGallery('bride')">
-        <img src="bride.jpg">
-      </div>
-      <div class="card" onclick="openGallery('newborn')">
-        <img src="newborn.jpg">
-      </div>
-      <div class="card" onclick="openGallery('balloons')">
-        <img src="balloons.jpg">
-      </div>
-      <div class="card" onclick="openGallery('grad')">
-        <img src="grad.jpg">
-      </div>
+      <div class="card"><img src="bride.jpg" alt="Bride"></div>
+      <div class="card"><img src="newborn.jpg" alt="Newborn"></div>
+      <div class="card"><img src="balloons.jpg" alt="Balloons"></div>
+      <div class="card"><img src="grad.jpg" alt="Graduation"></div>
     </div>
 
-    <div class="footer">
-      <div>للتواصل</div>
+    <div class="footer-box">
+      <div class="contact-text">تواصلوا معنا عبر واتساب</div>
       <div class="phone">+965 6502 2191</div>
+      <a href="https://wa.me/96565022191" class="whatsapp-button">
+        <svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.1 0-65.6-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.6-2.8-23.5-8.6-44.7-27.5-16.6-14.7-27.7-32.9-31-38.5-3.2-5.6-.4-8.6 2.4-11.4 2.5-2.5 5.6-6.5 8.3-9.8 2.8-3.2 3.7-5.5 5.5-9.2 1.9-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.3 5.7 23.7 9.1 31.7 11.7 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+        <span>واتساب</span>
+      </a>
+    </div>
 
-      <div class="whatsapp" onclick="window.open('https://wa.me/96565022191')">
-        <svg viewBox="0 0 32 32">
-          <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/>
-        </svg>
+    <div class="bottom-box" onclick="showCatalog()">
+      <h2>تصفح الكتالوج</h2>
+      <p>lovingly.framed</p>
+    </div>
+  </div>
+
+  <div id="catalogView" class="view">
+    <div class="catalog-header">
+      <h2 style="font-size: 18px;">الكتالوج</h2>
+      <button class="back-btn" onclick="showHome()">عودة</button>
+    </div>
+    
+    <div class="catalog-grid">
+      <div class="catalog-item"><img src="img1.jpg"></div>
+      <div class="catalog-item"><img src="img2.jpg"></div>
+      <div class="catalog-item"><img src="img3.jpg"></div>
+      <div class="catalog-item"><img src="img4.jpg"></div>
+      <div class="catalog-item"><img src="img5.jpg"></div>
+      <div class="catalog-item"><img src="img6.jpg"></div>
       </div>
-    </div>
-
   </div>
-</div>
 
-<!-- ====== صفحة الكتالوج ====== -->
-<div id="galleryPage" class="page">
-  <div class="container">
-
-    <div class="back" onclick="goHome()">رجوع</div>
-
-    <div id="gallery" class="gallery">
-      <!-- الصور تنحط هنا -->
-    </div>
-
-  </div>
 </div>
 
 <script>
-const galleries = {
-  bride: ['bride1.jpg','bride2.jpg','bride3.jpg'],
-  newborn: ['new1.jpg','new2.jpg','new3.jpg'],
-  balloons: ['bal1.jpg','bal2.jpg','bal3.jpg'],
-  grad: ['grad1.jpg','grad2.jpg','grad3.jpg']
-};
-
-function openGallery(type){
-  document.getElementById('home').classList.remove('active');
-  document.getElementById('galleryPage').classList.add('active');
-
-  const g = document.getElementById('gallery');
-  g.innerHTML = '';
-
-  galleries[type].forEach(src=>{
-    const img = document.createElement('img');
-    img.src = src;
-    g.appendChild(img);
-  });
+function showCatalog() {
+  document.getElementById('homeView').classList.remove('active');
+  document.getElementById('catalogView').classList.add('active');
 }
 
-function goHome(){
-  document.getElementById('galleryPage').classList.remove('active');
-  document.getElementById('home').classList.add('active');
+function showHome() {
+  document.getElementById('catalogView').classList.remove('active');
+  document.getElementById('homeView').classList.add('active');
 }
 </script>
 
