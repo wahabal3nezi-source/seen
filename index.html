@@ -16,7 +16,6 @@
   --shadow:0 6px 12px rgba(233,133,179,.15);
   --radius:10px;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;}
 
 html,body{
@@ -25,10 +24,9 @@ html,body{
   font-family:system-ui,-apple-system,Tahoma,Arial;
   background:linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
-  overflow:hidden; /* مهم */
+  overflow:hidden;
 }
 
-/* container */
 .container{
   max-width:520px;
   margin:0 auto;
@@ -42,24 +40,23 @@ html,body{
   flex-direction:column;
 }
 
-/* views */
 #homeView,#catalogView{
   flex:1;
   display:flex;
   flex-direction:column;
   min-height:0;
+  gap:6px;
 }
 
 .view-hidden{display:none!important;}
 
-/* home */
+/* HOME */
 .grid{
   flex:1;
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:6px;
 }
-
 .card{
   background:var(--card);
   border-radius:var(--radius);
@@ -67,7 +64,6 @@ html,body{
   box-shadow:var(--shadow);
   cursor:pointer;
 }
-
 .card img{
   width:100%;
   height:100%;
@@ -86,7 +82,6 @@ html,body{
   cursor:pointer;
 }
 
-/* footer */
 .footer-box{
   background:var(--card);
   border-radius:var(--radius);
@@ -94,10 +89,8 @@ html,body{
   padding:8px;
   text-align:center;
 }
-
 .whatsapp-button{
-  width:34px;
-  height:34px;
+  width:34px;height:34px;
   margin:6px auto 0;
   background:#25D366;
   border-radius:9px;
@@ -105,10 +98,11 @@ html,body{
   align-items:center;
   justify-content:center;
 }
-
 .whatsapp-button svg{width:18px;height:18px;fill:#fff;}
 
-/* catalog */
+/* CATALOG */
+#catalogView{overflow:hidden;}
+
 .catalog-header{
   flex-shrink:0;
   display:flex;
@@ -129,7 +123,6 @@ html,body{
 
 .catalog-title{font-weight:900;}
 
-/* ⭐ السحر هنا ⭐ */
 .catalog-grid{
   flex:1;
   overflow-y:auto;
@@ -142,7 +135,7 @@ html,body{
   touch-action:pan-y;
 }
 
-/* post */
+/* بوست طبيعي */
 .catalog-item{
   background:var(--card);
   border-radius:var(--radius);
@@ -152,7 +145,7 @@ html,body{
 
 .catalog-item img{
   width:100%;
-  height:auto; /* حجم حقيقي */
+  height:auto;
   display:block;
 }
 </style>
@@ -161,82 +154,102 @@ html,body{
 <body>
 <div class="container">
 
-<!-- HOME -->
-<div id="homeView">
-  <div class="grid">
-    <div class="card" onclick="showCatalog('bridal')"><img src="bride.jpg"></div>
-    <div class="card" onclick="showCatalog('newborn')"><img src="newborn.jpg"></div>
-    <div class="card" onclick="showCatalog('balloons')"><img src="balloons.jpg"></div>
-    <div class="card" onclick="showCatalog('grad')"><img src="grad.jpg"></div>
-  </div>
+  <!-- HOME -->
+  <div id="homeView">
+    <div class="grid">
+      <div class="card" onclick="showCatalog('bridal')"><img src="bride.jpg" alt="العروس"></div>
+      <div class="card" onclick="showCatalog('newborn')"><img src="newborn.jpg" alt="المواليد"></div>
+      <div class="card" onclick="showCatalog('balloons')"><img src="balloons.jpg" alt="البالونات"></div>
+      <div class="card" onclick="showCatalog('grad')"><img src="grad.jpg" alt="التخرج"></div>
+    </div>
 
-  <div class="catalog-button" onclick="showCatalog('all')">📁 تصفح الكتالوج الكامل</div>
+    <div class="catalog-button" onclick="showCatalog('all')">📁 تصفح الكتالوج الكامل</div>
 
-  <div class="footer-box">
-    <div>+965 6502 2191</div>
-    <div class="whatsapp-button" onclick="window.open('https://wa.me/96565022191')">
-      <svg viewBox="0 0 32 32"><path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/></svg>
+    <div class="footer-box">
+      <div>+965 6502 2191</div>
+      <div class="whatsapp-button" onclick="window.open('https://wa.me/96565022191')">
+        <svg viewBox="0 0 32 32"><path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/></svg>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- CATALOG -->
-<div id="catalogView" class="view-hidden">
-  <div class="catalog-header">
-    <button class="back-button" onclick="goBack()">← رجوع</button>
-    <div class="catalog-title" id="catalogTitle"></div>
-    <div style="width:60px"></div>
+  <!-- CATALOG -->
+  <div id="catalogView" class="view-hidden">
+    <div class="catalog-header">
+      <button class="back-button" onclick="goBack()">← رجوع</button>
+      <div class="catalog-title" id="catalogTitle"></div>
+      <div style="width:60px"></div>
+    </div>
+
+    <div class="catalog-grid" id="catalogGrid"></div>
   </div>
-
-  <div class="catalog-grid" id="catalogGrid"></div>
-</div>
 
 </div>
 
 <script>
-const images={
-  bridal:[
+const images = {
+  bridal: [
     'https://images.unsplash.com/photo-1511285560929-80b456fea0bc',
-    'https://images.unsplash.com/photo-1519741497674-611481863552'
+    'https://images.unsplash.com/photo-1519741497674-611481863552',
+    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e'
   ],
-  newborn:[
-    'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00'
+  newborn: [
+    'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00',
+    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e'
   ],
-  balloons:[
-    'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3'
+  balloons: [
+    'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3',
+    'https://images.unsplash.com/photo-1545235617-9465d2a55698'
   ],
-  grad:[
-    'https://images.unsplash.com/photo-1523050854058-8df90110c9f1'
+  grad: [
+    'https://images.unsplash.com/photo-1523050854058-8df90110c9f1',
+    'https://images.unsplash.com/photo-1524178234883-043d5c3f3cf4'
   ],
-  all:[]
+  all: []
 };
 
-const titles={
-  bridal:'العروس',
-  newborn:'المواليد',
-  balloons:'البالونات',
-  grad:'التخرج',
-  all:'الكتالوج الكامل'
+const titles = {
+  bridal: 'العروس',
+  newborn: 'المواليد',
+  balloons: 'البالونات',
+  grad: 'التخرج',
+  all: 'الكتالوج الكامل'
 };
+
+/* يضمن إن كل صور Unsplash تجي بحجم كبير ثابت */
+function normalizeUrl(url){
+  if(!url) return url;
+  if(url.includes('images.unsplash.com')){
+    const base = url.split('?')[0];
+    return base + '?w=1400&fit=max&auto=format&q=80';
+  }
+  return url; // صورك المحلية تظل مثل ما هي
+}
 
 function buildAll(){
-  images.all=[...images.bridal,...images.newborn,...images.balloons,...images.grad];
+  images.all = [
+    ...images.bridal,
+    ...images.newborn,
+    ...images.balloons,
+    ...images.grad
+  ];
 }
 
 function showCatalog(cat){
   homeView.classList.add('view-hidden');
   catalogView.classList.remove('view-hidden');
-  catalogTitle.textContent=titles[cat];
+  catalogTitle.textContent = titles[cat] || 'الكتالوج';
 
-  catalogGrid.innerHTML='';
-  (images[cat]||[]).forEach(src=>{
-    const d=document.createElement('div');
-    d.className='catalog-item';
-    d.innerHTML=`<img src="${src}" loading="lazy">`;
+  catalogGrid.innerHTML = '';
+
+  (images[cat] || []).forEach(src=>{
+    const d = document.createElement('div');
+    d.className = 'catalog-item';
+    d.innerHTML = `<img src="${normalizeUrl(src)}" loading="lazy" alt="صورة">`;
     catalogGrid.appendChild(d);
   });
 
-  catalogGrid.scrollTop=0;
+  catalogGrid.scrollTop = 0;
 }
 
 function goBack(){
