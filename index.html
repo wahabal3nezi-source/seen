@@ -17,481 +17,143 @@
   --radius:10px;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 html,body{
-  height:100%;
   width:100%;
-  overflow:hidden;
+  height:100%;
   font-family:system-ui,-apple-system,Tahoma,Arial;
   background:linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
-  -webkit-tap-highlight-color:transparent;
-  overscroll-behavior:none;
+  overflow:hidden; /* مهم */
 }
 
-/* الحاوية */
+/* container */
 .container{
   max-width:520px;
-  height:100vh;
   margin:0 auto;
-  padding:0;
+  height:100dvh;
+  padding:
+    env(safe-area-inset-top)
+    8px
+    env(safe-area-inset-bottom)
+    8px;
   display:flex;
   flex-direction:column;
-  position:relative;
-  overflow:hidden;
 }
 
-/* المحتوى */
-#homeView, #catalogView{
+/* views */
+#homeView,#catalogView{
   flex:1;
   display:flex;
   flex-direction:column;
   min-height:0;
-  height:100%;
 }
 
-/* إخفاء العرض */
-.view-hidden{
-  display:none !important;
-}
+.view-hidden{display:none!important;}
 
-/* الصفحة الرئيسية */
-#homeView {
-  padding-top: 0;
-}
-
-/* الهيدر ثابت في الأعلى */
-.contact-header{
-  background:var(--card);
-  border-bottom:1px solid var(--stroke);
-  padding:14px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
-  position:sticky;
-  top:0;
-  z-index:100;
-  flex:none;
-}
-
-.contact-info{
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-}
-
-.contact-text{
-  font-size:10px;
-  color:var(--muted);
-}
-
-.phone{
-  font-size:14px;
-  font-weight:900;
-  direction:ltr;
-  color:var(--text);
-}
-
-/* زر واتساب في الهيدر */
-.whatsapp-header-button{
-  width:40px;
-  height:40px;
-  background:#25D366;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  box-shadow:0 3px 8px rgba(37,211,102,0.3);
-  transition:transform 0.2s, box-shadow 0.2s;
-  position:relative;
-  z-index:10;
-}
-
-.whatsapp-header-button:active{
-  transform:scale(0.92);
-  box-shadow:0 2px 4px rgba(37,211,102,0.3);
-}
-
-.whatsapp-header-button svg{
-  width:20px;
-  height:20px;
-  fill:#fff;
-}
-
-/* الشبكة في الصفحة الرئيسية */
+/* home */
 .grid{
+  flex:1;
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  padding:16px;
-  flex:none;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
 }
 
-/* الكارد */
 .card{
   background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:12px;
-  box-shadow:var(--shadow);
+  border-radius:var(--radius);
   overflow:hidden;
+  box-shadow:var(--shadow);
   cursor:pointer;
-  transition:all 0.3s ease;
-  height:180px;
-  position:relative;
 }
 
-.card:hover, .card:active{
-  transform:translateY(-4px);
-  box-shadow:0 10px 20px rgba(233,133,179,0.25);
-}
-
-/* صورة الكارد بشكل عمودي */
-.card-image{
-  width:100%;
-  height:100%;
-  background:#f8eaf1;
-}
-.card-image img{
+.card img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
 }
 
-/* البوكس السفلي */
-.bottom-box{
+.catalog-button{
+  margin:6px 0;
   background:var(--card);
-  border-top:1px solid var(--stroke);
-  padding:16px;
-  text-align:center;
-  margin-top:auto;
-  box-shadow:0 -2px 8px rgba(0,0,0,0.05);
-  flex:none;
-}
-
-.bottom-box h2{
-  font-size:16px;
-  font-weight:900;
-  margin-bottom:6px;
-  letter-spacing:-0.5px;
-}
-
-.bottom-box p{
-  font-size:12px;
-  color:var(--muted);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-/* زر الكتالوج الكامل */
-.full-catalog-button{
-  background:linear-gradient(135deg, var(--card), #fff);
-  border:1px solid var(--stroke);
-  border-radius:12px;
+  border-radius:var(--radius);
   box-shadow:var(--shadow);
-  padding:18px;
-  margin:10px 16px 16px;
-  cursor:pointer;
-  font-weight:900;
-  font-size:14px;
+  padding:10px;
   text-align:center;
-  color:var(--text);
-  transition:all 0.3s ease;
+  font-weight:900;
+  cursor:pointer;
+}
+
+/* footer */
+.footer-box{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:8px;
+  text-align:center;
+}
+
+.whatsapp-button{
+  width:34px;
+  height:34px;
+  margin:6px auto 0;
+  background:#25D366;
+  border-radius:9px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:10px;
-  position:relative;
-  overflow:hidden;
 }
 
-.full-catalog-button:active{
-  transform:scale(0.98);
-  background:var(--bg2);
-}
+.whatsapp-button svg{width:18px;height:18px;fill:#fff;}
 
-.full-catalog-button::before{
-  content:'';
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:2px;
-  background:linear-gradient(90deg, #ff6b9d, #25D366);
-}
-
-/* صفحة الكتالوج */
+/* catalog */
 .catalog-header{
+  flex-shrink:0;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:14px 16px;
+  padding:10px;
   background:var(--card);
-  border-bottom:1px solid var(--stroke);
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  max-width:520px;
-  margin:0 auto;
-  z-index:100;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
-  flex:none;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
 }
 
 .back-button{
-  background:none;
-  border:none;
-  font-size:15px;
-  color:var(--text);
-  cursor:pointer;
-  padding:8px 12px 8px 8px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:500;
+  background:var(--card);
   border-radius:8px;
-  transition:background 0.2s;
-}
-
-.back-button:active{
-  background:var(--bg2);
-}
-
-.back-button span{
-  font-size:22px;
-  margin-top:-2px;
-}
-
-.catalog-title{
-  font-size:16px;
-  font-weight:900;
-  text-align:center;
-  flex:1;
-}
-
-/* الحاوية الرئيسية للكتالوج */
-.catalog-container{
-  flex:1;
-  height:100vh;
-  width:100%;
-  position:relative;
-  overflow:hidden;
-  margin-top:60px; /* مسافة للهيدر */
-}
-
-/* كل صورة تأخذ الشاشة بالكامل */
-.catalog-slide{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:transform 0.5s ease;
-  background:#000;
-}
-
-/* الصورة داخل السلايد */
-.catalog-image{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.catalog-image img{
-  width:auto;
-  height:auto;
-  max-width:100%;
-  max-height:100%;
-  object-fit:contain;
-  display:block;
-}
-
-/* مؤشر الصورة الحالية */
-.image-indicator{
-  position:fixed;
-  top:80px;
-  right:20px;
-  background:rgba(0,0,0,0.7);
-  color:white;
-  padding:8px 16px;
-  border-radius:20px;
-  font-size:13px;
-  backdrop-filter:blur(10px);
-  z-index:50;
-  font-weight:500;
-}
-
-/* نقاط التنقل */
-.dots-navigation{
-  position:fixed;
-  bottom:30px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:8px;
-  z-index:50;
-  background:rgba(0,0,0,0.5);
-  padding:10px 16px;
-  border-radius:30px;
-  backdrop-filter:blur(10px);
-}
-
-.dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.3);
-  transition:all 0.3s ease;
+  padding:6px 10px;
   cursor:pointer;
 }
 
-.dot.active{
-  background:white;
-  transform:scale(1.2);
-}
+.catalog-title{font-weight:900;}
 
-/* تلميحات التمرير */
-.swipe-hint{
-  position:fixed;
-  bottom:80px;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(15px);
-  padding:12px 24px;
-  border-radius:30px;
-  font-size:13px;
-  color:white;
+/* ⭐ السحر هنا ⭐ */
+.catalog-grid{
+  flex:1;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  padding:10px 0 20px;
   display:flex;
-  align-items:center;
-  gap:10px;
-  z-index:50;
-  animation:pulse 2s infinite;
-  border:1px solid rgba(255,255,255,0.2);
+  flex-direction:column;
+  gap:14px;
+  touch-action:pan-y;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
-  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+/* post */
+.catalog-item{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
 }
 
-.swipe-hint svg{
-  width:16px;
-  height:16px;
-  fill:white;
-  animation:swipe 2s infinite;
-}
-
-@keyframes swipe {
-  0%, 100% { transform:translateY(0); }
-  50% { transform:translateY(-5px); }
-}
-
-/* شعار واتساب في البوكس السفلي */
-.whatsapp-logo{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:4px 8px;
-  background:rgba(37,211,102,0.1);
-  border-radius:6px;
-}
-
-.whatsapp-logo svg{
-  width:14px;
-  height:14px;
-  fill:#25D366;
-}
-
-/* تحسين للجوال */
-@media (max-width: 480px) {
-  .grid{
-    gap:8px;
-    padding:12px;
-  }
-  
-  .card{
-    height:160px;
-  }
-  
-  .full-catalog-button{
-    padding:16px;
-    margin:8px 12px 12px;
-  }
-  
-  .bottom-box{
-    padding:14px;
-  }
-  
-  .swipe-hint{
-    bottom:70px;
-    padding:10px 20px;
-    font-size:12px;
-  }
-  
-  .dots-navigation{
-    bottom:25px;
-  }
-}
-
-/* حالة التحميل */
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height:100%;
-  color: white;
-  font-size: 16px;
-  background:#000;
-}
-
-/* التأثير عند التمرير */
-.slide-up {
-  transform: translateY(-100%);
-}
-
-.slide-down {
-  transform: translateY(100%);
-}
-
-/* تلميحات لونية */
-.hint-up, .hint-down {
-  position: fixed;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: white;
-  z-index: 10;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.hint-up {
-  top: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
-}
-
-.hint-down {
-  bottom: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+.catalog-item img{
+  width:100%;
+  height:auto; /* حجم حقيقي */
+  display:block;
 }
 </style>
 </head>
@@ -499,412 +161,90 @@ html,body{
 <body>
 <div class="container">
 
-  <!-- الصفحة الرئيسية -->
-  <div id="homeView">
-    <!-- الهيدر مع معلومات التواصل -->
-    <div class="contact-header">
-      <div class="contact-info">
-        <div class="contact-text">للتواصل</div>
-        <div class="phone">+965 6502 2191</div>
-      </div>
-      <div class="whatsapp-header-button" onclick="window.open('https://wa.me/96565022191')">
-        <svg viewBox="0 0 32 32">
-          <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/>
-        </svg>
-      </div>
-    </div>
-
-    <!-- الشبكة الرئيسية -->
-    <div class="grid">
-      <div class="card" onclick="showCatalog('bridal')">
-        <div class="card-image"><img src="bride.jpg" alt="العروس"></div>
-      </div>
-
-      <div class="card" onclick="showCatalog('newborn')">
-        <div class="card-image"><img src="newborn.jpg" alt="المواليد"></div>
-      </div>
-
-      <div class="card" onclick="showCatalog('balloons')">
-        <div class="card-image"><img src="balloons.jpg" alt="البالونات"></div>
-      </div>
-
-      <div class="card" onclick="showCatalog('grad')">
-        <div class="card-image"><img src="grad.jpg" alt="التخرج"></div>
-      </div>
-    </div>
-
-    <!-- زر الكتالوج الكامل -->
-    <div class="full-catalog-button" onclick="showCatalog('all')">
-      📁 الكتالوج الكامل
-    </div>
-
-    <!-- البوكس السفلي -->
-    <div class="bottom-box">
-      <h2>lovingly.framed</h2>
-      <p>Frames made with love 
-        <span class="whatsapp-logo">
-          <svg viewBox="0 0 32 32">
-            <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/>
-          </svg>
-          WhatsApp
-        </span>
-      </p>
-    </div>
+<!-- HOME -->
+<div id="homeView">
+  <div class="grid">
+    <div class="card" onclick="showCatalog('bridal')"><img src="bride.jpg"></div>
+    <div class="card" onclick="showCatalog('newborn')"><img src="newborn.jpg"></div>
+    <div class="card" onclick="showCatalog('balloons')"><img src="balloons.jpg"></div>
+    <div class="card" onclick="showCatalog('grad')"><img src="grad.jpg"></div>
   </div>
 
-  <!-- صفحة الكتالوج -->
-  <div id="catalogView" class="view-hidden">
-    <div class="catalog-header">
-      <button class="back-button" onclick="goBack()">
-        <span>←</span> رجوع
-      </button>
-      <div class="catalog-title" id="catalogTitle"></div>
-      <div style="width:60px;"></div>
-    </div>
+  <div class="catalog-button" onclick="showCatalog('all')">📁 تصفح الكتالوج الكامل</div>
 
-    <div class="catalog-container" id="catalogContainer">
-      <!-- الصور ستظهر هنا جافا سكريبت -->
+  <div class="footer-box">
+    <div>+965 6502 2191</div>
+    <div class="whatsapp-button" onclick="window.open('https://wa.me/96565022191')">
+      <svg viewBox="0 0 32 32"><path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/></svg>
     </div>
   </div>
+</div>
+
+<!-- CATALOG -->
+<div id="catalogView" class="view-hidden">
+  <div class="catalog-header">
+    <button class="back-button" onclick="goBack()">← رجوع</button>
+    <div class="catalog-title" id="catalogTitle"></div>
+    <div style="width:60px"></div>
+  </div>
+
+  <div class="catalog-grid" id="catalogGrid"></div>
+</div>
 
 </div>
 
 <script>
-// بيانات صور الكتالوج - صور عمودية
-const catalogImages = {
-  'bridal': [
-    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&h=1200&fit=contain&bg=000'
+const images={
+  bridal:[
+    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc',
+    'https://images.unsplash.com/photo-1519741497674-611481863552'
   ],
-  'newborn': [
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=800&h=1200&fit=contain&bg=000'
+  newborn:[
+    'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00'
   ],
-  'balloons': [
-    'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1545235617-9465d2a55698?w=800&h=1200&fit=contain&bg=000'
+  balloons:[
+    'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3'
   ],
-  'grad': [
-    'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1524178234883-043d5c3f3cf4?w=800&h=1200&fit=contain&bg=000'
+  grad:[
+    'https://images.unsplash.com/photo-1523050854058-8df90110c9f1'
   ],
-  'all': [
-    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=1200&fit=contain&bg=000',
-    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=1200&fit=contain&bg=000'
-  ]
+  all:[]
 };
 
-const catalogTitles = {
-  'bridal': 'العروس 👰',
-  'newborn': 'المواليد 👶',
-  'balloons': 'البالونات 🎈',
-  'grad': 'التخرج 🎓',
-  'all': 'الكتالوج الكامل 📁'
+const titles={
+  bridal:'العروس',
+  newborn:'المواليد',
+  balloons:'البالونات',
+  grad:'التخرج',
+  all:'الكتالوج الكامل'
 };
 
-let currentCatalog = '';
-let currentImageIndex = 0;
-let totalImages = 0;
-let isAnimating = false;
-let startY = 0;
-
-// عرض الكتالوج
-function showCatalog(category) {
-  currentCatalog = category;
-  currentImageIndex = 0;
-  
-  document.getElementById('homeView').classList.add('view-hidden');
-  document.getElementById('catalogView').classList.remove('view-hidden');
-  
-  const title = catalogTitles[category] || 'الكتالوج';
-  document.getElementById('catalogTitle').textContent = title;
-  
-  const container = document.getElementById('catalogContainer');
-  container.innerHTML = '<div class="loading">جاري التحميل...</div>';
-  
-  setTimeout(() => {
-    displayCatalogImages(category);
-  }, 100);
+function buildAll(){
+  images.all=[...images.bridal,...images.newborn,...images.balloons,...images.grad];
 }
 
-// عرض الصور في السلايدر
-function displayCatalogImages(category) {
-  const container = document.getElementById('catalogContainer');
-  container.innerHTML = '';
-  
-  const images = catalogImages[category] || [];
-  totalImages = images.length;
-  
-  if (images.length === 0) {
-    container.innerHTML = `
-      <div style="display:flex; justify-content:center; align-items:center; height:100%; background:#000; color:white; text-align:center; padding:20px;">
-        <div>
-          <p style="margin-bottom:20px; font-size:16px;">لا توجد صور في هذا القسم بعد</p>
-          <button onclick="goBack()" style="padding:12px 24px; background:rgba(255,255,255,0.2); border:none; border-radius:8px; color:white; font-size:14px; cursor:pointer; backdrop-filter:blur(10px);">
-            العودة للرئيسية
-          </button>
-        </div>
-      </div>
-    `;
-    return;
-  }
-  
-  // إضافة السلايدات
-  images.forEach((imgUrl, index) => {
-    const slide = document.createElement('div');
-    slide.className = 'catalog-slide';
-    slide.id = `slide-${index}`;
-    slide.style.transform = `translateY(${index * 100}%)`;
-    
-    const imageDiv = document.createElement('div');
-    imageDiv.className = 'catalog-image';
-    
-    const img = document.createElement('img');
-    img.src = imgUrl;
-    img.alt = `صورة ${index + 1}`;
-    img.loading = 'lazy';
-    
-    img.onerror = function() {
-      this.src = 'https://via.placeholder.com/800x1200/000000/ffffff?text=LOVINGLY+FRAMED';
-      this.style.padding = '20px';
-      this.style.boxSizing = 'border-box';
-    };
-    
-    imageDiv.appendChild(img);
-    slide.appendChild(imageDiv);
-    container.appendChild(slide);
+function showCatalog(cat){
+  homeView.classList.add('view-hidden');
+  catalogView.classList.remove('view-hidden');
+  catalogTitle.textContent=titles[cat];
+
+  catalogGrid.innerHTML='';
+  (images[cat]||[]).forEach(src=>{
+    const d=document.createElement('div');
+    d.className='catalog-item';
+    d.innerHTML=`<img src="${src}" loading="lazy">`;
+    catalogGrid.appendChild(d);
   });
-  
-  // إضافة مؤشر الصورة
-  const indicator = document.createElement('div');
-  indicator.className = 'image-indicator';
-  indicator.id = 'imageIndicator';
-  indicator.textContent = `1 / ${totalImages}`;
-  container.appendChild(indicator);
-  
-  // إضافة نقاط التنقل
-  const dotsContainer = document.createElement('div');
-  dotsContainer.className = 'dots-navigation';
-  dotsContainer.id = 'dotsContainer';
-  
-  for (let i = 0; i < totalImages; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'dot';
-    dot.dataset.index = i;
-    if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goToImage(i));
-    dotsContainer.appendChild(dot);
-  }
-  
-  container.appendChild(dotsContainer);
-  
-  // إضافة تلميحات التمرير (تظهر 3 ثواني ثم تختفي)
-  if (totalImages > 1) {
-    const swipeHint = document.createElement('div');
-    swipeHint.className = 'swipe-hint';
-    swipeHint.innerHTML = `
-      <svg viewBox="0 0 24 24">
-        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-      </svg>
-      اسحب للتغيير
-    `;
-    container.appendChild(swipeHint);
-    
-    setTimeout(() => {
-      swipeHint.style.opacity = '0';
-      swipeHint.style.transition = 'opacity 0.5s';
-      setTimeout(() => swipeHint.remove(), 500);
-    }, 3000);
-  }
-  
-  // تفعيل التمرير
-  setupTouchEvents();
-  setupKeyboardEvents();
-  
-  // عرض الصورة الأولى
-  updateSlidePosition();
+
+  catalogGrid.scrollTop=0;
 }
 
-// تحديث موضع السلايد
-function updateSlidePosition() {
-  const slides = document.querySelectorAll('.catalog-slide');
-  slides.forEach((slide, index) => {
-    slide.style.transform = `translateY(${(index - currentImageIndex) * 100}%)`;
-  });
-  
-  // تحديث المؤشر
-  const indicator = document.getElementById('imageIndicator');
-  if (indicator) {
-    indicator.textContent = `${currentImageIndex + 1} / ${totalImages}`;
-  }
-  
-  // تحديث النقاط
-  const dots = document.querySelectorAll('.dot');
-  dots.forEach((dot, index) => {
-    if (index === currentImageIndex) {
-      dot.classList.add('active');
-    } else {
-      dot.classList.remove('active');
-    }
-  });
+function goBack(){
+  catalogView.classList.add('view-hidden');
+  homeView.classList.remove('view-hidden');
 }
 
-// التمرير لصورة محددة
-function goToImage(index) {
-  if (isAnimating || index < 0 || index >= totalImages) return;
-  
-  currentImageIndex = index;
-  updateSlidePosition();
-}
-
-// التمرير للصورة التالية
-function nextImage() {
-  if (currentImageIndex < totalImages - 1) {
-    currentImageIndex++;
-    updateSlidePosition();
-  }
-}
-
-// التمرير للصورة السابقة
-function prevImage() {
-  if (currentImageIndex > 0) {
-    currentImageIndex--;
-    updateSlidePosition();
-  }
-}
-
-// إعداد أحداث اللمس
-function setupTouchEvents() {
-  const container = document.getElementById('catalogContainer');
-  let touchStartY = 0;
-  let touchStartTime = 0;
-  
-  container.addEventListener('touchstart', function(e) {
-    touchStartY = e.touches[0].clientY;
-    touchStartTime = Date.now();
-    isAnimating = false;
-  }, { passive: true });
-  
-  container.addEventListener('touchmove', function(e) {
-    if (isAnimating) return;
-    
-    const touchY = e.touches[0].clientY;
-    const diffY = touchStartY - touchY;
-    
-    // إذا كان التمرير عمودي بشكل كافي
-    if (Math.abs(diffY) > 50) {
-      e.preventDefault();
-    }
-  }, { passive: false });
-  
-  container.addEventListener('touchend', function(e) {
-    if (isAnimating) return;
-    
-    const touchEndY = e.changedTouches[0].clientY;
-    const diffY = touchStartY - touchEndY;
-    const touchDuration = Date.now() - touchStartTime;
-    
-    // سرعة التمرير
-    const velocity = Math.abs(diffY) / touchDuration;
-    
-    // إذا كان التمرير سريع أو مسافة كافية
-    if (Math.abs(diffY) > 100 || velocity > 0.3) {
-      if (diffY > 0 && currentImageIndex < totalImages - 1) {
-        // تمرير للأسفل - صورة تالية
-        nextImage();
-      } else if (diffY < 0 && currentImageIndex > 0) {
-        // تمرير للأعلى - صورة سابقة
-        prevImage();
-      }
-    }
-  }, { passive: true });
-  
-  // دعم عجلة الماوس
-  container.addEventListener('wheel', function(e) {
-    e.preventDefault();
-    
-    if (e.deltaY > 0) {
-      nextImage();
-    } else {
-      prevImage();
-    }
-  }, { passive: false });
-}
-
-// إعداد أحداث لوحة المفاتيح
-function setupKeyboardEvents() {
-  document.addEventListener('keydown', function(e) {
-    if (document.getElementById('catalogView').classList.contains('view-hidden')) return;
-    
-    switch(e.key) {
-      case 'ArrowUp':
-      case 'ArrowLeft':
-        prevImage();
-        break;
-      case 'ArrowDown':
-      case 'ArrowRight':
-        nextImage();
-        break;
-    }
-  });
-}
-
-// الرجوع للصفحة الرئيسية
-function goBack() {
-  document.getElementById('catalogView').classList.add('view-hidden');
-  document.getElementById('homeView').classList.remove('view-hidden');
-  currentImageIndex = 0;
-}
-
-// تحميل الصور الحقيقية
-function loadCustomImages() {
-  // هنا تضيف روابط صورك الحقيقية العمودية
-  // مثال:
-  // catalogImages.bridal = ['bridal1.jpg', 'bridal2.jpg'];
-  // catalogImages.newborn = ['newborn1.jpg', 'newborn2.jpg'];
-  
-  // الكتالوج الكامل يجمع كل الصور
-  catalogImages.all = [
-    ...catalogImages.bridal,
-    ...catalogImages.newborn,
-    ...catalogImages.balloons,
-    ...catalogImages.grad
-  ];
-}
-
-// تحميل الصور عند بدء التشغيل
-window.onload = function() {
-  loadCustomImages();
-  
-  // معالجة أخطاء تحميل الصور في الصفحة الرئيسية
-  document.querySelectorAll('.card-image img').forEach(img => {
-    img.onerror = function() {
-      this.src = 'https://via.placeholder.com/400x600/f8eaf1/6a3d57?text=LOVINGLY+FRAMED';
-      this.onerror = null;
-    };
-  });
-};
-
-// تفعيل زر الرجوع
-window.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape' && !document.getElementById('catalogView').classList.contains('view-hidden')) {
-    goBack();
-  }
-});
-
-// منع التمرير الأفقي
-window.addEventListener('touchmove', function(e) {
-  if (e.touches.length > 1) e.preventDefault();
-}, { passive: false });
+buildAll();
 </script>
 </body>
 </html>
