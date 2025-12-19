@@ -1,241 +1,393 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Lovingly Framed</title>
-<style>
-:root{
-  --bg:#fff7fb;
-  --bg2:#fde8f2;
-  --card:#ffffff;
-  --pink:#f6a6c9;
-  --purple:#c9b6e4;
-  --text:#6a3d57;
-  --muted:#9b6f86;
-  --stroke:rgba(0,0,0,.06);
-  --shadow:0 8px 16px rgba(233,133,179,.18);
-  --radius:14px;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>lovingly.framed</title>
 
-*{box-sizing:border-box; margin:0; padding:0;}
+  <style>
+    :root{
+      --bg:#fff7fb;
+      --bg2:#fde8f2;
+      --pinkBar:#f7d6e6;
+      --text:#6a3d57;
+      --muted:#9b6f86;
+      --stroke:rgba(0,0,0,.08);
+      --shadow:0 10px 26px rgba(233,133,179,.18);
+      --radius:18px;
+    }
 
-body{
-  font-family: system-ui, -apple-system, Tahoma, Arial;
-  background: linear-gradient(180deg,var(--bg),var(--bg2));
-  color:var(--text);
-  height:100vh;
-  overflow:hidden;
-}
+    *{box-sizing:border-box}
+    html, body{height:100%}
 
-.container{
-  max-width:520px;
-  height:100vh;
-  margin:0 auto;
-  padding:6px;
-  display:flex;
-  flex-direction:column;
-}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Tahoma, Arial;
+      background: linear-gradient(180deg,var(--bg),var(--bg2));
+      color:var(--text);
+      overflow:hidden; /* صفحة وحدة بدون سكرول */
+      -webkit-tap-highlight-color: transparent;
+    }
 
-/* Header */
-.header{
-  background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:16px;
-  box-shadow:var(--shadow);
-  padding:8px;
-  text-align:center;
-  margin-bottom:6px;
-}
-.header h1{
-  font-size:14px;
-  font-weight:900;
-  margin:0;
-}
-.header p{
-  font-size:10px;
-  color:var(--muted);
-  margin-top:2px;
-}
+    .wrap{
+      max-width:520px;
+      height:100vh;
+      margin:0 auto;
+      padding:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
 
-/* الصفحة الرئيسية */
-#homeView{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
+    /* Header صغير للحساب */
+    .topHeader{
+      background:#fff;
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:10px 10px;
+      text-align:center;
+      flex:0 0 auto;
+    }
+    .topHeader h1{
+      margin:0;
+      font-size:14px;
+      font-weight:900;
+    }
+    .topHeader p{
+      margin:4px 0 0;
+      font-size:11px;
+      color:var(--muted);
+    }
 
-/* شبكة الصور 2×2 */
-.grid{
-  flex:1;
-  display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:6px;
-}
+    /* الكرت الرئيسي */
+    .card{
+      flex:1 1 auto;
+      background:#fff;
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:0; /* مهم للـ flex */
+    }
 
-/* البطاقة */
-.card{
-  background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:16px;
-  box-shadow:var(--shadow);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  min-height:0; /* مهم للفليكس */
-}
+    /* الشريط الوردي للعنوان (مواليد وغيره) */
+    .pinkBar{
+      background: var(--pinkBar);
+      padding:10px;
+      border-bottom:1px solid rgba(0,0,0,.06);
+      flex:0 0 auto;
+    }
 
-/* العنوان في الجزء العلوي الوردي */
-.card-header{
-  background:linear-gradient(135deg, var(--pink), var(--purple));
-  color:white;
-  padding:8px;
-  text-align:center;
-  flex-shrink:0;
-}
-.card-header h3{
-  font-size:12px;
-  font-weight:900;
-  margin:0;
-}
+    .tabs{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:6px;
+    }
 
-/* الصورة تأخذ باقي المساحة */
-.card-image{
-  flex:1;
-  min-height:0;
-  position:relative;
-}
-.card-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
+    .tab{
+      border:1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.45);
+      border-radius:14px;
+      padding:10px 6px;
+      font-size:12px;
+      font-weight:900;
+      text-align:center;
+      cursor:pointer;
 
-/* الفوتر في الأسفل */
-.footer{
-  background:var(--card);
-  border:1px solid var(--stroke);
-  border-radius:16px;
-  box-shadow:var(--shadow);
-  padding:8px;
-  text-align:center;
-  margin-top:6px;
-}
-.contact-text{
-  font-size:10px;
-  color:var(--muted);
-  margin-bottom:4px;
-}
-.phone{
-  font-size:12px;
-  font-weight:900;
-  color:var(--text);
-  direction:ltr;
-  unicode-bidi:plaintext;
-}
+      touch-action: manipulation;
+      user-select:none;
+      -webkit-user-select:none;
+    }
 
-/* زر الواتساب */
-.whatsapp-button{
-  width:36px;
-  height:36px;
-  border-radius:12px;
-  background:#25D366;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:6px auto 0;
-  cursor:pointer;
-}
-.whatsapp-button svg{
-  width:20px;
-  height:20px;
-  fill:white;
-}
-</style>
+    .tab.active{
+      background:#fff;
+      border-color: rgba(233,133,179,.55);
+      box-shadow: 0 8px 18px rgba(233,133,179,.18);
+    }
+
+    /* المربع الأبيض للصور */
+    .whiteBox{
+      flex:1 1 auto;
+      padding:10px;
+      min-height:0;
+      background:#fff;
+    }
+
+    /* شبكة الصور داخل المربع الأبيض */
+    .grid{
+      height:100%;
+      width:100%;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:8px;
+
+      /* إذا زادت الصور، السحب داخل المربع فقط */
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom:6px;
+    }
+
+    .imgBtn{
+      border:1px solid rgba(0,0,0,.08);
+      border-radius:14px;
+      overflow:hidden;
+      background:#f8f2f6;
+      cursor:pointer;
+
+      touch-action: manipulation;
+      user-select:none;
+      -webkit-user-select:none;
+    }
+
+    .imgBtn img{
+      width:100%;
+      height: clamp(70px, 14vh, 110px); /* يصغر/يكبر حسب شاشة التلفون */
+      object-fit:cover;
+      display:block;
+    }
+
+    /* فوتر التواصل داخل نفس الصفحة */
+    .footer{
+      flex:0 0 auto;
+      text-align:center;
+      color:var(--muted);
+      font-size:11px;
+      padding:2px 0 0;
+    }
+
+    .phone{
+      margin-top:4px;
+      font-size:13px;
+      font-weight:900;
+      color:var(--text);
+      direction:ltr;           /* عشان ما ينعكس */
+      unicode-bidi: plaintext; /* تثبيت */
+    }
+
+    .waRow{
+      margin-top:6px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      align-items:center;
+    }
+
+    .waBtn{
+      width:38px;
+      height:38px;
+      border-radius:14px;
+      background:#25D366;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 10px 18px rgba(37,211,102,.20);
+      border:0;
+      cursor:pointer;
+      touch-action: manipulation;
+    }
+    .waBtn svg{width:20px;height:20px;fill:#fff}
+
+    /* مودال تكبير الصورة */
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.65);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:999;
+      padding:14px;
+    }
+    .modal.open{display:flex}
+    .viewer{
+      width:min(520px, 96vw);
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+    }
+    .viewerTop{
+      padding:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    .viewerTop b{font-size:12px}
+    .close{
+      border:0;
+      background:var(--pinkBar);
+      padding:8px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:900;
+      color:var(--text);
+    }
+    .bigImg{
+      width:100%;
+      max-height:70vh;
+      object-fit:contain;
+      background:#fff;
+      display:block;
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="wrap">
 
-  <div class="header">
-    <h1>lovingly.framed</h1>
-    <p>Frames made with love</p>
-  </div>
+    <div class="topHeader">
+      <h1>lovingly.framed</h1>
+      <p>Frames made with love</p>
+    </div>
 
-  <div id="homeView">
-
-    <div class="grid">
-      <!-- مواليد -->
-      <div class="card">
-        <div class="card-header">
-          <h3>مواليد</h3>
-        </div>
-        <div class="card-image">
-          <img src="images/covers/newborn.jpg" alt="إطار مواليد">
-        </div>
+    <div class="card">
+      <!-- الشريط الوردي: العناوين -->
+      <div class="pinkBar">
+        <div class="tabs" id="tabs"></div>
       </div>
 
-      <!-- عروس -->
-      <div class="card">
-        <div class="card-header">
-          <h3>عروس</h3>
-        </div>
-        <div class="card-image">
-          <img src="images/covers/bride.jpg" alt="إطار عروس">
-        </div>
-      </div>
-
-      <!-- تخرج -->
-      <div class="card">
-        <div class="card-header">
-          <h3>تخرج</h3>
-        </div>
-        <div class="card-image">
-          <img src="images/covers/grad.jpg" alt="إطار تخرج">
-        </div>
-      </div>
-
-      <!-- بالونات -->
-      <div class="card">
-        <div class="card-header">
-          <h3>بالونات</h3>
-        </div>
-        <div class="card-image">
-          <img src="images/covers/balloons.jpg" alt="إطار بالونات">
-        </div>
+      <!-- المربع الأبيض: الصور -->
+      <div class="whiteBox">
+        <div class="grid" id="grid"></div>
       </div>
     </div>
 
+    <!-- تواصل -->
     <div class="footer">
-      <div class="contact-text">للتواصل</div>
+      <div>للتواصل</div>
       <div class="phone">+965 6502 2191</div>
-      <div class="whatsapp-button" onclick="window.open('https://wa.me/96565022191','_blank')">
-        <svg viewBox="0 0 32 32">
-          <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14s-6.3-15.5-15.7-15.5z"/>
-        </svg>
+      <div class="waRow">
+        <button class="waBtn" id="waBtn" aria-label="WhatsApp">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M19.11 17.29c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.15-.42-2.19-1.34-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.02-.22-.52-.45-.45-.61-.46-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27 0 1.34.98 2.64 1.12 2.82.14.18 1.93 2.95 4.68 4.14.65.28 1.16.45 1.56.57.65.21 1.25.18 1.72.11.52-.08 1.6-.65 1.82-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32z"/>
+            <path d="M26.73 5.27C24.06 2.6 20.5 1.13 16.73 1.13 9.02 1.13 2.76 7.39 2.76 15.1c0 2.47.65 4.88 1.88 7.01L2.64 30.87l8.96-1.96c2.07 1.13 4.4 1.73 6.78 1.73h.01c7.71 0 13.97-6.26 13.97-13.97 0-3.77-1.47-7.33-4.14-10.4zm-9.99 23.02h-.01c-2.09 0-4.14-.56-5.93-1.61l-.42-.25-5.32 1.16 1.14-5.18-.28-.45c-1.18-1.88-1.8-4.05-1.8-6.26 0-6.57 5.35-11.92 11.92-11.92 3.18 0 6.17 1.24 8.42 3.49 2.25 2.25 3.49 5.24 3.49 8.42 0 6.57-5.35 11.92-11.21 11.92z"/>
+          </svg>
+        </button>
       </div>
     </div>
 
   </div>
-</div>
+
+  <!-- مودال تكبير -->
+  <div class="modal" id="modal">
+    <div class="viewer">
+      <div class="viewerTop">
+        <b id="viewerTitle">-</b>
+        <button class="close" id="closeBtn">إغلاق</button>
+      </div>
+      <img class="bigImg" id="bigImg" src="" alt="">
+    </div>
+  </div>
 
 <script>
-// تأكد من أن الصفحة تعرض كل شيء بدون تمرير
-window.addEventListener('load', function() {
-  const view = document.getElementById('homeView');
-  const container = document.querySelector('.container');
-  
-  // تأكد من أن المحتوى كامل في الشاشة
-  if (view.scrollHeight > view.clientHeight) {
-    // تصغير الصور قليلاً إذا كان هناك تجاوز
-    const images = document.querySelectorAll('.card-image');
-    images.forEach(img => {
-      img.style.flex = '0.9';
+  const WHATSAPP_NUMBER = "96565022191";
+
+  /* عدّل الصور هنا حسب مساراتك */
+  const DATA = [
+    {
+      key: "newborn",
+      title: "مواليد",
+      images: [
+        "images/newborn/1.jpg",
+        "images/newborn/2.jpg",
+        "images/newborn/3.jpg",
+        "images/newborn/4.jpg",
+        "images/newborn/5.jpg",
+        "images/newborn/6.jpg"
+      ]
+    },
+    {
+      key: "bride",
+      title: "عروس",
+      images: [
+        "images/bride/1.jpg",
+        "images/bride/2.jpg",
+        "images/bride/3.jpg",
+        "images/bride/4.jpg",
+        "images/bride/5.jpg",
+        "images/bride/6.jpg"
+      ]
+    },
+    {
+      key: "grad",
+      title: "تخرج",
+      images: [
+        "images/grad/1.jpg",
+        "images/grad/2.jpg",
+        "images/grad/3.jpg",
+        "images/grad/4.jpg",
+        "images/grad/5.jpg",
+        "images/grad/6.jpg"
+      ]
+    },
+    {
+      key: "balloons",
+      title: "بالونات",
+      images: [
+        "images/balloons/1.jpg",
+        "images/balloons/2.jpg",
+        "images/balloons/3.jpg",
+        "images/balloons/4.jpg",
+        "images/balloons/5.jpg",
+        "images/balloons/6.jpg"
+      ]
+    }
+  ];
+
+  const tabsEl = document.getElementById("tabs");
+  const gridEl = document.getElementById("grid");
+
+  const modal = document.getElementById("modal");
+  const bigImg = document.getElementById("bigImg");
+  const viewerTitle = document.getElementById("viewerTitle");
+  const closeBtn = document.getElementById("closeBtn");
+
+  let activeKey = DATA[0].key;
+
+  function renderTabs(){
+    tabsEl.innerHTML = "";
+    DATA.forEach(cat=>{
+      const b = document.createElement("div");
+      b.className = "tab" + (cat.key === activeKey ? " active" : "");
+      b.textContent = cat.title;
+      b.addEventListener("click", ()=> {
+        activeKey = cat.key;
+        renderTabs();
+        renderGrid();
+      }, { passive:true });
+      tabsEl.appendChild(b);
     });
   }
-});
+
+  function renderGrid(){
+    const cat = DATA.find(x=>x.key === activeKey);
+    gridEl.innerHTML = "";
+    (cat.images || []).forEach((src)=>{
+      const btn = document.createElement("div");
+      btn.className = "imgBtn";
+      btn.innerHTML = `<img src="${src}" alt="${cat.title}">`;
+      btn.addEventListener("click", ()=>{
+        viewerTitle.textContent = cat.title;
+        bigImg.src = src;
+        modal.classList.add("open");
+      }, { passive:true });
+      gridEl.appendChild(btn);
+    });
+  }
+
+  closeBtn.addEventListener("click", ()=> modal.classList.remove("open"));
+  modal.addEventListener("click", (e)=>{ if(e.target === modal) modal.classList.remove("open"); });
+
+  document.getElementById("waBtn").addEventListener("click", ()=>{
+    const msg = encodeURIComponent("السلام عليكم، أبي أستفسر عن الفريمات.");
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+  }, { passive:true });
+
+  renderTabs();
+  renderGrid();
 </script>
 </body>
 </html>
