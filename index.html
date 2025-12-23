@@ -16,6 +16,7 @@
   --shadow:0 6px 12px rgba(233,133,179,.12);
   --radius:16px;
   --wa:#23D366;
+  --ph:#f3e6ee;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -52,15 +53,8 @@ body{
   margin-bottom:12px;
   text-align:center;
 }
-.top-bar .made{
-  font-size:16px;
-  font-weight:800;
-}
-.top-bar .handle{
-  font-size:15px;
-  font-weight:700;
-  direction:ltr;
-}
+.top-bar .made{font-size:16px;font-weight:800;}
+.top-bar .handle{font-size:15px;font-weight:700;direction:ltr;}
 
 /* الصفحة الرئيسية */
 .home-grid{
@@ -82,6 +76,7 @@ body{
   height:100%;
   object-fit:cover;
   display:block;
+  background:var(--ph);
 }
 
 /* زر الكتالوج */
@@ -103,7 +98,7 @@ body{
 }
 .pill-button:active{transform:scale(.99);}
 
-/* كرت التواصل (ناعم) */
+/* كرت التواصل */
 .contact-card{
   background:#fff;
   border-radius:16px;
@@ -124,7 +119,6 @@ body{
   direction:ltr;
 }
 
-/* زر واتساب (ناعم) */
 .wa-btn{
   margin-top:10px;
   padding:10px 14px;
@@ -186,14 +180,13 @@ body{
   font-weight:800;
 }
 
-/* FEED مع Snap (يوقف عند كل صورة) */
+/* FEED مثل إنستغرام + Snap مثل تيك توك */
 .feed{
   display:flex;
   flex-direction:column;
   gap:20px;
   scroll-snap-type:y mandatory;
 }
-
 .post{
   scroll-snap-align:start;
   background:#fff;
@@ -202,17 +195,23 @@ body{
   overflow:hidden;
   border:1px solid var(--stroke);
 }
+.post .ph{
+  background:var(--ph);
+  width:100%;
+  aspect-ratio: 9 / 16; /* شكل تيك توك للـ placeholder */
+}
 .post img{
   width:100%;
   height:auto;
   display:block;
+  background:var(--ph);
 }
 
-/* رسالة تحميل */
-.loading{
+/* رسالة */
+.msg{
   text-align:center;
   color:var(--muted);
-  padding:26px 10px;
+  padding:24px 10px;
   font-weight:700;
 }
 </style>
@@ -230,16 +229,16 @@ body{
   <section id="homeView">
     <div class="home-grid">
       <div class="home-card" onclick="openCatalog('bridal')">
-        <img id="thumbBridal" src="images/bridal/1.png" alt="العروس">
+        <img id="thumbBridal" src="images/bridal/1.jpg" alt="العروس" loading="eager" decoding="async">
       </div>
       <div class="home-card" onclick="openCatalog('newborn')">
-        <img id="thumbNewborn" src="images/newborn/1.png" alt="المواليد">
+        <img id="thumbNewborn" src="images/newborn/1.jpg" alt="المواليد" loading="eager" decoding="async">
       </div>
       <div class="home-card" onclick="openCatalog('balloons')">
-        <img id="thumbBalloons" src="images/balloons/1.png" alt="البالونات">
+        <img id="thumbBalloons" src="images/balloons/1.jpg" alt="البالونات" loading="eager" decoding="async">
       </div>
       <div class="home-card" onclick="openCatalog('grad')">
-        <img id="thumbGrad" src="images/grad/1.png" alt="التخرج">
+        <img id="thumbGrad" src="images/grad/1.jpg" alt="التخرج" loading="eager" decoding="async">
       </div>
     </div>
 
@@ -269,7 +268,7 @@ body{
     </div>
 
     <div class="feed" id="feed">
-      <div class="loading" id="loadingMsg">جاري تحميل الصور…</div>
+      <div class="msg">اختر قسم لعرض الصور</div>
     </div>
   </section>
 
@@ -277,7 +276,8 @@ body{
 
 <script>
 const IMAGE_ROOT = "images";
-const MAX_PER_FOLDER = 300;
+const EXT = "jpg";          // أنت بتحول الصور إلى JPG
+const MAX_PER_FOLDER = 200; // خله رقم كبير وآمن
 
 const titles = {
   bridal: 'العروس',
@@ -287,90 +287,93 @@ const titles = {
   all: 'الكتالوج الكامل'
 };
 
-let catalogImages = {
-  bridal: [],
-  newborn: [],
-  balloons: [],
-  grad: [],
-  all: []
-};
+const folders = ["bridal","newborn","balloons","grad"];
 
-let isReady = false;
-
-async function exists(url){
-  try{
-    const res = await fetch(url, { method: "HEAD", cache: "no-store" });
-    return res.ok;
-  }catch(e){
-    return false;
-  }
-}
-
-async function loadFolder(folder){
+/* نولد روابط بدون فحص مسبق (هذا أسرع) */
+function generateUrls(folder, max){
   const list = [];
-  for(let i = 1; i <= MAX_PER_FOLDER; i++){
-    const url = `${IMAGE_ROOT}/${folder}/${i}.png`;
-    const ok = await exists(url);
-    if(!ok) break;
-    list.push(url);
+  for(let i=1;i<=max;i++){
+    list.push(`${IMAGE_ROOT}/${folder}/${i}.${EXT}`);
   }
   return list;
 }
 
-function setThumb(id, list){
-  const img = document.getElementById(id);
-  if(!img) return;
-  if(list && list.length) img.src = list[0];
-}
+let catalogImages = {
+  bridal: generateUrls("bridal", MAX_PER_FOLDER),
+  newborn: generateUrls("newborn", MAX_PER_FOLDER),
+  balloons: generateUrls("balloons", MAX_PER_FOLDER),
+  grad: generateUrls("grad", MAX_PER_FOLDER),
+  all: []
+};
 
-async function initCatalog(){
-  // حمّل الأقسام واحد واحد
-  catalogImages.bridal   = await loadFolder("bridal");
-  catalogImages.newborn  = await loadFolder("newborn");
-  catalogImages.balloons = await loadFolder("balloons");
-  catalogImages.grad     = await loadFolder("grad");
-
-  catalogImages.all = [
-    ...catalogImages.bridal,
-    ...catalogImages.newborn,
-    ...catalogImages.balloons,
-    ...catalogImages.grad
-  ];
-
-  // ثَمبنيل الصفحة الرئيسية: أول صورة موجودة فعلياً
-  setThumb("thumbBridal", catalogImages.bridal);
-  setThumb("thumbNewborn", catalogImages.newborn);
-  setThumb("thumbBalloons", catalogImages.balloons);
-  setThumb("thumbGrad", catalogImages.grad);
-
-  isReady = true;
-}
+catalogImages.all = [
+  ...catalogImages.bridal,
+  ...catalogImages.newborn,
+  ...catalogImages.balloons,
+  ...catalogImages.grad
+];
 
 const homeView = document.getElementById('homeView');
 const catalogView = document.getElementById('catalogView');
 const catalogTitle = document.getElementById('catalogTitle');
 const feed = document.getElementById('feed');
-const loadingMsg = document.getElementById('loadingMsg');
+
+/* Lazy loading أقوى من loading="lazy" لحاله */
+let io = null;
+function ensureObserver(){
+  if(io) return;
+  io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      const img = e.target;
+      const src = img.getAttribute("data-src");
+      if(src){
+        img.src = src;
+        img.removeAttribute("data-src");
+      }
+      io.unobserve(img);
+    });
+  }, { root: null, rootMargin: "800px 0px", threshold: 0.01 });
+}
+
+function makePost(url){
+  const post = document.createElement('div');
+  post.className = 'post';
+  post.innerHTML = `
+    <div class="ph"></div>
+    <img data-src="${url}" alt="صورة" decoding="async">
+  `;
+
+  const img = post.querySelector("img");
+  const ph = post.querySelector(".ph");
+
+  // إذا الصورة تحملت: نحذف الـ placeholder
+  img.addEventListener("load", () => {
+    if(ph) ph.remove();
+  });
+
+  // إذا الصورة غير موجودة: نحذف البوست بالكامل
+  img.addEventListener("error", () => {
+    post.remove();
+  });
+
+  ensureObserver();
+  io.observe(img);
+  return post;
+}
 
 function renderFeed(cat){
   feed.innerHTML = '';
 
-  if(!isReady){
-    feed.innerHTML = `<div class="loading">جاري تحميل الصور…</div>`;
-    return;
-  }
-
   const list = catalogImages[cat] || [];
   if(!list.length){
-    feed.innerHTML = `<div class="loading">لا توجد صور في هذا القسم</div>`;
+    feed.innerHTML = `<div class="msg">لا توجد صور</div>`;
     return;
   }
 
-  list.forEach(src=>{
-    const post = document.createElement('div');
-    post.className = 'post';
-    post.innerHTML = `<img src="${src}" loading="lazy" decoding="async" alt="صورة">`;
-    feed.appendChild(post);
+  // نرسم عدد كبير، والغير موجود ينحذف تلقائيًا
+  list.forEach(url => {
+    feed.appendChild(makePost(url));
   });
 }
 
@@ -388,12 +391,19 @@ function goBack(){
   window.scrollTo(0,0);
 }
 
-window.addEventListener("load", async () => {
-  await initCatalog();
-  // إذا المستخدم كان فاتح الكتالوج قبل ما يخلص التحميل، نعيد الرسم
-  if(!catalogView.classList.contains("view-hidden")){
-    renderFeed("all");
-  }
+/* لو صورة الثمبنيل 1.jpg ما موجودة، نخليها فاضية بدل كسر */
+function fixThumb(id, fallback){
+  const img = document.getElementById(id);
+  if(!img) return;
+  img.onerror = () => { img.removeAttribute("src"); img.style.background = "var(--ph)"; };
+  if(fallback) img.src = fallback;
+}
+
+window.addEventListener("load", () => {
+  fixThumb("thumbBridal",  `${IMAGE_ROOT}/bridal/1.${EXT}`);
+  fixThumb("thumbNewborn", `${IMAGE_ROOT}/newborn/1.${EXT}`);
+  fixThumb("thumbBalloons",`${IMAGE_ROOT}/balloons/1.${EXT}`);
+  fixThumb("thumbGrad",    `${IMAGE_ROOT}/grad/1.${EXT}`);
 });
 </script>
 </body>
