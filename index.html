@@ -63,6 +63,13 @@
       align-items:center;
       justify-content:center; /* يضمن التوسيط */
     }
+  .top-bar{ color:var(--text); } /* يخلي نص الشريط واضح بالوضع العادي */
+  body.catalog-mode .top-bar{
+  background:#111;             /* شريط غامق وقت عرض الصور */
+  border-color:rgba(255,255,255,.12);
+  color:#fff;                  /* نص أبيض واضح */
+}
+
 
     /* زر الرجوع ما يأثر على التوسيط */
     .back-btn{
