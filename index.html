@@ -15,6 +15,7 @@
   --imgBorder: rgba(200,200,200,.35);
   --topbar-h:78px;
   --wa:#23D366;
+  --pink:#ff4fa3;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -58,14 +59,15 @@ body.catalog-mode{
   height:var(--topbar-h);
   display:flex;
   align-items:center;
-  justify-content:center; /* يضمن التوسيط */
+  justify-content:center;
+  text-align:center;
 }
 
-/* زر الرجوع ما يأثر على التوسيط */
+/* زر الرجوع */
 .back-btn{
   display:none;
   position:absolute;
-  right:12px;           /* في RTL هذا يمين */
+  right:12px;
   top:50%;
   transform:translateY(-50%);
   border:none;
@@ -77,13 +79,24 @@ body.catalog-mode{
   cursor:pointer;
 }
 
-/* النص بالنص */
+/* العنوان */
 .brand{
   text-align:center;
   line-height:1.15;
 }
-.brand .made{font-size:16px;font-weight:900;}
-.brand .handle{font-size:14px;font-weight:800;direction:ltr;opacity:.9;}
+
+.brand .made{
+  font-size:16px;
+  font-weight:900;
+  color:var(--pink);
+}
+
+.brand .handle{
+  font-size:14px;
+  font-weight:800;
+  direction:ltr;
+  opacity:.9;
+}
 
 /* الصفحة الرئيسية */
 .home-grid{
@@ -91,15 +104,15 @@ body.catalog-mode{
   grid-template-columns:1fr 1fr;
   gap:10px;
 }
+
 .home-card{
   background:#fff;
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   overflow:hidden;
   cursor:pointer;
-  touch-action:manipulation;
 }
-.home-card:active{transform:scale(.99);}
+
 .home-card img{
   width:100%;
   height:100%;
@@ -116,18 +129,20 @@ body.catalog-mode{
   text-align:center;
   margin-top:14px;
 }
+
 .contact-card .title{
   font-size:12px;
   font-weight:600;
   color:var(--muted);
   margin-bottom:6px;
 }
+
 .contact-card .phone{
   font-size:18px;
   font-weight:700;
-  letter-spacing:.5px;
   direction:ltr;
 }
+
 .wa-btn{
   margin-top:10px;
   padding:10px 14px;
@@ -140,23 +155,10 @@ body.catalog-mode{
   align-items:center;
   justify-content:center;
   gap:10px;
-  box-shadow:0 6px 12px rgba(35,211,102,.18);
   border:none;
   width:100%;
   cursor:pointer;
-  touch-action:manipulation;
 }
-.wa-btn:active{transform:scale(.99);}
-.wa-icon{
-  width:28px;height:28px;
-  border-radius:50%;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex:0 0 auto;
-}
-.wa-icon svg{width:16px;height:16px;fill:var(--wa);}
 
 /* عرض الصور */
 .feed{
@@ -164,6 +166,7 @@ body.catalog-mode{
   flex-direction:column;
   gap:16px;
 }
+
 .post{
   background:#0b0b0b;
   border-radius:var(--radius);
@@ -171,16 +174,19 @@ body.catalog-mode{
   border:2px solid var(--imgBorder);
   box-shadow:0 12px 22px rgba(0,0,0,.4);
 }
+
 .post .ph{
   background:#111;
   width:100%;
   aspect-ratio:9/16;
 }
+
 .post img{
   width:100%;
   display:block;
   background:#111;
 }
+
 .end-note{
   text-align:center;
   color:rgba(255,255,255,.75);
@@ -196,31 +202,24 @@ body.catalog-mode{
   <div class="top-bar">
     <button id="backBtn" class="back-btn" onclick="goBack()">← رجوع</button>
     <div class="brand">
-      <div class="made">صُنع بحب 🤍</div>
+      <div class="made">لقب وردي 💗</div>
       <div class="handle">lovingly.framed</div>
     </div>
   </div>
 
   <section id="homeView">
     <div class="home-grid">
-      <div class="home-card" onclick="openCatalog('bridal')"><img src="images/bridal/1.jpg" alt="العروس"></div>
-      <div class="home-card" onclick="openCatalog('newborn')"><img src="images/newborn/1.jpg" alt="المواليد"></div>
-      <div class="home-card" onclick="openCatalog('balloons')"><img src="images/balloons/1.jpg" alt="البالونات"></div>
-      <div class="home-card" onclick="openCatalog('grad')"><img src="images/grad/1.jpg" alt="التخرج"></div>
+      <div class="home-card" onclick="openCatalog('bridal')"><img src="images/bridal/1.jpg"></div>
+      <div class="home-card" onclick="openCatalog('newborn')"><img src="images/newborn/1.jpg"></div>
+      <div class="home-card" onclick="openCatalog('balloons')"><img src="images/balloons/1.jpg"></div>
+      <div class="home-card" onclick="openCatalog('grad')"><img src="images/grad/1.jpg"></div>
     </div>
 
-    <!-- رجعت الواتساب مثل ما كان -->
     <div class="contact-card">
       <div class="title">للتواصل</div>
       <div class="phone">+965 6502 2191</div>
-
       <button class="wa-btn" onclick="window.open('https://wa.me/96565022191')">
-        <span>تواصل واتساب</span>
-        <span class="wa-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32">
-            <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/>
-          </svg>
-        </span>
+        تواصل واتساب
       </button>
     </div>
   </section>
@@ -232,73 +231,26 @@ body.catalog-mode{
 </div>
 
 <script>
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-const BRIDAL_COUNT   = 7;
-const NEWBORN_COUNT  = 23;
-const BALLOONS_COUNT = 0;
-const GRAD_COUNT     = 6;
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-const IMAGE_ROOT = "images";
-const EXT = "jpg";
-const START_INDEX = 2;
+const LIMITS={bridal:7,newborn:23,balloons:0,grad:6};
+const IMAGE_ROOT="images";
+const EXT="jpg";
+const START_INDEX=2;
 
-const LIMITS = {
-  bridal: BRIDAL_COUNT,
-  newborn: NEWBORN_COUNT,
-  balloons: BALLOONS_COUNT,
-  grad: GRAD_COUNT
-};
-
-const homeView = document.getElementById("homeView");
-const catalogView = document.getElementById("catalogView");
-const feed = document.getElementById("feed");
-const backBtn = document.getElementById("backBtn");
-
-let io=null;
-function ensureObserver(){
-  if(io) return;
-  io=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting) return;
-      const img=e.target;
-      img.src=img.dataset.src;
-      img.removeAttribute("data-src");
-      io.unobserve(img);
-    });
-  },{rootMargin:"1200px"});
-}
+const homeView=document.getElementById("homeView");
+const catalogView=document.getElementById("catalogView");
+const feed=document.getElementById("feed");
+const backBtn=document.getElementById("backBtn");
 
 function makePost(url){
   const d=document.createElement("div");
   d.className="post";
-  d.innerHTML=`<div class="ph"></div><img data-src="${url}" loading="lazy">`;
-  const img=d.querySelector("img");
-  img.onload=()=>d.querySelector(".ph")?.remove();
-  img.onerror=()=>d.remove();
-  ensureObserver(); io.observe(img);
+  d.innerHTML=`<div class="ph"></div><img src="${url}">`;
   return d;
 }
 
 function renderFeed(cat){
   feed.innerHTML="";
-  const max = LIMITS[cat] || 0;
-
-  if(max < START_INDEX){
-    const end=document.createElement("div");
-    end.className="end-note";
-    end.textContent="لا يوجد محتوى";
-    feed.appendChild(end);
-    window.scrollTo(0,0);
-    return;
-  }
-
-  for(let i=START_INDEX;i<=max;i++){
+  for(let i=START_INDEX;i<=LIMITS[cat];i++){
     feed.appendChild(makePost(`${IMAGE_ROOT}/${cat}/${i}.${EXT}`));
   }
   const end=document.createElement("div");
