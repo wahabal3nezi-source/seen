@@ -17,10 +17,14 @@
   --radius:16px;
   --wa:#23D366;
   --ph:#f3e6ee;
+
+  /* إطار الصور المطلوب */
+  --imgBorder: rgba(0,0,0,.35);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
+
 body{
   font-family:system-ui,-apple-system,Tahoma,Arial;
   background:linear-gradient(180deg,var(--bg),var(--bg2));
@@ -30,28 +34,44 @@ body{
   padding-bottom:env(safe-area-inset-bottom);
 }
 
-.container{max-width:560px;margin:0 auto;padding:12px;}
+/* نخلي مساحة للشريط الثابت */
+:root { --topbar-h: 76px; }
+body{ padding-top: calc(env(safe-area-inset-top) + var(--topbar-h) + 12px); }
+
+.container{
+  max-width:560px;
+  margin:0 auto;
+  padding:12px;
+}
+
 .view-hidden{display:none!important;}
 
-/* الشريط العلوي */
+/* الشريط العلوي (ثابت) */
 .top-bar{
-  position:sticky;
+  position:fixed;
   top:env(safe-area-inset-top);
-  z-index:100;
-  background:rgba(255,255,255,.9);
+  left:50%;
+  transform:translateX(-50%);
+  width:min(560px, calc(100% - 24px));
+  z-index:1000;
+
+  background:rgba(255,255,255,.92);
   backdrop-filter:blur(12px);
   border:1px solid var(--stroke);
   border-radius:var(--radius);
   box-shadow:0 4px 8px rgba(0,0,0,.04);
   padding:12px;
-  margin-bottom:12px;
   text-align:center;
 }
 .top-bar .made{font-size:16px;font-weight:800;}
 .top-bar .handle{font-size:15px;font-weight:700;direction:ltr;}
 
 /* الصفحة الرئيسية */
-.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.home-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
 .home-card{
   background:var(--card);
   border-radius:var(--radius);
@@ -96,8 +116,18 @@ body{
   padding:14px;
   text-align:center;
 }
-.contact-card .title{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;}
-.contact-card .phone{font-size:18px;font-weight:700;letter-spacing:.5px;direction:ltr;}
+.contact-card .title{
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.contact-card .phone{
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.5px;
+  direction:ltr;
+}
 
 .wa-btn{
   margin-top:10px;
@@ -132,9 +162,9 @@ body{
 /* الكتالوج */
 .catalog-header{
   position:sticky;
-  top:calc(env(safe-area-inset-top) + 0px);
-  z-index:50;
-  background:rgba(255,255,255,.9);
+  top:calc(env(safe-area-inset-top) + var(--topbar-h) + 12px);
+  z-index:200;
+  background:rgba(255,255,255,.92);
   backdrop-filter:blur(10px);
   border-radius:var(--radius);
   padding:10px;
@@ -156,24 +186,27 @@ body{
 }
 .catalog-title{flex:1;text-align:center;font-weight:800;}
 
-/* FEED (مرتب + نهاية واضحة) */
+/* FEED */
 .feed{
   display:flex;
   flex-direction:column;
   gap:16px;
 }
+
 .post{
   background:#fff;
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   overflow:hidden;
-  border:1px solid var(--stroke);
+  border:2px solid var(--imgBorder); /* إطار رمادي غامق */
 }
+
 .post .ph{
   background:var(--ph);
   width:100%;
   aspect-ratio: 9 / 16;
 }
+
 .post img{
   width:100%;
   height:auto;
@@ -181,26 +214,13 @@ body{
   background:var(--ph);
 }
 
-/* زر تحميل المزيد + نهاية */
-.load-more{
-  margin:10px 0 20px;
-  padding:12px 14px;
-  width:100%;
-  border:none;
-  border-radius:14px;
-  background:#fff;
-  box-shadow:0 6px 12px rgba(0,0,0,.05);
-  font-weight:900;
-  cursor:pointer;
-}
 .end-note{
   text-align:center;
   color:var(--muted);
-  font-weight:800;
+  font-weight:900;
   padding:18px 10px 28px;
 }
 
-/* رسالة */
 .msg{
   text-align:center;
   color:var(--muted);
@@ -235,7 +255,8 @@ body{
       </div>
     </div>
 
-    <div class="pill-button" onclick="openCatalog('all')">📁 الكتالوج الكامل</div>
+    <!-- شلت أيقونة الملف -->
+    <div class="pill-button" onclick="openCatalog('all')">الكتالوج الكامل</div>
 
     <div class="contact-card">
       <div class="title">للتواصل</div>
@@ -271,17 +292,14 @@ body{
 const IMAGE_ROOT = "images";
 const EXT = "jpg";
 
-/* مهم:
-- 1.jpg للـ thumbnails فقط.
-- داخل الكتالوج نبدأ من 2.jpg عشان ما تتكرر.
-*/
+/* 1.jpg للثَمبنيل فقط */
 const START_INDEX_IN_CATALOG = 2;
 
-/* حد منطقي لكل فولدر عشان ما يصير “مالانهاية” */
-const MAX_PER_FOLDER = 200;
+/* أقصى رقم ممكن تجربته. إذا صورك أقل عادي بيوقف بدري */
+const MAX_PER_FOLDER = 400;
 
-/* كم صورة نحمل كل دفعة */
-const PAGE_SIZE = 12;
+/* كم خطأ متتالي نعتبره نهاية (يحميك لو رقم ناقص بالغلط) */
+const MAX_MISS_STREAK = 3;
 
 const titles = {
   bridal: 'العروس',
@@ -297,10 +315,6 @@ const homeView = document.getElementById('homeView');
 const catalogView = document.getElementById('catalogView');
 const catalogTitle = document.getElementById('catalogTitle');
 const feed = document.getElementById('feed');
-
-/* حفظ سكرول لكل قسم عشان لما ترجع يرجع نفس مكانك */
-const scrollMemory = {}; // {cat: scrollY}
-let currentCat = null;
 
 /* Lazy loading */
 let io = null;
@@ -339,137 +353,95 @@ function makePost(url){
   return post;
 }
 
-/* يبني URL */
 function urlFor(folder, i){
   return `${IMAGE_ROOT}/${folder}/${i}.${EXT}`;
 }
 
-/* state للـ pagination */
-let state = {
-  cat: null,
-  index: START_INDEX_IN_CATALOG,   // رقم الصورة الحالية
-  folderIdx: 0,                     // للتنقل بين الفولدرات في all
-  ended: false
-};
-
-function resetState(cat){
-  state.cat = cat;
-  state.index = START_INDEX_IN_CATALOG;
-  state.folderIdx = 0;
-  state.ended = false;
+/* تحقق وجود الصورة (سريع على نفس الدومين) */
+async function exists(url){
+  try{
+    const r = await fetch(url, { method:"HEAD", cache:"no-store" });
+    return r.ok;
+  }catch(_){
+    return false;
+  }
 }
 
-/* زر تحميل المزيد + نهاية */
-function renderFooterControls(){
-  // امسح أي footer قديم
-  const oldBtn = document.getElementById("loadMoreBtn");
-  if(oldBtn) oldBtn.remove();
-  const oldEnd = document.getElementById("endNote");
-  if(oldEnd) oldEnd.remove();
+/* اجمع الصور الموجودة فعليًا من فولدر واحد */
+async function collectFolder(folder){
+  const list = [];
+  let miss = 0;
 
-  if(state.ended){
-    const end = document.createElement("div");
-    end.id = "endNote";
-    end.className = "end-note";
-    end.textContent = "انتهى الكتالوج";
-    feed.appendChild(end);
-    return;
+  for(let i = START_INDEX_IN_CATALOG; i <= MAX_PER_FOLDER; i++){
+    const u = urlFor(folder, i);
+    const ok = await exists(u);
+
+    if(ok){
+      list.push(u);
+      miss = 0;
+    }else{
+      miss++;
+      if(list.length > 0 && miss >= MAX_MISS_STREAK) break;
+    }
   }
 
-  const btn = document.createElement("button");
-  btn.id = "loadMoreBtn";
-  btn.className = "load-more";
-  btn.textContent = "تحميل المزيد";
-  btn.onclick = () => loadNextPage();
-  feed.appendChild(btn);
+  return list;
 }
 
-/* تحميل دفعة صور */
-function loadNextPage(){
-  // احذف زر التحميل قبل الإضافة عشان ما يتكرر بين النص
-  const btn = document.getElementById("loadMoreBtn");
-  if(btn) btn.remove();
-
-  let added = 0;
-
-  // إذا قسم عادي
-  if(state.cat !== "all"){
-    while(added < PAGE_SIZE && state.index <= MAX_PER_FOLDER){
-      const u = urlFor(state.cat, state.index);
-      feed.appendChild(makePost(u));
-      state.index++;
-      added++;
-    }
-    if(state.index > MAX_PER_FOLDER){
-      state.ended = true;
-    }
-    renderFooterControls();
-    return;
+/* اجمع كل الفئات */
+async function collectAll(){
+  const all = [];
+  for(const f of folders){
+    const arr = await collectFolder(f);
+    all.push(...arr);
   }
-
-  // قسم all: يمشي فولدر فولدر
-  while(added < PAGE_SIZE){
-    if(state.folderIdx >= folders.length){
-      state.ended = true;
-      break;
-    }
-
-    const folder = folders[state.folderIdx];
-
-    if(state.index > MAX_PER_FOLDER){
-      // خلص فولدر وابدأ التالي
-      state.folderIdx++;
-      state.index = START_INDEX_IN_CATALOG;
-      continue;
-    }
-
-    const u = urlFor(folder, state.index);
-    feed.appendChild(makePost(u));
-    state.index++;
-    added++;
-  }
-
-  renderFooterControls();
+  return all;
 }
 
-/* عرض الكتالوج */
-function renderFeed(cat){
+function showEndNote(){
+  const end = document.createElement("div");
+  end.className = "end-note";
+  end.textContent = "انتهى الكتالوج";
+  feed.appendChild(end);
+}
+
+async function renderFeed(cat){
+  feed.innerHTML = `<div class="msg">جاري تحميل الصور...</div>`;
+
+  let list = [];
+  if(cat === "all"){
+    list = await collectAll();
+  }else{
+    list = await collectFolder(cat);
+  }
+
   feed.innerHTML = '';
-  resetState(cat);
 
-  // أول دفعة
-  loadNextPage();
+  if(!list.length){
+    feed.innerHTML = `<div class="msg">لا توجد صور</div>`;
+    return;
+  }
 
-  // أعلى الصفحة
+  // عرض الكل مرة وحدة
+  list.forEach(url => feed.appendChild(makePost(url)));
+
+  // نهاية واضحة دائمًا
+  showEndNote();
+
   window.scrollTo(0,0);
 }
 
 function openCatalog(cat){
-  // احفظ سكرول القسم الحالي قبل ما تغيّر
-  if(currentCat){
-    scrollMemory[currentCat] = window.scrollY;
-  }
-
-  currentCat = cat;
-
   homeView.classList.add('view-hidden');
   catalogView.classList.remove('view-hidden');
   catalogTitle.textContent = titles[cat] || 'الكتالوج';
-
   renderFeed(cat);
 }
 
 function goBack(){
-  // احفظ سكرول القسم الحالي
-  if(currentCat){
-    scrollMemory[currentCat] = window.scrollY;
-  }
-
   catalogView.classList.add('view-hidden');
   homeView.classList.remove('view-hidden');
   window.scrollTo(0,0);
-
-  currentCat = null;
 }
 
 /* thumbnails fallback */
