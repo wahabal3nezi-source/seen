@@ -7,23 +7,12 @@
 
 <style>
 :root{
-  --bg:#fff7fb;
-  --bg2:#fde8f2;
-  --card:#ffffff;
   --text:#6a3d57;
-  --muted:#9b6f86;
-  --stroke:rgba(0,0,0,.06);
-  --shadow:0 6px 12px rgba(233,133,179,.12);
+  --stroke:rgba(0,0,0,.08);
   --radius:16px;
-  --wa:#23D366;
-  --ph:#f3e6ee;
-
-  /* إطار الصور */
-  --imgBorder: rgba(0,0,0,.55);
-
-  /* أبعاد ثابتة */
-  --topbar-h: 76px;
-  --catbar-h: 58px;
+  --shadow:0 6px 14px rgba(0,0,0,.18);
+  --imgBorder: rgba(200,200,200,.35);
+  --topbar-h:78px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -31,20 +20,17 @@ html,body{height:100%;}
 
 body{
   font-family:system-ui,-apple-system,Tahoma,Arial;
-  background:linear-gradient(180deg,var(--bg),var(--bg2));
+  background:#fff7fb;
   color:var(--text);
   overflow-x:hidden;
   padding-top:calc(env(safe-area-inset-top) + var(--topbar-h) + 12px);
-  padding-bottom:env(safe-area-inset-bottom);
 }
 
-/* وضع عرض الصور */
 body.catalog-mode{
   background:#000;
   color:#fff;
 }
 
-/* حاوية */
 .container{
   max-width:560px;
   margin:0 auto;
@@ -53,7 +39,7 @@ body.catalog-mode{
 
 .view-hidden{display:none!important;}
 
-/* الشريط العلوي (ثابت دائماً) */
+/* الشريط العلوي */
 .top-bar{
   position:fixed;
   top:env(safe-area-inset-top);
@@ -61,17 +47,33 @@ body.catalog-mode{
   transform:translateX(-50%);
   width:min(560px, calc(100% - 24px));
   z-index:1000;
-
-  background:#fff;               /* غير شفاف */
+  background:#fff;
   border:1px solid var(--stroke);
   border-radius:var(--radius);
-  box-shadow:0 4px 8px rgba(0,0,0,.12);
-  padding:12px;
-  text-align:center;
-  color:var(--text);
+  box-shadow:var(--shadow);
+  padding:10px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
-.top-bar .made{font-size:16px;font-weight:800;}
-.top-bar .handle{font-size:15px;font-weight:700;direction:ltr;}
+
+.back-btn{
+  display:none;
+  border:none;
+  background:#111;
+  color:#fff;
+  border-radius:12px;
+  padding:10px 12px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.brand{
+  flex:1;
+  text-align:center;
+}
+.brand .made{font-size:16px;font-weight:900;}
+.brand .handle{font-size:14px;font-weight:800;direction:ltr;opacity:.9;}
 
 /* الصفحة الرئيسية */
 .home-grid{
@@ -80,140 +82,47 @@ body.catalog-mode{
   gap:10px;
 }
 .home-card{
-  background:var(--card);
+  background:#fff;
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   overflow:hidden;
   cursor:pointer;
-  touch-action:manipulation;
 }
-.home-card:active{transform:scale(.99);}
 .home-card img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
-  background:var(--ph);
 }
 
-/* كرت التواصل */
-.contact-card{
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 6px 12px rgba(0,0,0,.05);
-  padding:14px;
-  text-align:center;
-  margin-top:14px;
-}
-.contact-card .title{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;}
-.contact-card .phone{font-size:18px;font-weight:700;letter-spacing:.5px;direction:ltr;}
-
-.wa-btn{
-  margin-top:10px;
-  padding:10px 14px;
-  border-radius:14px;
-  background:var(--wa);
-  color:#fff;
-  font-size:14px;
-  font-weight:700;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  box-shadow:0 6px 12px rgba(35,211,102,.18);
-  border:none;
-  width:100%;
-  cursor:pointer;
-  touch-action:manipulation;
-}
-.wa-btn:active{transform:scale(.99);}
-.wa-icon{
-  width:28px;height:28px;
-  border-radius:50%;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex:0 0 auto;
-}
-.wa-icon svg{width:16px;height:16px;fill:var(--wa);}
-
-/* شريط الرجوع داخل عرض الصور (ثابت) */
-.catalog-header{
-  position:fixed;
-  top:calc(env(safe-area-inset-top) + var(--topbar-h) + 12px);
-  left:50%;
-  transform:translateX(-50%);
-  width:min(560px, calc(100% - 24px));
-  z-index:900;
-
-  background:#111;              /* مناسب للخلفية السوداء */
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:var(--radius);
-  box-shadow:0 4px 12px rgba(0,0,0,.35);
-  height:var(--catbar-h);
-
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  padding:10px;
-}
-
-.back-button{
-  border:none;
-  background:#fff;
-  color:#111;
-  border-radius:12px;
-  padding:10px 14px;
-  cursor:pointer;
-  font-weight:900;
-}
-
-/* مساحة تحت الهيدر الثابت داخل الكتالوج */
-#catalogView{
-  padding-top:calc(var(--catbar-h) + 14px);
-}
-
-/* الصور */
+/* عرض الصور */
 .feed{
   display:flex;
   flex-direction:column;
   gap:16px;
 }
-
 .post{
   background:#0b0b0b;
   border-radius:var(--radius);
   overflow:hidden;
-  border:2px solid rgba(200,200,200,.35); /* رمادي غامق */
-  box-shadow:0 10px 20px rgba(0,0,0,.35);
+  border:2px solid var(--imgBorder);
+  box-shadow:0 12px 22px rgba(0,0,0,.4);
 }
-
 .post .ph{
   background:#111;
   width:100%;
-  aspect-ratio: 9 / 16;
+  aspect-ratio:9/16;
 }
-
 .post img{
   width:100%;
-  height:auto;
   display:block;
   background:#111;
 }
-
 .end-note{
   text-align:center;
   color:rgba(255,255,255,.75);
   font-weight:900;
-  padding:18px 10px 28px;
-}
-
-.msg{
-  text-align:center;
-  color:var(--muted);
-  padding:24px 10px;
-  font-weight:700;
+  padding:22px 10px 32px;
 }
 </style>
 </head>
@@ -222,173 +131,126 @@ body.catalog-mode{
 <div class="container">
 
   <div class="top-bar">
-    <div class="made">صُنع بحب 🤍</div>
-    <div class="handle">lovingly.framed</div>
+    <button id="backBtn" class="back-btn" onclick="goBack()">← رجوع</button>
+    <div class="brand">
+      <div class="made">صُنع بحب 🤍</div>
+      <div class="handle">lovingly.framed</div>
+    </div>
+    <div style="width:70px;"></div>
   </div>
 
-  <!-- HOME -->
   <section id="homeView">
     <div class="home-grid">
       <div class="home-card" onclick="openCatalog('bridal')">
-        <img id="thumbBridal" src="images/bridal/1.jpg" alt="العروس" loading="eager" decoding="async">
+        <img src="images/bridal/1.jpg">
       </div>
       <div class="home-card" onclick="openCatalog('newborn')">
-        <img id="thumbNewborn" src="images/newborn/1.jpg" alt="المواليد" loading="eager" decoding="async">
+        <img src="images/newborn/1.jpg">
       </div>
       <div class="home-card" onclick="openCatalog('balloons')">
-        <img id="thumbBalloons" src="images/balloons/1.jpg" alt="البالونات" loading="eager" decoding="async">
+        <img src="images/balloons/1.jpg">
       </div>
       <div class="home-card" onclick="openCatalog('grad')">
-        <img id="thumbGrad" src="images/grad/1.jpg" alt="التخرج" loading="eager" decoding="async">
+        <img src="images/grad/1.jpg">
       </div>
-    </div>
-
-    <div class="contact-card">
-      <div class="title">للتواصل</div>
-      <div class="phone">+965 6502 2191</div>
-
-      <button class="wa-btn" onclick="window.open('https://wa.me/96565022191')">
-        <span>تواصل واتساب</span>
-        <span class="wa-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32">
-            <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/>
-          </svg>
-        </span>
-      </button>
     </div>
   </section>
 
-  <!-- CATALOG -->
   <section id="catalogView" class="view-hidden">
-    <div class="catalog-header">
-      <button class="back-button" onclick="goBack()">← رجوع</button>
-    </div>
-
     <div class="feed" id="feed"></div>
   </section>
 
 </div>
 
 <script>
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+const BRIDAL_COUNT   = 7;
+const NEWBORN_COUNT  = 23;
+const BALLOONS_COUNT = 0;
+const GRAD_COUNT     = 6;
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 const IMAGE_ROOT = "images";
 const EXT = "jpg";
+const START_INDEX = 2;
 
-/* 1.jpg للثَمبنيل فقط */
-const START_INDEX_IN_CATALOG = 2;
+const LIMITS = {
+  bridal: BRIDAL_COUNT,
+  newborn: NEWBORN_COUNT,
+  balloons: BALLOONS_COUNT,
+  grad: GRAD_COUNT
+};
 
-/* عدل هذا حسب أكبر رقم عندك بكل فولدر */
-const MAX_PER_FOLDER = 250;
+const homeView = document.getElementById("homeView");
+const catalogView = document.getElementById("catalogView");
+const feed = document.getElementById("feed");
+const backBtn = document.getElementById("backBtn");
 
-/* Preload: كم صورة من كل قسم تتحمل من أول ما تفتح الموقع */
-const PRELOAD_COUNT = 12;
-
-const folders = ["bridal","newborn","balloons","grad"];
-
-const homeView = document.getElementById('homeView');
-const catalogView = document.getElementById('catalogView');
-const feed = document.getElementById('feed');
-
-/* Lazy loading */
-let io = null;
+let io=null;
 function ensureObserver(){
   if(io) return;
-  io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
+  io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
       if(!e.isIntersecting) return;
-      const img = e.target;
-      const src = img.getAttribute("data-src");
-      if(src){
-        img.src = src;
-        img.removeAttribute("data-src");
-      }
+      const img=e.target;
+      img.src=img.dataset.src;
+      img.removeAttribute("data-src");
       io.unobserve(img);
     });
-  }, { root: null, rootMargin: "1200px 0px", threshold: 0.01 });
+  },{rootMargin:"1200px"});
 }
 
 function makePost(url){
-  const post = document.createElement('div');
-  post.className = 'post';
-  post.innerHTML = `
-    <div class="ph"></div>
-    <img data-src="${url}" alt="صورة" decoding="async" loading="lazy">
-  `;
-
-  const img = post.querySelector("img");
-  const ph = post.querySelector(".ph");
-
-  img.addEventListener("load", () => { if(ph) ph.remove(); });
-  img.addEventListener("error", () => { post.remove(); });
-
-  ensureObserver();
-  io.observe(img);
-  return post;
+  const d=document.createElement("div");
+  d.className="post";
+  d.innerHTML=`<div class="ph"></div><img data-src="${url}" loading="lazy">`;
+  const img=d.querySelector("img");
+  img.onload=()=>d.querySelector(".ph")?.remove();
+  img.onerror=()=>d.remove();
+  ensureObserver(); io.observe(img);
+  return d;
 }
 
-function urlFor(folder, i){
-  return `${IMAGE_ROOT}/${folder}/${i}.${EXT}`;
-}
-
-function showEndNote(){
-  const end = document.createElement("div");
-  end.className = "end-note";
-  end.textContent = "نهاية المحتوى";
-  feed.appendChild(end);
-}
-
-/* يرسم الكل مرة وحدة بدون انتظار */
 function renderFeed(cat){
-  feed.innerHTML = '';
-
-  for(let i = START_INDEX_IN_CATALOG; i <= MAX_PER_FOLDER; i++){
-    const u = urlFor(cat, i);
-    feed.appendChild(makePost(u));
+  feed.innerHTML="";
+  for(let i=START_INDEX;i<=LIMITS[cat];i++){
+    feed.appendChild(makePost(`${IMAGE_ROOT}/${cat}/${i}.${EXT}`));
   }
-
-  showEndNote();
+  const end=document.createElement("div");
+  end.className="end-note";
+  end.textContent="نهاية المحتوى";
+  feed.appendChild(end);
   window.scrollTo(0,0);
 }
 
 function openCatalog(cat){
   document.body.classList.add("catalog-mode");
-  homeView.classList.add('view-hidden');
-  catalogView.classList.remove('view-hidden');
+  homeView.classList.add("view-hidden");
+  catalogView.classList.remove("view-hidden");
+  backBtn.style.display="inline-flex";
   renderFeed(cat);
 }
 
 function goBack(){
-  catalogView.classList.add('view-hidden');
-  homeView.classList.remove('view-hidden');
   document.body.classList.remove("catalog-mode");
+  catalogView.classList.add("view-hidden");
+  homeView.classList.remove("view-hidden");
+  backBtn.style.display="none";
   window.scrollTo(0,0);
 }
-
-/* thumbnails fallback */
-function fixThumb(id, fallback){
-  const img = document.getElementById(id);
-  if(!img) return;
-  img.onerror = () => { img.removeAttribute("src"); img.style.background = "var(--ph)"; };
-  if(fallback) img.src = fallback;
-}
-
-/* Preload صور من أول ما تفتح الموقع */
-function preloadImages(){
-  folders.forEach(folder => {
-    for(let i = START_INDEX_IN_CATALOG; i < START_INDEX_IN_CATALOG + PRELOAD_COUNT; i++){
-      const img = new Image();
-      img.src = urlFor(folder, i);
-    }
-  });
-}
-
-window.addEventListener("load", () => {
-  fixThumb("thumbBridal",  `${IMAGE_ROOT}/bridal/1.${EXT}`);
-  fixThumb("thumbNewborn", `${IMAGE_ROOT}/newborn/1.${EXT}`);
-  fixThumb("thumbBalloons",`${IMAGE_ROOT}/balloons/1.${EXT}`);
-  fixThumb("thumbGrad",    `${IMAGE_ROOT}/grad/1.${EXT}`);
-
-  preloadImages();
-});
 </script>
 </body>
 </html>
