@@ -8,11 +8,13 @@
 <style>
 :root{
   --text:#6a3d57;
+  --muted:#9b6f86;
   --stroke:rgba(0,0,0,.08);
   --radius:16px;
   --shadow:0 6px 14px rgba(0,0,0,.18);
   --imgBorder: rgba(200,200,200,.35);
   --topbar-h:78px;
+  --wa:#23D366;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -24,6 +26,7 @@ body{
   color:var(--text);
   overflow-x:hidden;
   padding-top:calc(env(safe-area-inset-top) + var(--topbar-h) + 12px);
+  padding-bottom:env(safe-area-inset-bottom);
 }
 
 body.catalog-mode{
@@ -52,13 +55,19 @@ body.catalog-mode{
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   padding:10px 12px;
+  height:var(--topbar-h);
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:center; /* يضمن التوسيط */
 }
 
+/* زر الرجوع ما يأثر على التوسيط */
 .back-btn{
   display:none;
+  position:absolute;
+  right:12px;           /* في RTL هذا يمين */
+  top:50%;
+  transform:translateY(-50%);
   border:none;
   background:#111;
   color:#fff;
@@ -68,9 +77,10 @@ body.catalog-mode{
   cursor:pointer;
 }
 
+/* النص بالنص */
 .brand{
-  flex:1;
   text-align:center;
+  line-height:1.15;
 }
 .brand .made{font-size:16px;font-weight:900;}
 .brand .handle{font-size:14px;font-weight:800;direction:ltr;opacity:.9;}
@@ -87,13 +97,66 @@ body.catalog-mode{
   box-shadow:var(--shadow);
   overflow:hidden;
   cursor:pointer;
+  touch-action:manipulation;
 }
+.home-card:active{transform:scale(.99);}
 .home-card img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
 }
+
+/* كرت الواتساب */
+.contact-card{
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 6px 12px rgba(0,0,0,.05);
+  padding:14px;
+  text-align:center;
+  margin-top:14px;
+}
+.contact-card .title{
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.contact-card .phone{
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.5px;
+  direction:ltr;
+}
+.wa-btn{
+  margin-top:10px;
+  padding:10px 14px;
+  border-radius:14px;
+  background:var(--wa);
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  box-shadow:0 6px 12px rgba(35,211,102,.18);
+  border:none;
+  width:100%;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.wa-btn:active{transform:scale(.99);}
+.wa-icon{
+  width:28px;height:28px;
+  border-radius:50%;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+.wa-icon svg{width:16px;height:16px;fill:var(--wa);}
 
 /* عرض الصور */
 .feed{
@@ -136,23 +199,29 @@ body.catalog-mode{
       <div class="made">صُنع بحب 🤍</div>
       <div class="handle">lovingly.framed</div>
     </div>
-    <div style="width:70px;"></div>
   </div>
 
   <section id="homeView">
     <div class="home-grid">
-      <div class="home-card" onclick="openCatalog('bridal')">
-        <img src="images/bridal/1.jpg">
-      </div>
-      <div class="home-card" onclick="openCatalog('newborn')">
-        <img src="images/newborn/1.jpg">
-      </div>
-      <div class="home-card" onclick="openCatalog('balloons')">
-        <img src="images/balloons/1.jpg">
-      </div>
-      <div class="home-card" onclick="openCatalog('grad')">
-        <img src="images/grad/1.jpg">
-      </div>
+      <div class="home-card" onclick="openCatalog('bridal')"><img src="images/bridal/1.jpg" alt="العروس"></div>
+      <div class="home-card" onclick="openCatalog('newborn')"><img src="images/newborn/1.jpg" alt="المواليد"></div>
+      <div class="home-card" onclick="openCatalog('balloons')"><img src="images/balloons/1.jpg" alt="البالونات"></div>
+      <div class="home-card" onclick="openCatalog('grad')"><img src="images/grad/1.jpg" alt="التخرج"></div>
+    </div>
+
+    <!-- رجعت الواتساب مثل ما كان -->
+    <div class="contact-card">
+      <div class="title">للتواصل</div>
+      <div class="phone">+965 6502 2191</div>
+
+      <button class="wa-btn" onclick="window.open('https://wa.me/96565022191')">
+        <span>تواصل واتساب</span>
+        <span class="wa-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/>
+          </svg>
+        </span>
+      </button>
     </div>
   </section>
 
@@ -167,18 +236,10 @@ body.catalog-mode{
 //////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 const BRIDAL_COUNT   = 7;
 const NEWBORN_COUNT  = 23;
 const BALLOONS_COUNT = 0;
 const GRAD_COUNT     = 6;
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -226,7 +287,18 @@ function makePost(url){
 
 function renderFeed(cat){
   feed.innerHTML="";
-  for(let i=START_INDEX;i<=LIMITS[cat];i++){
+  const max = LIMITS[cat] || 0;
+
+  if(max < START_INDEX){
+    const end=document.createElement("div");
+    end.className="end-note";
+    end.textContent="لا يوجد محتوى";
+    feed.appendChild(end);
+    window.scrollTo(0,0);
+    return;
+  }
+
+  for(let i=START_INDEX;i<=max;i++){
     feed.appendChild(makePost(`${IMAGE_ROOT}/${cat}/${i}.${EXT}`));
   }
   const end=document.createElement("div");
