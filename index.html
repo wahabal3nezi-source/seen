@@ -334,7 +334,7 @@ function renderFeed(cat){
     return;
   }
 
-  for(let i = START_INDEX; i <= max; i++){
+  for(let i = max; i >= START_INDEX; i--){
     feed.appendChild(
       makePost(`${IMAGE_ROOT}/${cat}/${i}.${EXT}`)
     );
