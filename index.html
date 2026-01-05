@@ -7,210 +7,317 @@
     content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
   />
   <title>Lovingly Framed</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --text:#6a3d57;
-      --muted:#9b6f86;
-      --stroke:rgba(0,0,0,.08);
-      --radius:16px;
-      --shadow:0 6px 14px rgba(0,0,0,.18);
-      --imgBorder: rgba(200,200,200,.35);
-      --topbar-h:78px;
-      --wa:#23D366;
+      /* لوحة ألوان جديدة أكثر دفئاً وفخامة */
+      --primary: #8e5572;      /* لون عنابي/وردي غامق */
+      --accent: #f4decb;       /* بيج كريمي */
+      --bg-color: #fdfbf7;     /* خلفية ورقية فاتحة */
+      --text: #4a2c3a;         /* نص بني غامق بدلاً من الأسود */
+      --radius: 24px;          /* زوايا أكثر انحناءً */
+      --card-shadow: 0 10px 25px rgba(142, 85, 114, 0.15);
+      --topbar-h: 70px;
+      --wa: #25D366;
     }
 
     *{box-sizing:border-box;margin:0;padding:0;}
     html,body{height:100%;}
 
     body{
-      font-family:system-ui,-apple-system,Tahoma,Arial;
-      background:#fff7fb;
-      color:var(--text);
-      overflow-x:hidden;
-      padding-top:calc(env(safe-area-inset-top) + var(--topbar-h) + 12px);
-      padding-bottom:env(safe-area-inset-bottom);
+      font-family: 'Tajawal', sans-serif; /* الخط الجديد */
+      background: var(--bg-color);
+      color: var(--text);
+      overflow-x: hidden;
+      /* إضافة خلفية ناعمة جداً */
+      background-image: radial-gradient(circle at 10% 20%, rgba(244, 222, 203, 0.4) 0%, transparent 20%),
+                        radial-gradient(circle at 90% 80%, rgba(142, 85, 114, 0.1) 0%, transparent 20%);
+      padding-top: calc(env(safe-area-inset-top) + var(--topbar-h) + 20px);
+      padding-bottom: env(safe-area-inset-bottom);
+      transition: background 0.4s ease, color 0.4s ease;
     }
 
+    /* تحسين وضع الكتالوج (الوضع الداكن) */
     body.catalog-mode{
-      background:#000;
-      color:#fff;
+      background: #1a1a1a;
+      color: #e0e0e0;
     }
 
     .container{
-      max-width:560px;
-      margin:0 auto;
-      padding:12px;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 16px;
     }
 
     .view-hidden{display:none!important;}
 
-    /* الشريط العلوي */
+    /* الشريط العلوي بتأثير الزجاج */
     .top-bar{
-      position:fixed;
-      top:env(safe-area-inset-top);
-      left:50%;
-      transform:translateX(-50%);
-      width:min(560px, calc(100% - 24px));
-      z-index:1000;
-      background:#fff;
-      border:1px solid var(--stroke);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:10px 12px;
-      height:var(--topbar-h);
-      display:flex;
-      align-items:center;
-      justify-content:center; /* يضمن التوسيط */
+      position: fixed;
+      top: 15px; /* مسافة من الأعلى */
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(540px, calc(100% - 32px));
+      z-index: 1000;
+      
+      background: rgba(255, 255, 255, 0.75); /* شفافية */
+      backdrop-filter: blur(12px);            /* تأثير الضباب */
+      -webkit-backdrop-filter: blur(12px);
+      
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50px; /* شكل كبسولة */
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      
+      padding: 0 20px;
+      height: var(--topbar-h);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
     }
-  .top-bar{ color:var(--text); } /* يخلي نص الشريط واضح بالوضع العادي */
-  body.catalog-mode .top-bar{
-  background:#111;             /* شريط غامق وقت عرض الصور */
-  border-color:rgba(255,255,255,.12);
-  color:#fff;                  /* نص أبيض واضح */
-}
 
+    body.catalog-mode .top-bar{
+      background: rgba(30, 30, 30, 0.85);
+      border-color: rgba(255,255,255,0.1);
+      color: #fff;
+    }
 
-    /* زر الرجوع ما يأثر على التوسيط */
+    /* زر الرجوع */
     .back-btn{
-      display:none;
-      position:absolute;
-      right:12px; /* في RTL هذا يمين */
-      top:50%;
-      transform:translateY(-50%);
-      border:none;
-      background:#111;
-      color:#fff;
-      border-radius:12px;
-      padding:10px 12px;
-      font-weight:900;
-      cursor:pointer;
+      display: none;
+      position: absolute;
+      right: 8px; 
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: var(--text);
+      color: #fff;
+      border-radius: 40px;
+      padding: 8px 16px;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .back-btn:active { transform: translateY(-50%) scale(0.95); }
+    
+    body.catalog-mode .back-btn {
+        background: #fff;
+        color: #000;
     }
 
-    /* النص بالنص */
+    /* العلامة التجارية */
     .brand{
-      text-align:center;
-      line-height:1.15;
-      width:100%;
+      text-align: center;
+      line-height: 1.2;
     }
-    .brand .made{font-size:16px;font-weight:900;}
-    .brand .handle{font-size:14px;font-weight:800;direction:ltr;opacity:.9;}
+    .brand .made{
+        font-size: 14px; 
+        font-weight: 500; 
+        color: var(--primary); 
+        letter-spacing: 0.5px;
+    }
+    body.catalog-mode .brand .made { color: #ffb7d5; }
 
-    /* الصفحة الرئيسية */
+    .brand .handle{
+        font-size: 18px; 
+        font-weight: 800; 
+        direction: ltr; 
+        background: linear-gradient(45deg, var(--text), var(--primary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    body.catalog-mode .brand .handle {
+        background: linear-gradient(45deg, #fff, #ddd);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* الشبكة الرئيسية - ستايل البولارويد / المعرض */
     .home-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 10px;
     }
 
     .home-card{
-      background:#fff;
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      cursor:pointer;
-      touch-action:manipulation;
+      background: #fff;
+      border-radius: 4px; /* زوايا حادة قليلاً مثل الصور المطبوعة */
+      box-shadow: var(--card-shadow);
+      cursor: pointer;
+      position: relative;
+      padding: 8px; /* إطار أبيض داخلي */
+      padding-bottom: 25px; /* مساحة أكبر من الأسفل كأنها صورة فورية */
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 1px solid rgba(0,0,0,0.03);
     }
+    
+    /* حركة جمالية عند المرور */
+    .home-card:hover { transform: translateY(-5px) rotate(1deg); }
+    .home-card:active { transform: scale(0.96); }
 
-    .home-card:active{transform:scale(.99);}
+    /* زينة بسيطة فوق الكرت */
+    .home-card::after {
+        content: '✦';
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: #ddd;
+    }
 
     .home-card img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 2px;
+      aspect-ratio: 1/1; /* يجعل الصور مربعة */
+      background: #f0f0f0;
     }
 
-    /* كرت الواتساب */
+    /* كرت التواصل - تصميم عصري */
     .contact-card{
-      background:#fff;
-      border-radius:16px;
-      box-shadow:0 6px 12px rgba(0,0,0,.05);
-      padding:14px;
-      text-align:center;
-      margin-top:14px;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 24px;
+      text-align: center;
+      margin-top: 30px;
+      border: 1px solid rgba(255,255,255,0.8);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* زخرفة خلفية خفيفة */
+    .contact-card::before {
+        content: '';
+        position: absolute;
+        top: -20px; right: -20px;
+        width: 80px; height: 80px;
+        background: var(--accent);
+        border-radius: 50%;
+        opacity: 0.3;
+        z-index: 0;
     }
 
     .contact-card .title{
-      font-size:12px;
-      font-weight:600;
-      color:var(--muted);
-      margin-bottom:6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      position: relative; 
+      z-index: 1;
     }
 
     .contact-card .phone{
-      font-size:18px;
-      font-weight:700;
-      letter-spacing:.5px;
-      direction:ltr;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      direction: ltr;
+      color: var(--text);
+      margin-bottom: 16px;
+      position: relative; 
+      z-index: 1;
     }
 
     .wa-btn{
-      margin-top:10px;
-      padding:10px 14px;
-      border-radius:14px;
-      background:var(--wa);
-      color:#fff;
-      font-size:14px;
-      font-weight:700;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      box-shadow:0 6px 12px rgba(35,211,102,.18);
-      border:none;
-      width:100%;
-      cursor:pointer;
-      touch-action:manipulation;
+      position: relative;
+      z-index: 1;
+      padding: 14px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #25D366, #128C7E); /* تدرج لون الواتساب */
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Tajawal', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+      border: none;
+      width: 100%;
+      cursor: pointer;
+      transition: transform 0.2s;
     }
-
-    .wa-btn:active{transform:scale(.99);}
+    .wa-btn:active { transform: scale(0.97); }
 
     .wa-icon{
-      width:28px;
-      height:28px;
-      border-radius:50%;
-      background:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex:0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+    .wa-icon svg{ width: 16px; height: 16px; fill: #fff; }
 
-    .wa-icon svg{width:16px;height:16px;fill:var(--wa);}
-
-    /* عرض الصور */
+    /* عرض الصور (Feed) */
     .feed{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-bottom: 40px;
     }
 
     .post{
-      background:#0b0b0b;
-      border-radius:var(--radius);
-      overflow:hidden;
-      border:2px solid var(--imgBorder);
-      box-shadow:0 12px 22px rgba(0,0,0,.4);
+      background: #222;
+      border-radius: 0; /* إلغاء التدوير لتبدو كشاشة عرض */
+      overflow: hidden;
+      border: 8px solid #fff; /* إطار أبيض للصورة في الوضع الليلي */
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    
+    /* مشبك ورق وهمي فوق الصورة */
+    .post::before {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 12px;
+        background: rgba(255,255,255,0.3);
+        margin: 0 auto;
+        margin-bottom: -12px;
+        position: relative;
+        z-index: 2;
     }
 
     .post .ph{
-      background:#111;
-      width:100%;
-      aspect-ratio:9/16;
+      background: #333;
+      width: 100%;
+      aspect-ratio: 9/16;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.6; }
+        100% { opacity: 1; }
     }
 
     .post img{
-      width:100%;
-      display:block;
-      background:#111;
+      width: 100%;
+      display: block;
+      background: #111;
     }
 
     .end-note{
-      text-align:center;
-      color:rgba(255,255,255,.75);
-      font-weight:900;
-      padding:22px 10px 32px;
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+      padding: 20px;
+      font-size: 14px;
+      letter-spacing: 1px;
     }
   </style>
 </head>
@@ -242,9 +349,8 @@
         </div>
       </div>
 
-      <!-- رجعت الواتساب مثل ما كان -->
       <div class="contact-card">
-        <div class="title">للتواصل</div>
+        <div class="title">للتواصل والحجز</div>
         <div class="phone">+965 6502 2191</div>
         <button class="wa-btn" onclick="window.open('https://wa.me/96565022191')">
           <span>تواصل واتساب</span>
