@@ -2,7 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"/>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+  />
   <title>Lovingly Framed</title>
 
   <style>
@@ -15,6 +18,7 @@
       --imgBorder: rgba(200,200,200,.35);
       --topbar-h:78px;
       --wa:#23D366;
+      --bg:#fff7fb;
     }
 
     *{box-sizing:border-box;margin:0;padding:0;}
@@ -22,10 +26,12 @@
 
     body{
       font-family:system-ui,-apple-system,Tahoma,Arial;
-      background:#fff7fb;
+      background:var(--bg);
       color:var(--text);
       overflow-x:hidden;
-      padding-top:12px;
+
+      /* مهم: يخلي المحتوى يبدأ تحت الشريط الثابت */
+      padding-top:calc(env(safe-area-inset-top) + var(--topbar-h) + 12px);
       padding-bottom:env(safe-area-inset-bottom);
     }
 
@@ -44,18 +50,25 @@
 
     /* الشريط العلوي */
     .top-bar{
-      position:sticky;
+      position:fixed;
       top:env(safe-area-inset-top);
+      left:0;
+      right:0;
+      margin:0 auto;
+      width:min(560px, calc(100% - 24px));
       z-index:1000;
-      background:#fff;
+
+      background:#fff;                 /* مو شفاف */
       border:1px solid var(--stroke);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       padding:10px 12px;
       height:var(--topbar-h);
+
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;                  /* يمنع ظهور المحتوى من الزوايا */
     }
 
     body.catalog-mode .top-bar{
@@ -84,27 +97,16 @@
       text-align:center;
       line-height:1.15;
       width:100%;
-      pointer-events:none;
+      pointer-events:none; /* عشان زر الرجوع ينضغط دايم */
     }
-
-    .brand .made{
-      font-size:16px;
-      font-weight:900;
-    }
-
-    .brand .handle{
-      font-size:14px;
-      font-weight:800;
-      direction:ltr;
-      opacity:.9;
-    }
+    .brand .made{font-size:16px;font-weight:900;}
+    .brand .handle{font-size:14px;font-weight:800;direction:ltr;opacity:.9;}
 
     /* الصفحة الرئيسية */
     .home-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:10px;
-      margin-top:12px;
     }
 
     .home-card{
@@ -113,7 +115,10 @@
       box-shadow:var(--shadow);
       overflow:hidden;
       cursor:pointer;
+      touch-action:manipulation;
     }
+
+    .home-card:active{transform:scale(.99);}
 
     .home-card img{
       width:100%;
@@ -142,6 +147,7 @@
     .contact-card .phone{
       font-size:18px;
       font-weight:700;
+      letter-spacing:.5px;
       direction:ltr;
     }
 
@@ -157,10 +163,14 @@
       align-items:center;
       justify-content:center;
       gap:10px;
+      box-shadow:0 6px 12px rgba(35,211,102,.18);
       border:none;
       width:100%;
       cursor:pointer;
+      touch-action:manipulation;
     }
+
+    .wa-btn:active{transform:scale(.99);}
 
     .wa-icon{
       width:28px;
@@ -170,13 +180,12 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      flex:0 0 auto;
     }
 
     .wa-icon svg{width:16px;height:16px;fill:var(--wa);}
 
     /* عرض الصور */
-    #catalogView{ margin-top:12px; }
-
     .feed{
       display:flex;
       flex-direction:column;
@@ -191,10 +200,12 @@
       box-shadow:0 12px 22px rgba(0,0,0,.4);
     }
 
+    /* placeholder قبل تحميل الصورة: رمادي جميل */
     .post .ph{
-      background:#111;
       width:100%;
       aspect-ratio:9/16;
+      background:
+        linear-gradient(180deg, #2a2a2a, #151515);
     }
 
     .post img{
@@ -226,25 +237,25 @@
     <section id="homeView">
       <div class="home-grid">
         <div class="home-card" onclick="openCatalog('bridal')">
-          <img src="images/bridal/1.jpg">
+          <img src="images/bridal/1.jpg" alt="العروس">
         </div>
         <div class="home-card" onclick="openCatalog('newborn')">
-          <img src="images/newborn/1.jpg">
+          <img src="images/newborn/1.jpg" alt="المواليد">
         </div>
         <div class="home-card" onclick="openCatalog('balloons')">
-          <img src="images/balloons/1.jpg">
+          <img src="images/balloons/1.jpg" alt="البالونات">
         </div>
         <div class="home-card" onclick="openCatalog('grad')">
-          <img src="images/grad/1.jpg">
+          <img src="images/grad/1.jpg" alt="التخرج">
         </div>
       </div>
 
       <div class="contact-card">
         <div class="title">للتواصل</div>
         <div class="phone">+965 6502 2191</div>
-        <button class="wa-btn" onclick="window.open('https://wa.me/96565022191')">
+        <button class="wa-btn" onclick="window.open('https://wa.me/96565022191','_blank')">
           <span>تواصل واتساب</span>
-          <span class="wa-icon">
+          <span class="wa-icon" aria-hidden="true">
             <svg viewBox="0 0 32 32">
               <path d="M16.7 1.1c-7.7 0-14 6.3-14 14 0 2.5.7 4.9 1.9 7L2.6 30.9l9-2c2.1 1.1 4.4 1.7 6.8 1.7 7.7 0 14-6.3 14-14S24.4 1.1 16.7 1.1z"/>
             </svg>
@@ -260,11 +271,18 @@
   </div>
 
   <script>
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 const BRIDAL_COUNT = 9;
 const NEWBORN_COUNT = 27;
 const BALLOONS_COUNT = 7;
 const GRAD_COUNT = 6;
-
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 const IMAGE_ROOT = "images";
 const EXT = "jpg";
 const START_INDEX = 2;
@@ -313,6 +331,15 @@ function makePost(url){
 function renderFeed(cat){
   feed.innerHTML = "";
   const max = LIMITS[cat] || 0;
+
+  if(max < START_INDEX){
+    const end = document.createElement("div");
+    end.className = "end-note";
+    end.textContent = "لا يوجد محتوى";
+    feed.appendChild(end);
+    window.scrollTo(0,0);
+    return;
+  }
 
   for(let i = max; i >= START_INDEX; i--){
     feed.appendChild(
