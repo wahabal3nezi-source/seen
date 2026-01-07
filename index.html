@@ -217,6 +217,7 @@
       overflow:hidden;
       border:2px solid var(--imgBorder);
       box-shadow:0 12px 22px rgba(0,0,0,.4);
+      position:relative; /* (جديد) عشان البادج يركب فوق الصورة */
     }
 
     /* Placeholder قبل تحميل الصورة: رمادي ناعم */
@@ -232,6 +233,42 @@
       display:block;
       background:#111;
     }
+
+    /* ====== PRICE BADGE (جديد) ====== */
+    .price-badge{
+      position:absolute;
+      top:14px;
+      right:14px;
+      z-index:10;
+      display:flex;
+      align-items:flex-end;
+      gap:6px;
+
+      padding:12px 16px;
+      border-radius:18px;
+
+      background:linear-gradient(135deg,#111,#000);
+      border:2px solid rgba(255,255,255,.25);
+      box-shadow:0 10px 25px rgba(0,0,0,.6);
+
+      color:#fff;
+      font-weight:900;
+      user-select:none;
+      pointer-events:none;
+    }
+
+    .price-badge .num{
+      font-size:26px;
+      line-height:1;
+    }
+
+    .price-badge .kd{
+      font-size:14px;
+      opacity:.9;
+      margin-bottom:3px;
+      font-weight:800;
+    }
+    /* ============================== */
 
     .end-note{
       text-align:center;
@@ -303,6 +340,40 @@ const GRAD_COUNT = 6;
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/* ===================== PRICES (جديد) ===================== */
+/*
+START_INDEX = 2
+يعني:
+Array[0] => صورة 2
+Array[1] => صورة 3
+Array[2] => صورة 4
+... إلخ
+*/
+const PriceBridal   = [11,11,12,12,12,12,12,12]; // مثال: [15, 18, 20]
+const PriceNewborn  = [11,11,12,11,11,12.5,11,11,11,11,12,12.5,11,11,11,11,11,12,12,12,12,11,12,12,12,12,12,12]; 
+const PriceBalloons = [10,10,10,10,10,10]; 
+const PriceGrad     = [8,8,10,10,10];
+
+const PRICES = {
+  bridal: PriceBridal,
+  newborn: PriceNewborn,
+  balloons: PriceBalloons,
+  grad: PriceGrad
+};
+/* ========================================================= */
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
 const IMAGE_ROOT = "images";
 const EXT = "jpg";
 const START_INDEX = 2;
@@ -334,10 +405,23 @@ function ensureObserver(){
   },{rootMargin:"1200px"});
 }
 
-function makePost(url){
+function getPriceFor(cat, imageIndex){
+  const arr = PRICES[cat] || [];
+  const pos = imageIndex - START_INDEX; // 2=>0, 3=>1, 4=>2 ...
+  const v = arr[pos];
+  if(v === null || v === undefined || v === "") return null;
+  return v;
+}
+
+function makePost(url, price){
   const d = document.createElement("div");
   d.className = "post";
-  d.innerHTML = `<div class="ph"></div><img data-src="${url}" loading="lazy">`;
+
+  const priceHtml = (price === null)
+    ? ""
+    : `<div class="price-badge"><span class="num">${price}</span><span class="kd">دك</span></div>`;
+
+  d.innerHTML = `${priceHtml}<div class="ph"></div><img data-src="${url}" loading="lazy">`;
 
   const img = d.querySelector("img");
   img.onload = ()=>d.querySelector(".ph")?.remove();
@@ -362,8 +446,9 @@ function renderFeed(cat){
   }
 
   for(let i = max; i >= START_INDEX; i--){
+    const price = getPriceFor(cat, i);
     feed.appendChild(
-      makePost(`${IMAGE_ROOT}/${cat}/${i}.${EXT}`)
+      makePost(`${IMAGE_ROOT}/${cat}/${i}.${EXT}`, price)
     );
   }
 
